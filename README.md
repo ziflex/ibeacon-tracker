@@ -11,6 +11,7 @@ You will need the following things properly installed on your computer.
 * [Babel.js](https://babeljs.io/)
 * [Bluez](http://www.bluez.org/)
 * [MongoDB](https://www.mongodb.org/downloads)
+* libbluetooth-dev for Ubuntu
 
 ## Installation
 
@@ -26,6 +27,7 @@ You will need the following things properly installed on your computer.
 ### Server
 * change into 'server/[service name]'
 * `npm install`
+* run this command in bash  'find -path '\*noble*Release/hci-ble\' -exec sudo setcap cap_net_raw+eip '\{}\' \;'
 
 ## Running / Development
 
