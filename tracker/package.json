@@ -1,0 +1,25 @@
+{
+  "name": "beacon-tracking-service",
+  "version": "1.0.0",
+  "description": "Service for tracking beacons",
+  "main": "index.js",
+  "scripts": {
+    "build": "npm run lint && npm run clean && npm run build-src",
+    "build-src": "babel src --out-dir dist",
+    "clean": "rimraf dist",
+    "lint": "eslint src --config ./.eslintrc",
+    "start": "npm run build && node dist/server.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "bluebird": "^2.9.26",
+    "restify": "^3.0.3"
+  },
+  "devDependencies": {
+    "babel": "^5.4.2",
+    "babel-eslint": "^3.1.9",
+    "eslint": "^0.21.0",
+    "rimraf": "^2.3.3"
+  }
+}
