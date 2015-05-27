@@ -9,10 +9,14 @@ You will need the following things properly installed on your computer.
 * [Git](http://git-scm.com/)
 * [Node.js](http://nodejs.org/) (with NPM)
 * [Babel.js](https://babeljs.io/)
+* [Bluez](http://www.bluez.org/)
+* [MongoDB](https://www.mongodb.org/downloads)
 
 ## Installation
 
 * `git clone <repository-url>` this repository
+* install `bluez` [how-to](http://www.jaredwolff.com/blog/get-started-with-bluetooth-low-energy/)
+* install `MongoDb` [how-to](http://docs.mongodb.org/manual/administration/install-on-linux/)
 
 ### Client
 * change into 'client'
