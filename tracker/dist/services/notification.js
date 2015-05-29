@@ -22,6 +22,10 @@ var _lodashNode = require('lodash-node');
 
 var _lodashNode2 = _interopRequireDefault(_lodashNode);
 
+var _logger = require('./logger');
+
+var _logger2 = _interopRequireDefault(_logger);
+
 var NotificationService = (function () {
     function NotificationService() {
         _classCallCheck(this, NotificationService);
@@ -36,13 +40,11 @@ var NotificationService = (function () {
 
             var data = {
                 event: event,
-                beacon: {
-                    uuid: beacon.uuid,
-                    major: beacon.major,
-                    minor: beacon.minor
-                }
+                uuid: beacon.uuid,
+                major: beacon.major,
+                minor: beacon.minor
             };
-            var query = 'event=' + event + '&' + _querystring2['default'].stringify(data.beacon);
+            var query = _querystring2['default'].stringify(data);
 
             _lodashNode2['default'].forEach(beacon.subscribers, function (subscriber) {
                 if (subscriber && !_lodashNode2['default'].isEmpty(subscriber.url)) {
@@ -53,8 +55,12 @@ var NotificationService = (function () {
 
                         var method = (subscriber.method || 'get').toLowerCase();
                         var args = null;
-                        var callback = function callback() {
-                            console.log('notified');
+                        var callback = function callback(err) {
+                            if (!err) {
+                                _logger2['default'].info('sent', event, 'notification to', subscriber.url);
+                            } else {
+                                _logger2['default'].error(err);
+                            }
                         };
 
                         if (method === 'post' || method === 'put' || method === 'patch') {

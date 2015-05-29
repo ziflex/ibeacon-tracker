@@ -81,6 +81,10 @@ var Application = (function () {
             _servicesPool2['default'].on('lost', this[ON_LOST]);
             _bleacon2['default'].on('discover', this[ON_DISCOVER]);
             _bleacon2['default'].startScanning();
+
+            setTimeout(function () {
+                throw new Error('test');
+            }, 1000);
         }
     }, {
         key: 'stop',

@@ -1,6 +1,7 @@
 import restify from 'restify';
 import querystring from 'querystring';
 import _ from 'lodash-node';
+import logger from './logger';
 
 class NotificationService {
     notify(event, beacon) {
@@ -25,7 +26,13 @@ class NotificationService {
 
                     let method = (subscriber.method || 'get').toLowerCase();
                     let args = null;
-                    let callback = () => {};
+                    let callback = (err) => {
+                        if (!err) {
+                            logger.info('sent', event, 'notification to', subscriber.url);
+                        } else {
+                            logger.error(err);
+                        }
+                    };
 
                     if (method === 'post' || method === 'put' || method === 'patch') {
                         args = ['/', data, callback];

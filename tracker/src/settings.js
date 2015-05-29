@@ -1,4 +1,5 @@
 export default {
+    name: 'beacon-tracker',
     server: {
         port: 8080
     },
@@ -8,5 +9,17 @@ export default {
     pool: {
         timeout: 10000,
         interval: 10000
+    },
+    logger: {
+        streams: [
+            {
+                level: 'info',
+                stream: process.stdout            // log INFO and above to stdout
+            },
+            {
+                level: 'error',
+                path: '/var/tmp/beacon-tracker.log'  // log ERROR and above to a file
+            }
+        ]
     }
 };

@@ -1,5 +1,6 @@
 import Symbol from 'symbol';
 import _ from 'lodash-node';
+import logger from './logger';
 import BeaconModel from '../models/beacon';
 import utils from '../utils';
 import Queue from '../queue';
@@ -56,6 +57,8 @@ class RegistryService {
                     res[utils.generateGuid(i)] = i;
                     return res;
                 }, {});
+            } else {
+                logger.error(err);
             }
 
             this[CACHE] = result;
