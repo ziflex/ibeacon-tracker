@@ -1,62 +1,33 @@
-import noble from 'noble';
+import bleacon from 'bleacon';
 import Symbol from 'symbol';
-import Promise from 'bluebird';
-import _ from 'lodash-node';
 import mongoose from 'mongoose';
 import settings from './settings';
-import Beacon from './models/beacon';
-import utils from './utils';
-import notificationSrvc from './services/notification';
+import notification from './services/notification';
+import pool from './services/pool';
+import registry from './services/registry';
 
-const nobleStates = {
-    UNKNOWN: 'unknown',
-    RESETTING: 'resetting',
-    UNSUPPORTED: 'unsupported',
-    UNAUTHORIZED: 'unauthorized',
-    POWERED_OFF: 'poweredOff',
-    POWERED_ON: 'poweredOn'
-};
 const IS_RUNNING = Symbol('IS_RUNNING');
 const ON_DISCOVER = Symbol('ON_DISCOVER');
-const BEACONS = Symbol('BEACONS');
-const INIT_NOBLE = Symbol('INIT_NOBLE');
-const FIND_ALL_BEACONS = Symbol('FIND_ALL_BEACONS');
+const ON_FOUND = Symbol('ON_FOUND');
+const ON_LOST = Symbol('ON_LOST');
 
 export default class Application {
     constructor() {
         this[IS_RUNNING] = false;
-        this[BEACONS] = {};
         this[ON_DISCOVER] = (peripheral) => {
-            notificationSrvc.notify(peripheral);
+            pool.add(peripheral);
         };
-        this[INIT_NOBLE] = () => {
-            return new Promise((resolve) => {
-                noble.on('discover', this[ON_DISCOVER]);
-
-                if (noble.state === nobleStates.POWERED_ON) {
-                    noble.startScanning();
-                    resolve();
-                } else {
-                    const onStateChange = (state) => {
-                        if (state === nobleStates.POWERED_ON) {
-                            noble.startScanning();
-                            noble.removeListener('stateChange', onStateChange);
-                            resolve();
-                        }
-                    };
-
-                    noble.on('stateChange', onStateChange);
-                }
+        this[ON_FOUND] = (beacon) => {
+            process.nextTick(() => {
+                registry.find(beacon, (info) => {
+                    notification.notify('found', info);
+                });
             });
         };
-        this[FIND_ALL_BEACONS] = () => {
-            return new Promise((resolve, reject) => {
-                Beacon.find({}, (err, beacons) => {
-                    if (err) {
-                        return reject(err);
-                    }
-
-                    resolve(beacons);
+        this[ON_LOST] = (beacon) => {
+            process.nextTick(() => {
+                registry.find(beacon, (info) => {
+                    notification.notify('lost', info);
                 });
             });
         };
@@ -69,17 +40,11 @@ export default class Application {
 
         this[IS_RUNNING] = true;
 
-        mongoose.connect(settings.database);
-
-        return this[FIND_ALL_BEACONS]().then(beacons => {
-            this[BEACONS] = {};
-
-            _.forEach(beacons, b => {
-                this[BEACONS][utils.generateGuid(b)] = b;
-            });
-
-            return this[INIT_NOBLE]();
-        });
+        mongoose.connect(settings.database.connectionString);
+        pool.on('found', this[ON_FOUND]);
+        pool.on('lost', this[ON_LOST]);
+        bleacon.on('discover', this[ON_DISCOVER]);
+        bleacon.startScanning();
     }
 
     stop() {
@@ -88,8 +53,10 @@ export default class Application {
         }
 
         mongoose.disconnect();
-        noble.stopScanning();
-        noble.removeListener('discover', this[ON_DISCOVER]);
+        bleacon.stopScanning();
+        bleacon.removeListener('discover', this[ON_DISCOVER]);
+        pool.removeListener('found', this[ON_FOUND]);
+        pool.removeListener('lost', this[ON_LOST]);
         this[IS_RUNNING] = false;
     }
 }

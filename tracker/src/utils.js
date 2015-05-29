@@ -1,14 +1,14 @@
 export default {
     generateGuid(beacon) {
-        let result = [];
+        let result = '';
 
         if (beacon) {
-            result.push(this.formatUuid(beacon));
-            result.push(beacon.major || 'x');
-            result.push(beacon.minor || 'x');
+            result += this.formatUuid(beacon);
+            result += beacon.major || 'x';
+            result += beacon.minor || 'x';
         }
 
-        return result.join('').toLowerCase();
+        return result.toLowerCase();
     },
 
     formatUuid(beacon) {
@@ -16,6 +16,6 @@ export default {
             return '';
         }
 
-        return (beacon.uuid || '').replace(/:/g, '').toLowerCase();
+        return (beacon.uuid || '').replace(/-/g, '').toLowerCase();
     }
 };

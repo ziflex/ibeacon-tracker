@@ -6,7 +6,7 @@ const server = restify.createServer({
     name: 'beacon-tracker'
 });
 
-new Application().run().then(() => {
-    server.listen(settings.port);
-    console.info('listenig port:', settings.port, '...');
-});
+const app = new Application();
+app.run();
+
+server.listen(settings.server.port);

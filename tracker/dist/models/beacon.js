@@ -12,9 +12,8 @@ var _mongoose2 = _interopRequireDefault(_mongoose);
 
 exports['default'] = _mongoose2['default'].model('Beacon', {
     uuid: String,
-    major: String,
-    minor: String,
-    lastSeen: { type: Date, 'default': Date.now },
+    major: Number,
+    minor: Number,
     subscribers: Array
 });
 module.exports = exports['default'];

@@ -18,7 +18,8 @@ var server = _restify2['default'].createServer({
     name: 'beacon-tracker'
 });
 
-new _app2['default']().run().then(function () {
-    server.listen(_settings2['default'].port);
-    console.info('listenig port:', _settings2['default'].port, '...');
-});
+var app = new _app2['default']();
+app.run();
+
+server.listen(_settings2['default'].server.port);
+console.info('listenig port:', _settings2['default'].server.port, '...');
