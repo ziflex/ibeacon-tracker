@@ -1,5 +1,6 @@
 export default {
     name: 'beacon-tracker',
+    endpoint: 'api',
     server: {
         port: 8080
     },

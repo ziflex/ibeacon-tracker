@@ -48,6 +48,7 @@ class RegistryService {
 
     update(callback) {
         this[IS_UPDATING] = true;
+        logger.info('Updating registry...');
         BeaconModel.find({}, (err, data) => {
             let result = null;
             let isEmpty = true;
@@ -57,6 +58,7 @@ class RegistryService {
                     res[utils.generateGuid(i)] = i;
                     return res;
                 }, {});
+                logger.info('Registry is updated.');
             } else {
                 logger.error(err);
             }

@@ -18,6 +18,10 @@ var _app = require('./app');
 
 var _app2 = _interopRequireDefault(_app);
 
+var _router = require('./router');
+
+var _router2 = _interopRequireDefault(_router);
+
 var errorHandler = function errorHandler(err, cb) {
     _servicesLogger2['default'].error(err);
     return cb ? cb() : null;
@@ -39,6 +43,7 @@ process.on('uncaughtException', function ProcessUncaughtExceptionHandler(err) {
 
 var app = new _app2['default']();
 app.run();
+_router2['default'].registerRoutes(server);
 server.listen(_settings2['default'].server.port);
 
 _servicesLogger2['default'].info('Listening on port', _settings2['default'].server.port);

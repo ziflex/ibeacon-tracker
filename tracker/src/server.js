@@ -2,6 +2,7 @@ import restify from 'restify';
 import logger from './services/logger';
 import settings from './settings';
 import Application from './app';
+import router from './router';
 
 const errorHandler = (err, cb) => {
     logger.error(err);
@@ -24,6 +25,7 @@ process.on('uncaughtException', function ProcessUncaughtExceptionHandler(err) {
 
 const app = new Application();
 app.run();
+router.registerRoutes(server);
 server.listen(settings.server.port);
 
 logger.info('Listening on port', settings.server.port);
