@@ -18,6 +18,7 @@ server.use(bunyanMiddleware({
     obscureHeaders: [],
     logger: logger
 }));
+server.use(express.static(__dirname + '/public/content'));
 server.use(bodyParser.json());
 server.use(bodyParser.urlencoded({ extended: false }));
 server.use(cookieParser());

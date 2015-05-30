@@ -4,14 +4,24 @@
   "description": "Service for tracking beacons",
   "main": "index.js",
   "scripts": {
-    "build": "npm run lint && npm run clean && npm run build-server",
-    "build-server": "babel server --out-dir dist",
-    "build-client": "babel client --out-dir dist/public",
+    "build": "npm run lint && npm run clean && npm run build:server && npm run build:server",
+    "build:server": "babel server --out-dir dist",
+    "build:client": "npm run build:client:js && npm run build:client:css && npm run build:client:html",
+    "build:client:js": "browserify client/content/js/boot.js -o dist/public/content/js/app.js",
+    "build:client:css": "lessc --clean-css='--s1 --advanced --compatibility=ie8' client/content/css/app.less dist/public/content/css/app.css",
+    "build:clent:html": "cp client/index.html dist/public/",
     "clean": "rimraf dist",
-    "lint": "npm run lint-server && npm run lint-client",
-    "lint-server": "eslint server --config ./.eslintrc",
-    "lint-client": "eslint client --config ./.eslintrc",
+    "lint": "npm run lint:server && npm run lint:client",
+    "lint:server": "eslint server --config ./.eslintrc",
+    "lint:client": "eslint client --config ./.eslintrc",
     "start": "npm run build && NOBLE_REPORT_ALL_HCI_EVENTS=1 node dist/server.js"
+  },
+  "browserify": {
+      "transform": [
+          [
+              "babelify"
+              ]
+        ]
   },
   "author": "",
   "license": "ISC",
@@ -31,12 +41,19 @@
     "passport-local-mongoose": "~1.0.0",
     "bunyan-middleware": "~0.2.0",
     "bunyan": "~1.3.5",
-    "superagent": "~1.2.0"
+    "superagent": "~1.2.0",
+    "immutable": "~3.7.3",
+    "bootstrap": "~3.3.4"
   },
   "devDependencies": {
     "babel": "^5.4.2",
     "babel-eslint": "~3.1.9",
     "eslint": "~0.21.2",
-    "rimraf": "^2.3.3"
+    "rimraf": "^2.3.3",
+    "browserify": "~10.2.3",
+    "less": "~2.5.1",
+    "less-plugin-clean-css": "~1.5.0",
+    "cp": "~0.2.0",
+    "babelify": "~6.1.2"
   }
 }
