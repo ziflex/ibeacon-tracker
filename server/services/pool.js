@@ -1,7 +1,7 @@
 import Symbol from 'symbol';
 import {EventEmitter} from 'events';
 import _ from 'lodash-node';
-import utils from '../utils';
+import uuid from '../utils/uuid';
 import settings from '../settings';
 
 const EVENTS = {
@@ -39,7 +39,7 @@ class PoolService extends EventEmitter {
                 if (isLost(beacon)) {
                     lost.push(beacon);
                 } else {
-                    newPool[utils.generateGuid(beacon)] = beacon;
+                    newPool[uuid.generate(beacon)] = beacon;
                 }
             });
 
@@ -49,7 +49,7 @@ class PoolService extends EventEmitter {
     }
 
     add(beacon) {
-        const guid = utils.generateGuid(beacon);
+        const guid = uuid.generate(beacon);
         const found = this[POOL][guid];
 
         if (!found) {

@@ -2,8 +2,8 @@ import Symbol from 'symbol';
 import _ from 'lodash-node';
 import logger from './logger';
 import BeaconModel from '../models/beacon';
-import utils from '../utils';
-import Queue from '../queue';
+import uuid from '../utils/uuid';
+import Queue from '../utils/queue';
 
 const IS_EMPTY = Symbol('IS_EMPTY');
 const CACHE = Symbol('CACHE');
@@ -24,7 +24,7 @@ class RegistryService {
         }
 
         const find = (b, cb) => {
-            const guid = utils.generateGuid(b);
+            const guid = uuid.generate(b);
             const found = this[CACHE][guid];
 
             if (found) {
@@ -55,7 +55,8 @@ class RegistryService {
 
             if (!err) {
                 result = _.reduce(data, (res, i) => {
-                    res[utils.generateGuid(i)] = i;
+                    isEmpty = false;
+                    res[uuid.generate(i)] = i;
                     return res;
                 }, {});
                 logger.info('Registry is updated.');

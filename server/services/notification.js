@@ -1,4 +1,4 @@
-import restify from 'restify';
+import superagent from 'superagent';
 import querystring from 'querystring';
 import _ from 'lodash-node';
 import logger from './logger';
@@ -20,27 +20,22 @@ class NotificationService {
         _.forEach(beacon.subscribers, (subscriber) => {
             if (subscriber && !_.isEmpty(subscriber.url)) {
                 if (!subscriber.event || subscriber.event === event) {
-                    let client = restify.createStringClient({
-                        url: subscriber.url
-                    });
-
                     let method = (subscriber.method || 'get').toLowerCase();
-                    let args = null;
-                    let callback = (err) => {
+                    let request = null;
+
+                    if (method === 'post') {
+                        request = superagent.post(subscriber.url).send(data);
+                    } else {
+                        request = superagent.get(subscriber.url + '/?' + query);
+                    }
+
+                    request.end((err) => {
                         if (!err) {
                             logger.info('sent', event, 'notification to', subscriber.url);
                         } else {
                             logger.error(err);
                         }
-                    };
-
-                    if (method === 'post' || method === 'put' || method === 'patch') {
-                        args = ['/', data, callback];
-                    } else {
-                        args = ['/?' + query, callback];
-                    }
-
-                    client[method].apply(client, args);
+                    });
                 }
             }
         });

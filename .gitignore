@@ -1,0 +1,13 @@
+.idea
+
+# logs
+logs
+*.log
+
+# compiled output
+dist
+tmp
+
+# dependencies
+node_modules
+bower_components

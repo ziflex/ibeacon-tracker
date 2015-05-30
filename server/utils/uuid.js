@@ -1,9 +1,9 @@
 export default {
-    generateGuid(beacon) {
+    generate(beacon) {
         let result = '';
 
         if (beacon) {
-            result += this.formatUuid(beacon);
+            result += this.format(beacon);
             result += beacon.major || 'x';
             result += beacon.minor || 'x';
         }
@@ -11,7 +11,7 @@ export default {
         return result.toLowerCase();
     },
 
-    formatUuid(beacon) {
+    format(beacon) {
         if (!beacon) {
             return '';
         }
