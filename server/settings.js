@@ -1,3 +1,8 @@
+import PrettyStream from 'bunyan-prettystream';
+
+const prettyStdOut = new PrettyStream();
+prettyStdOut.pipe(process.stdout);
+
 export default {
     name: 'beacon-tracker',
     server: {
@@ -15,7 +20,7 @@ export default {
         streams: [
             {
                 level: 'info',
-                stream: process.stdout            // log INFO and above to stdout
+                stream: prettyStdOut            // log INFO and above to stdout
             },
             {
                 level: 'error',
