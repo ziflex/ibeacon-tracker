@@ -1,3 +1,4 @@
+import path from 'path';
 import express from 'express';
 import bodyParser from 'body-parser';
 import cookieParser from 'cookie-parser';
@@ -18,7 +19,8 @@ server.use(bunyanMiddleware({
     obscureHeaders: [],
     logger: logger
 }));
-server.use(express.static(__dirname + '/public/content'));
+server.use('/', express.static(path.join(__dirname, '/public')));
+server.use('/content', express.static(path.join(__dirname, '/public/content')));
 server.use(bodyParser.json());
 server.use(bodyParser.urlencoded({ extended: false }));
 server.use(cookieParser());
@@ -32,7 +34,7 @@ server.use(session({
 }));
 server.use(passport.initialize());
 server.use(passport.session());
-server.use('/', router);
+server.use(router);
 
 passport.use(passportConfig.strategy);
 passport.serializeUser(passportConfig.serializeUser);
@@ -40,7 +42,7 @@ passport.deserializeUser(passportConfig.deserializeUser);
 
 // catch 404 and forward to error handler
 server.use(function Handler404(req, res) {
-    res.status(404).end();
+    res.sendFile(path.join(__dirname, '/public/404.html'));
 });
 
 // error handlers
