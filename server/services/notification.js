@@ -1,6 +1,6 @@
 import superagent from 'superagent';
 import querystring from 'querystring';
-import _ from 'lodash-node';
+import _ from 'lodash';
 import logger from './logger';
 
 class NotificationService {
@@ -31,7 +31,7 @@ class NotificationService {
 
                     request.end((err) => {
                         if (!err) {
-                            logger.info('sent', event, 'notification to', subscriber.url);
+                            logger.info('Sent', event, 'notification to', subscriber.url);
                         } else {
                             logger.error(err);
                         }

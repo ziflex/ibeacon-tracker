@@ -1,6 +1,6 @@
 import Symbol from 'symbol';
 import {EventEmitter} from 'events';
-import _ from 'lodash-node';
+import _ from 'lodash';
 import uuid from '../utils/uuid';
 import settings from '../settings';
 
@@ -11,7 +11,7 @@ const EVENTS = {
 const POOL = Symbol('POOL');
 const NOTIFY = Symbol('NOTIFY');
 
-class PoolService extends EventEmitter {
+class TrackingService extends EventEmitter {
     constructor() {
         super();
         this[POOL] = {};
@@ -48,7 +48,7 @@ class PoolService extends EventEmitter {
         }, settings.pool.interval || 5000);
     }
 
-    add(beacon) {
+    track(beacon) {
         const guid = uuid.generate(beacon);
         const found = this[POOL][guid];
 
@@ -62,4 +62,4 @@ class PoolService extends EventEmitter {
     }
 }
 
-export default new PoolService();
+export default new TrackingService();

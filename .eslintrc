@@ -146,7 +146,7 @@
     }],
     "new-cap": [2, {                 // http://eslint.org/docs/rules/new-cap
       "newIsCap": true,
-      "capIsNewExceptions": ["Router"]
+      "capIsNewExceptions": ["Router", "Map", "List", "Record"]
     }],
     "no-multiple-empty-lines": [2, { // http://eslint.org/docs/rules/no-multiple-empty-lines
       "max": 2

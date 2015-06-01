@@ -1,5 +1,5 @@
 import Symbol from 'symbol';
-import _ from 'lodash-node';
+import _ from 'lodash';
 
 const ITEMS = Symbol('ITEMS');
 

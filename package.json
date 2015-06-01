@@ -4,16 +4,20 @@
   "description": "Service for tracking beacons",
   "main": "index.js",
   "scripts": {
-    "build": "npm run lint && npm run clean && npm run build:server && npm run build:client",
-    "build:server": "babel server --out-dir dist",
+    "build": "npm run clean && npm run build:server && npm run build:client",
+    "build:server": "npm run lint:server && babel server --out-dir dist",
     "build:client": "npm run build:client:js && npm run build:client:css && npm run build:client:html",
-    "build:client:js": "mkdir -p dist/public/content/js/ && browserify client/content/js/boot.js > dist/public/content/js/app.js",
+    "build:client:js": "npm run lint:client && mkdir -p dist/public/content/js/ && browserify client/content/js/boot.js > dist/public/content/js/app.js --debug true",
     "build:client:css": "lessc --clean-css='--s1 --advanced --compatibility=ie8' client/content/css/app.less dist/public/content/css/app.css",
     "build:client:html": "cp client/index.html dist/public/index.html && cp client/404.html dist/public/404.html",
     "clean": "rimraf dist",
     "lint": "npm run lint:server && npm run lint:client",
     "lint:server": "eslint server --config ./.eslintrc",
     "lint:client": "eslint client --config ./.eslintrc",
+    "watch:client:js": "watchify --debug client/content/js/boot.js -o dist/public/content/js/app.js",
+    "watch:client:css": "watch 'npm run build:client:css' client/content/css",
+    "watch:client": "npm run watch:client:js && npm run watch:client:css",
+    "watch": "npm run watch:client",
     "start": "npm run build && NOBLE_REPORT_ALL_HCI_EVENTS=1 node dist/server.js"
   },
   "browserify": {
@@ -31,7 +35,6 @@
     "cookie-parser": "^1.3.5",
     "express": "^4.12.3",
     "express-session": "^1.11.2",
-    "lodash-node": "~3.9.3",
     "mongod": "~1.3.0",
     "mongoose": "^4.0.3",
     "morgan": "^1.5.3",
@@ -46,7 +49,9 @@
     "bootstrap": "~3.3.4",
     "react": "~0.13.3",
     "react-router": "~0.13.3",
-    "bunyan-prettystream": "~0.1.3"
+    "bunyan-prettystream": "~0.1.3",
+    "alt": "~0.16.7",
+    "lodash": "~3.9.3"
   },
   "devDependencies": {
     "babel": "^5.4.2",
@@ -58,6 +63,8 @@
     "less-plugin-clean-css": "~1.5.0",
     "cp": "~0.2.0",
     "babelify": "~6.1.2",
-    "eslint-plugin-react": "~2.4.0"
+    "eslint-plugin-react": "~2.4.0",
+    "watchify": "~3.2.1",
+    "watch": "~0.16.0"
   }
 }

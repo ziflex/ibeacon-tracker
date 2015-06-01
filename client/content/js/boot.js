@@ -1,7 +1,7 @@
 import React from 'react';
-import Root from './components/root';
+import Router from 'react-router';
+import routes from './routes';
 
-React.render(
-  React.createElement(Root, null),
-  document.getElementById('app')
-);
+Router.run(routes, Router.HistoryLocation, (Root) => {
+    React.render(<Root/>, document.body);
+});

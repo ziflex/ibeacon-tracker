@@ -1,5 +1,5 @@
 import Symbol from 'symbol';
-import _ from 'lodash-node';
+import _ from 'lodash';
 import logger from './logger';
 import BeaconModel from '../models/beacon';
 import uuid from '../utils/uuid';

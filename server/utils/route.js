@@ -9,8 +9,16 @@ export default {
         res.status(401).end();
     },
 
-    onError(req, res, err) {
+    ok(res) {
+        return res.status(200).end();
+    },
+
+    bad(res, msg = '') {
+        return res.status(400).json({message: msg});
+    },
+
+    error(res, err) {
         logger.error(err);
-        res.status(500).end();
+        return res.status(500).end();
     }
 };

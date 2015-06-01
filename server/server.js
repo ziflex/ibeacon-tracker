@@ -9,7 +9,7 @@ import bunyanMiddleware from 'bunyan-middleware';
 import logger from './services/logger';
 import router from './router';
 import settings from './settings';
-import App from './app';
+import scanner from './services/scanner';
 const server = express();
 
 server.use(bunyanMiddleware({
@@ -41,8 +41,11 @@ passport.serializeUser(passportConfig.serializeUser);
 passport.deserializeUser(passportConfig.deserializeUser);
 
 // catch 404 and forward to error handler
-server.use(function Handler404(req, res) {
-    res.sendFile(path.join(__dirname, '/public/404.html'));
+server.use('/api/*', (req, res) => {
+    res.status(404).end();
+});
+server.use('/*', (req, res) => {
+    res.sendFile(path.join(__dirname, '/public/index.html'));
 });
 
 // error handlers
@@ -65,7 +68,6 @@ server.use(function ErrorHandler(err, req, res) {
     res.status(err.status || 500).end();
 });
 
-const app = new App();
-app.run();
+scanner.startScanning();
 server.listen(settings.server.port);
 logger.info('Listening on port', settings.server.port);
