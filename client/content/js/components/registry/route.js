@@ -8,11 +8,8 @@ export default React.createClass({
     mixins: [ReactStateMagicMixin, State],
     statics: {
         registerStore: RegistryStore,
-        willTransitionTo: function (transition, params, query, callback) {
-            if (!this.state) {
-                RegistryActions.findAsync();
-            }
-
+        willTransitionTo: (transition, params, query, callback) => {
+            RegistryActions.findAsync();
             callback();
         }
     },

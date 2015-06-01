@@ -27,7 +27,7 @@ export default React.createClass({
                     {this.props.url}
                 </td>
                 <td>
-                    <button type="button" className="btn btn-primary" onClick={this._onEdit}>Edit</button>
+                    <button type="button" className="btn btn-success" onClick={this._onEdit}>Edit</button>
                 </td>
                 <td>
                     <button type="button" className="btn btn-danger" onClick={this._onDelete}>Delete</button>

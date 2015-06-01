@@ -10,7 +10,7 @@ function createDefaultEntry() {
         name: '',
         subscribers: []
     };
-};
+}
 
 export default React.createClass({
     mixins: [

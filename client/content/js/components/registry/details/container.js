@@ -1,6 +1,5 @@
 import React from 'react/addons';
 import {State} from 'react-router';
-import RegistryStore from '../../../stores/registry';
 import Details from './details';
 
 export default React.createClass({

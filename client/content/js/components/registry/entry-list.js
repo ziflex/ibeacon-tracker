@@ -38,7 +38,7 @@ export default React.createClass({
                 <hr />
                 <div className="row">
                     <div className="col-sm-3 col-md-11">
-                        <button className="btn btn-primary pull-right" onClick={this._onNew}>New</button>
+                        <button className="btn btn-success pull-right" onClick={this._onNew}>New</button>
                     </div>
                 </div>
             </div>

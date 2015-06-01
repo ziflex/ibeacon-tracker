@@ -17,7 +17,7 @@ export default React.createClass({
                 <td>{this.props.item.uuid}</td>
                 <td>{this.props.item.name}</td>
                 <td>{subNum}</td>
-                <td><button type="button" className="btn btn-primary" onClick={this._onEdit}>Edit</button></td>
+                <td><button type="button" className="btn btn-success" onClick={this._onEdit}>Edit</button></td>
                 <td><button type="button" className="btn btn-danger" onClick={this._onDelete}>Delete</button></td>
             </tr>
         );
