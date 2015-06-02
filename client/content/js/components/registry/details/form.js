@@ -96,7 +96,7 @@ export default React.createClass({
         );
     },
 
-    _onSubscriberSave(isNew, value) {
+    _onSubscriberSave(index, value, isNew) {
         if (!value) {
             return;
         }

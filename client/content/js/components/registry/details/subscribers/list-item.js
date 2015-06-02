@@ -62,7 +62,7 @@ export default React.createClass({
 
     _onSave(value) {
         if (this.props.onSave) {
-            this.props.onSave(this.isNew, value.toJSON());
+            this.props.onSave(this.props.number - 1, value.toJSON(), this.isNew);
         }
     },
 

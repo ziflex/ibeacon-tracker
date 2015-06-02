@@ -1,5 +1,4 @@
 import React from 'react/addons';
-import {List} from 'immutable';
 import Item from './list-item';
 import DynamicEventsMixin from '../../../../mixins/dynamic-events-mixin';
 
@@ -17,7 +16,7 @@ export default React.createClass({
     getInitialState() {
         return {
             items: this.props.items
-        }
+        };
     },
 
     render() {
