@@ -7,8 +7,9 @@ A short introduction of this app.
 You will need the following things properly installed on your computer.
 
 * [Git](http://git-scm.com/)
-* [Node.js](http://nodejs.org/) (with NPM)
-* [Babel.js](https://babeljs.io/)
+* [Node](http://nodejs.org/) (with NPM)
+* [Babel](https://babeljs.io/)
+* [Forever](https://www.npmjs.com/package/forever)
 * [Bluez](http://www.bluez.org/)
 * [MongoDB](https://www.mongodb.org/downloads)
 * libbluetooth-dev for Ubuntu

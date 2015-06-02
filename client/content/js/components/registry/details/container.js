@@ -1,6 +1,6 @@
 import React from 'react/addons';
 import {State} from 'react-router';
-import Details from './details';
+import Form from './form';
 
 export default React.createClass({
     mixins: [React.addons.PureRenderMixin, State],
@@ -14,7 +14,7 @@ export default React.createClass({
         return (
             <div>
                 <h1>Edit</h1>
-                <Details item={entry} />
+                <Form item={entry} />
             </div>
         );
     }

@@ -9,8 +9,8 @@ export default React.createClass({
         item: React.PropTypes.object.isRequired
     },
     render() {
-        const subscribers = this.props.item.subscribers;
-        const subNum = subscribers ? subscribers.length : 0;
+        const subNum = this.props.item.subscribers.count();
+
         return (
             <tr>
                 <td>{this.props.number}</td>
@@ -26,6 +26,6 @@ export default React.createClass({
         this.transitionTo('/registry/edit/:id', { id: this.props.item.id });
     },
     _onDelete() {
-        RegistryActions.deleteAsync(this.props.item.id);
+        RegistryActions.delete(this.props.item.id);
     }
 });

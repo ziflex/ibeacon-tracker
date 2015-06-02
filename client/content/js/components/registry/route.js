@@ -7,9 +7,11 @@ import RegistryActions from '../../actions/registry';
 export default React.createClass({
     mixins: [ReactStateMagicMixin, State],
     statics: {
-        registerStore: RegistryStore,
+        registerStores: {
+            entries: RegistryStore
+        },
         willTransitionTo: (transition, params, query, callback) => {
-            RegistryActions.findAsync();
+            RegistryActions.find();
             callback();
         }
     },

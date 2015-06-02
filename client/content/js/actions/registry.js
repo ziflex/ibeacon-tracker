@@ -1,18 +1,11 @@
-import superagent from 'superagent';
+import service from '../services/registry';
 import app from '../app';
-import settings from '../settings';
 
 class RegistryActions {
-    findAsync() {
-        superagent.get(settings.endpoint + '/registry/find')
-            .set('Accept', 'application/json')
-            .end((err, res) => {
-                if (!err) {
-                    this.actions.findComplete(res.body);
-                } else {
-                    this.actions.findFail(err);
-                }
-            });
+    find() {
+        service.findAsync()
+            .then(result => this.actions.findComplete(result))
+            .catch(reason => this.actions.findFail(reason));
     }
 
     findComplete(entires) {
@@ -23,17 +16,10 @@ class RegistryActions {
         this.dispatch(reason);
     }
 
-    saveAsync(entry) {
-        superagent.post(settings.endpoint + '/registry/save')
-            .send(entry)
-            .set('Accept', 'application/json')
-            .end((err, res) => {
-                if (!err) {
-                    this.actions.saveComplete(res.body);
-                } else {
-                    this.actions.saveFail(err);
-                }
-            });
+    save(entry) {
+        service.saveAsync(entry)
+            .then(result => this.actions.saveComplete(result))
+            .catch(reason => this.actions.saveFail(reason));
     }
 
     saveComplete(updatedEntry) {
@@ -44,21 +30,14 @@ class RegistryActions {
         this.dispatch(reason);
     }
 
-    deleteAsync(id) {
-        superagent.post(settings.endpoint + '/registry/delete')
-            .send({id: id})
-            .set('Accept', 'application/json')
-            .end((err) => {
-                if (!err) {
-                    this.actions.deleteComplete(id);
-                } else {
-                    this.actions.deleteFail(err);
-                }
-            });
+    delete(id) {
+        service.deleteAsync(id)
+            .then(result => this.actions.deleteComplete(result))
+            .catch(reason => this.actions.deleteFail(reason));
     }
 
-    deleteComplete() {
-        this.dispatch();
+    deleteComplete(result) {
+        this.dispatch(result);
     }
 
     deleteFail(reason) {

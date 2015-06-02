@@ -5,53 +5,59 @@ import BeaconModel from '../models/beacon';
 
 const route = '/registry';
 
-function toJSON(entries) {
-    return _.map(entries, (entry) => {
-        return {
-            id: entry._id,
-            name: entry.name,
-            uuid: entry.uuid,
-            major: entry.major,
-            minor: entry.minor,
-            subscribers: entry.subscribers || []
-        };
-    });
+function toJSON(entry = {}) {
+    return {
+        id: entry._id,
+        name: entry.name,
+        uuid: entry.uuid,
+        major: entry.major,
+        minor: entry.minor,
+        subscribers: entry.subscribers || []
+    };
 }
 
 // TODO: ADD 'routeUtil.isAuthenticated' for all route handlers
 export default {
     use(router) {
-        router.get(settings.server.api + route + '/find', (req, res) => {
+        router.get(settings.server.api + route, (req, res) => {
             BeaconModel.find({}, (err, data) => {
                 if (!err) {
-                    res.json(toJSON(data));
+                    res.json(_.map(data || [], toJSON));
                 } else {
                     routeUtil.error(res, err);
                 }
             });
         });
 
-        router.post(settings.server.api + route + '/save', (req, res) => {
+        router.post(settings.server.api + route, (req, res) => {
             const entry = req.body;
+
             if (entry) {
-                BeaconModel.findByIdAndUpdate(entry.id, _.omit(entry, 'id'), {
-                    new: _.isUndefined(entry.id),
-                    upsert: true
-                }, (err, data) => {
-                    if (!err) {
-                        req.json(_.first(toJSON([data])));
-                    } else {
-                        routeUtil.error(res, err);
-                    }
-                });
+                if (entry.id) {
+                    BeaconModel.update({_id: entry.id}, _.omit(entry, 'id'), (err) => {
+                        if (!err) {
+                            res.json(entry);
+                        } else {
+                            routeUtil.error(res, err);
+                        }
+                    });
+                } else {
+                    BeaconModel.create(entry, (err, data) => {
+                        if (!err) {
+                            res.json(toJSON(data));
+                        } else {
+                            routeUtil.error(res, err);
+                        }
+                    });
+                }
             } else {
                 routeUtil.bad(res, 'Missed parameters');
             }
         });
 
-        router.post(settings.server.api + route + '/delete', (req, res) => {
+        router.delete(settings.server.api + route, (req, res) => {
             if (req.body) {
-                BeaconModel.remove({ id: req.body.id }, (err) => {
+                BeaconModel.remove({ _id: req.body.id }, (err) => {
                     if (!err) {
                         routeUtil.ok(res);
                     } else {

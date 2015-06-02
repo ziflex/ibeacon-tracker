@@ -6,7 +6,9 @@ import RegistryStore from '../../../stores/registry';
 export default React.createClass({
     mixins: [ReactStateMagicMixin, State],
     statics: {
-        registerStore: RegistryStore
+        registerStores: {
+            entries: RegistryStore
+        }
     },
     render() {
         return (
