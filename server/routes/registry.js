@@ -1,7 +1,9 @@
 import _ from 'lodash';
+import hub from '../services/event-hub';
 import settings from '../settings';
 import routeUtil from '../utils/route';
 import BeaconModel from '../models/beacon';
+import events from '../enums/registry-events';
 
 const route = '/registry';
 
@@ -19,6 +21,8 @@ function toJSON(entry = {}) {
 // TODO: ADD 'routeUtil.isAuthenticated' for all route handlers
 export default {
     use(router) {
+        const emit = () => hub.emit(events.CHANGED);
+
         router.get(settings.server.api + route, (req, res) => {
             BeaconModel.find({}, (err, data) => {
                 if (!err) {
@@ -36,6 +40,7 @@ export default {
                 if (entry.id) {
                     BeaconModel.update({_id: entry.id}, _.omit(entry, 'id'), (err) => {
                         if (!err) {
+                            emit();
                             res.json(entry);
                         } else {
                             routeUtil.error(res, err);
@@ -44,6 +49,7 @@ export default {
                 } else {
                     BeaconModel.create(entry, (err, data) => {
                         if (!err) {
+                            emit();
                             res.json(toJSON(data));
                         } else {
                             routeUtil.error(res, err);
@@ -59,6 +65,7 @@ export default {
             if (req.body) {
                 BeaconModel.remove({ _id: req.body.id }, (err) => {
                     if (!err) {
+                        emit();
                         routeUtil.ok(res);
                     } else {
                         routeUtil.error(res, err);

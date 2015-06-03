@@ -1,10 +1,11 @@
 import bleacon from 'bleacon';
 import Symbol from 'symbol';
-import mongoose from 'mongoose';
-import settings from '../settings';
+import hub from './event-hub';
 import notification from './notification';
 import tracker from './tracker';
 import registry from './registry';
+import logger from './logger';
+import trackingEvents from '../enums/tracking-events';
 
 const IS_RUNNING = Symbol('IS_RUNNING');
 const ON_DISCOVER = Symbol('ON_DISCOVER');
@@ -18,45 +19,53 @@ class ScanningService {
             tracker.track(peripheral);
         };
         this[ON_FOUND] = (beacon) => {
+            logger.info('Found', beacon.uuid);
+
             process.nextTick(() => {
                 registry.find(beacon, (info) => {
-                    notification.notify('found', info);
+                    if (info) {
+                        notification.notify('found', info);
+                    }
                 });
             });
         };
         this[ON_LOST] = (beacon) => {
+            logger.info('Lost', beacon.uuid);
+
             process.nextTick(() => {
                 registry.find(beacon, (info) => {
-                    notification.notify('lost', info);
+                    if (info) {
+                        notification.notify('lost', info);
+                    }
                 });
             });
         };
     }
 
     startScanning() {
-        if (this.isRunning) {
+        if (this[IS_RUNNING]) {
             throw new Error('Service is already running');
         }
 
         this[IS_RUNNING] = true;
 
-        mongoose.connect(settings.database.connectionString);
-        tracker.on('found', this[ON_FOUND]);
-        tracker.on('lost', this[ON_LOST]);
-        bleacon.on('discover', this[ON_DISCOVER]);
-        bleacon.startScanning();
+        registry.update(() => {
+            hub.on(trackingEvents.FOUND, this[ON_FOUND]);
+            hub.on(trackingEvents.LOST, this[ON_LOST]);
+            bleacon.on('discover', this[ON_DISCOVER]);
+            bleacon.startScanning();
+        });
     }
 
     stopScanning() {
-        if (!this.isRunning) {
+        if (!this[IS_RUNNING]) {
             throw new Error('Service is already stopped');
         }
 
-        mongoose.disconnect();
         bleacon.stopScanning();
         bleacon.removeListener('discover', this[ON_DISCOVER]);
-        tracker.removeListener('found', this[ON_FOUND]);
-        tracker.removeListener('lost', this[ON_LOST]);
+        hub.removeListener(trackingEvents.FOUND, this[ON_FOUND]);
+        hub.removeListener(trackingEvents.LOST, this[ON_LOST]);
         this[IS_RUNNING] = false;
     }
 }

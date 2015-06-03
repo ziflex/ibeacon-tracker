@@ -1,20 +1,9 @@
 import client from 'superagent';
 import Promise from 'bluebird';
 import map from 'lodash/collection/map';
-import set from 'lodash/object/set';
 import Immutable from 'immutable';
 import settings from '../settings';
-import Beacon from '../models/beacon';
-import Subscriber from '../models/subscriber';
-
-function createSubscriber(entry) {
-    return new Subscriber(entry);
-}
-
-function createBeacon(entry) {
-    const subscribers = Immutable.List(map(entry.subscribers, createSubscriber));
-    return new Beacon(set(entry, 'subscribers', subscribers));
-}
+import utils from '../utils/models';
 
 class RegistryService {
 
@@ -25,7 +14,7 @@ class RegistryService {
                 .end((err, res) => {
                     if (!err) {
                         resolve(Immutable.Map(map(res.body || [], i => {
-                            return [i.id, createBeacon(i)];
+                            return [i.id, utils.mapToBeacon(i)];
                         })));
                     } else {
                         reject(err);
@@ -41,7 +30,7 @@ class RegistryService {
                 .set('Accept', 'application/json')
                 .end((err, res) => {
                     if (!err) {
-                        resolve(createBeacon(res.body));
+                        resolve(utils.mapToBeacon(res.body));
                     } else {
                         reject(err);
                     }

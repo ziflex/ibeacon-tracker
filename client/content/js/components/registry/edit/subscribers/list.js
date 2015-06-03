@@ -34,7 +34,7 @@ export default React.createClass({
                         {this.props.items.toSeq().map(i => {
                             index += 1;
                             return (<Item
-                                    key={i.toJSON()}
+                                    key={index}
                                     index={index}
                                     item={i}
                                     onSave={this.delegateAs('onSave')}
@@ -44,13 +44,7 @@ export default React.createClass({
                         }).toArray()}
                     </tbody>
                 </table>
-                <div className="btn-group pull-right">
-                    <button type="button" className="btn btn-success" onClick={this._onAdd}>Add</button>
-                </div>
             </div>
         );
-    },
-
-    _onAdd() {
     }
 });

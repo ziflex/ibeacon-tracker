@@ -6,12 +6,15 @@ import session from 'express-session';
 import passport from 'passport';
 import passportConfig from './config/passport';
 import bunyanMiddleware from 'bunyan-middleware';
+import mongoose from 'mongoose';
 import logger from './services/logger';
 import router from './router';
 import settings from './settings';
 import scanner from './services/scanner';
-const server = express();
 
+mongoose.connect(settings.database.connectionString);
+
+const server = express();
 server.use(bunyanMiddleware({
     headerName: 'X-Request-Id',
     propertyName: 'reqId',

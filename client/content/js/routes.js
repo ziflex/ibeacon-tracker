@@ -1,21 +1,24 @@
 import React from 'react';
 import {Route, DefaultRoute} from 'react-router';
 import AppRoute from './components/route';
-import MonitorRoute from './components/monitor/route';
+import ActivityRoute from './components/activity/route';
+import ActivityContainer from './components/activity/container';
 import RegistryRoute from './components/registry/route';
-import Registry from './components/registry/container';
-import RegistryDetailsRoute from './components/registry/details/route';
-import RegistryDetails from './components/registry/details/container';
+import RegistryContainer from './components/registry/container';
+import RegistryEditRoute from './components/registry/edit/route';
+import RegistryEditContainer from './components/registry/edit/container';
 
 // declare our routes and their hierarchy
 export default (
     <Route handler={AppRoute}>
-        <Route path="/" handler={MonitorRoute}/>
+        <Route path="/" handler={ActivityRoute}>
+            <DefaultRoute handler={ActivityContainer} />
+        </Route>
         <Route path="registry" handler={RegistryRoute}>
-            <DefaultRoute name="registry-list" handler={Registry} />
-            <Route path="edit" handler={RegistryDetailsRoute}>
-                <DefaultRoute name="registry-details" handler={RegistryDetails} />
-                <Route path=":id" handler={RegistryDetails} />
+            <DefaultRoute handler={RegistryContainer} />
+            <Route path="edit" handler={RegistryEditRoute}>
+                <DefaultRoute handler={RegistryEditContainer} />
+                <Route path=":id" handler={RegistryEditContainer} />
             </Route>
         </Route>
     </Route>

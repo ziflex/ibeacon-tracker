@@ -1,14 +1,17 @@
 import Symbol from 'symbol';
 import _ from 'lodash';
+import hub from './event-hub';
 import logger from './logger';
 import BeaconModel from '../models/beacon';
 import uuid from '../utils/uuid';
 import Queue from '../utils/queue';
+import events from '../enums/registry-events';
 
 const IS_EMPTY = Symbol('IS_EMPTY');
 const CACHE = Symbol('CACHE');
 const QUEUE = Symbol('QUEUE');
 const IS_UPDATING = Symbol('IS_UPDATING');
+const ENSURE = Symbol('ENSURE');
 
 class RegistryService {
     constructor() {
@@ -16,34 +19,58 @@ class RegistryService {
         this[IS_EMPTY] = true;
         this[QUEUE] = new Queue();
         this[IS_UPDATING] = false;
+        this[ENSURE] = (callback) => {
+            if (callback) {
+                if (this[IS_UPDATING]) {
+                    this[QUEUE].enqueue(callback);
+                    return;
+                }
+
+                if (this[IS_EMPTY]) {
+                    this.update(() => {
+                        callback();
+                    });
+                } else {
+                    callback();
+                }
+            }
+        };
+
+        hub.on(events.CHANGED, () => {
+            this.update();
+        });
     }
 
     find(beacon, callback) {
         if (!beacon) {
-            return;
+            callback(null);
         }
 
-        const find = (b, cb) => {
+        this[ENSURE](_.bind((b, cb, sym) => {
             const guid = uuid.generate(b);
-            const found = this[CACHE][guid];
 
-            if (found) {
-                cb(found);
-            }
-        };
+            cb(this[sym][guid]);
+        }, this, beacon, callback, CACHE));
+    }
 
-        if (this[IS_UPDATING]) {
-            this[QUEUE].enqueue(_.bind(find, this, beacon, callback));
+    findAll(beacons, callback) {
+        if (!beacons || !beacons.length) {
             return;
         }
 
-        if (this[IS_EMPTY]) {
-            this.update(() => {
-                find(beacon, callback);
+        this[ENSURE](_.bind((b, cb, sym) => {
+            const result = [];
+            _.forEach(b, (i) => {
+                const guid = uuid.generate(i);
+                const found = this[sym][guid];
+
+                if (found) {
+                    result.push(found);
+                }
             });
-        } else {
-            find(beacon, callback);
-        }
+
+            cb(result);
+        }, this, beacons, callback, CACHE));
     }
 
     update(callback) {

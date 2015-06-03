@@ -4,6 +4,7 @@ import {Navigation} from 'react-router';
 import SubscribersList from './subscribers/list';
 import RegistryActions from '../../../actions/registry';
 import Beacon from '../../../models/beacon';
+import Subscriber from '../../../models/subscriber';
 
 export default React.createClass({
     mixins: [
@@ -80,6 +81,9 @@ export default React.createClass({
                             items={this.state.item.subscribers}
                             onSave={this._onSubscriberSave}
                             onDelete={this._onSubscriberDelete} />
+                            <div className="btn-group pull-right">
+                                <button type="button" className="btn btn-success" onClick={this._onAddSubscriber}>Add</button>
+                            </div>
                         </div>
                     </div>
                     <hr />
@@ -96,9 +100,16 @@ export default React.createClass({
         );
     },
 
+    _onAddSubscriber() {
+        this.setState({
+            item: this.state.item.update('subscribers', list => list.push(new Subscriber()))
+        });
+    },
+
     _onSubscriberSave(options) {
-        let {index, value, isNew} = options;
+        let {index, value} = options;
         let newCollection;
+        let isNew = index + 1 === this.state.item.count();
 
         if (isNew) {
             newCollection = this.state.item.subscribers.push(value);

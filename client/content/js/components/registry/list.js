@@ -1,7 +1,7 @@
 import React from 'react/addons';
 import {Navigation} from 'react-router';
 import Immutable from 'immutable';
-import Item from './entry-list-item';
+import Item from './list-item';
 
 export default React.createClass({
     mixins: [React.addons.PureRenderMixin, Navigation],

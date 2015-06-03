@@ -1,33 +1,29 @@
-import Symbol from 'symbol';
-import {EventEmitter} from 'events';
 import _ from 'lodash';
+import Symbol from 'symbol';
+import eventHub from './event-hub';
+import events from '../enums/tracking-events';
 import uuid from '../utils/uuid';
 import settings from '../settings';
 
-const EVENTS = {
-    LOST: 'lost',
-    FOUND: 'found'
-};
 const POOL = Symbol('POOL');
 const NOTIFY = Symbol('NOTIFY');
 
-class TrackingService extends EventEmitter {
+class TrackingService {
     constructor() {
-        super();
-        this[POOL] = {};
+        this[POOL] = Object.create(null);
         this[NOTIFY] = (event, data) => {
             let func;
 
             if (_.isArray(data)) {
-                func = () => _.forEach(data, i => this.emit(event, i));
+                func = () => _.forEach(data, i => eventHub.emit(event, i));
             } else {
-                func = () => this.emit(event, data);
+                func = () => eventHub.emit(event, data);
             }
 
             process.nextTick(func);
         };
         setInterval(() => {
-            const newPool = {};
+            const newPool = Object.create(null);
             const lost = [];
             const timestamp = new Date().getTime();
             const timeout = settings.pool.timeout;
@@ -44,7 +40,7 @@ class TrackingService extends EventEmitter {
             });
 
             this[POOL] = newPool;
-            this[NOTIFY](EVENTS.LOST, lost);
+            this[NOTIFY](events.LOST, lost);
         }, settings.pool.interval || 5000);
     }
 
@@ -55,10 +51,14 @@ class TrackingService extends EventEmitter {
         if (!found) {
             beacon.lastSeen = new Date();
             this[POOL][guid] = beacon;
-            this[NOTIFY](EVENTS.FOUND, [beacon]);
+            this[NOTIFY](events.FOUND, [beacon]);
         } else {
             found.lastSeen = new Date();
         }
+    }
+
+    getList() {
+        return _.map(this[POOL], i => _.clone(i));
     }
 }
 
