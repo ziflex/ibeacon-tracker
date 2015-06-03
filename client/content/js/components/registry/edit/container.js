@@ -13,7 +13,7 @@ export default React.createClass({
 
         return (
             <div>
-                <h1>Edit</h1>
+                <h1>{entry ? 'Edit iBeacon' : 'Create iBeacon'}</h1>
                 <Form item={entry} />
             </div>
         );

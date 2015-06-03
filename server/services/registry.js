@@ -55,6 +55,7 @@ class RegistryService {
 
     findAll(beacons, callback) {
         if (!beacons || !beacons.length) {
+            callback([]);
             return;
         }
 
