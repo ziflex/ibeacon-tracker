@@ -7,6 +7,15 @@ import settings from '../settings';
 import Beacon from '../models/beacon';
 import Subscriber from '../models/subscriber';
 
+function createSubscriber(entry) {
+    return new Subscriber(entry);
+}
+
+function createBeacon(entry) {
+    const subscribers = Immutable.List(map(entry.subscribers, createSubscriber));
+    return new Beacon(set(entry, 'subscribers', subscribers));
+}
+
 class RegistryService {
 
     findAsync() {
@@ -16,7 +25,7 @@ class RegistryService {
                 .end((err, res) => {
                     if (!err) {
                         resolve(Immutable.Map(map(res.body || [], i => {
-                            return [i.id, new Beacon(set(i, 'subscribers', Immutable.List(map(i.subscribers, s => new Subscriber(s)))))];
+                            return [i.id, createBeacon(i)];
                         })));
                     } else {
                         reject(err);
@@ -32,7 +41,7 @@ class RegistryService {
                 .set('Accept', 'application/json')
                 .end((err, res) => {
                     if (!err) {
-                        resolve(new Beacon(res.body));
+                        resolve(createBeacon(res.body));
                     } else {
                         reject(err);
                     }

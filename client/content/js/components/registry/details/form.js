@@ -1,5 +1,5 @@
 import React from 'react/addons';
-import Immutable from 'immutable';
+import LinkedImmutableStateMixin from 'reactlink-immutable';
 import {Navigation} from 'react-router';
 import SubscribersList from './subscribers/list';
 import RegistryActions from '../../../actions/registry';
@@ -8,16 +8,16 @@ import Beacon from '../../../models/beacon';
 export default React.createClass({
     mixins: [
         React.addons.PureRenderMixin,
-        React.addons.LinkedStateMixin,
+        LinkedImmutableStateMixin,
         Navigation
     ],
     propTypes: {
         item: React.PropTypes.object
     },
     getInitialState() {
-        const state = this.props.item ? this.props.item.toJSON() : (new Beacon()).toJSON();
-        state.subscribers = Immutable.List(state.subscribers);
-        return state;
+        return {
+            item: this.props.item || new Beacon()
+        };
     },
     render() {
         return (
@@ -31,7 +31,7 @@ export default React.createClass({
                                 className="form-control"
                                 id="name"
                                 placeholder="Name"
-                                valueLink={this.linkState('name')}
+                                valueLink={this.linkImmutableState(['item', 'name'])}
                             />
                         </div>
                     </div>
@@ -43,7 +43,7 @@ export default React.createClass({
                                 className="form-control"
                                 id="uuid"
                                 placeholder="XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX"
-                                valueLink={this.linkState('uuid')}
+                                valueLink={this.linkImmutableState(['item', 'uuid'])}
                             />
                         </div>
                     </div>
@@ -56,7 +56,7 @@ export default React.createClass({
                                 id="major"
                                 min="0"
                                 max="65535"
-                                valueLink={this.linkState('major')}
+                                valueLink={this.linkImmutableState(['item', 'major'])}
                             />
                         </div>
                     </div>
@@ -69,7 +69,7 @@ export default React.createClass({
                                 id="minor"
                                 min="0"
                                 max="65535"
-                                valueLink={this.linkState('minor')}
+                                valueLink={this.linkImmutableState(['item', 'minor'])}
                             />
                         </div>
                     </div>
@@ -77,7 +77,7 @@ export default React.createClass({
                         <label htmlFor="minor" className="col-sm-2 control-label">Subscribers</label>
                         <div className="col-sm-10">
                             <SubscribersList
-                            items={this.state.subscribers}
+                            items={this.state.item.subscribers}
                             onSave={this._onSubscriberSave}
                             onDelete={this._onSubscriberDelete} />
                         </div>
@@ -96,41 +96,34 @@ export default React.createClass({
         );
     },
 
-    _onSubscriberSave(index, value, isNew) {
-        if (!value) {
-            return;
-        }
-
+    _onSubscriberSave(options) {
+        let {index, value, isNew} = options;
         let newCollection;
+
         if (isNew) {
-            newCollection = this.state.subscribers.push(value);
+            newCollection = this.state.item.subscribers.push(value);
         } else {
-            newCollection = this.state.subscribers.set(index, value);
+            newCollection = this.state.item.subscribers.set(index, value);
         }
 
         this.setState({
-            subscribers: newCollection
+            item: this.state.item.set('subscribers', newCollection)
         });
     },
 
     _onSubscriberDelete(index) {
         if (index > -1) {
             this.setState({
-                subscribers: this.state.subscribers.remove(index)
+                item: this.state.item.update('subscribers', (current) => {
+                    return current.remove(index);
+                })
             });
         }
     },
 
     _onSubmit(event) {
         event.preventDefault();
-        RegistryActions.save(new Beacon({
-            id: this.props.item ? this.props.item.id : '',
-            name: this.state.name,
-            uuid: this.state.uuid,
-            major: this.state.major,
-            minor: this.state.minor,
-            subscribers: Immutable.List(this.state.subscribers)
-        }));
+        RegistryActions.save(this.state.item);
         this.transitionTo('/registry');
     },
 

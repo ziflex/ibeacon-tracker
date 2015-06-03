@@ -8,6 +8,13 @@ export default React.createClass({
     statics: {
         registerStores: {
             entries: RegistryStore
+        },
+        willTransitionTo: (transition, params, query, callback) => {
+            if (!RegistryStore.getState().count() && params.id) {
+                transition.redirect('/registry');
+            }
+
+            callback();
         }
     },
     render() {

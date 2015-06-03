@@ -1,5 +1,7 @@
 import React from 'react/addons';
 import DynamicEventsMixin from '../../../../mixins/dynamic-events-mixin';
+import subscriberMethods from '../../../../enums/subscriber-methods';
+import trackerEvents from '../../../../enums/tracker-events';
 
 export default React.createClass({
     mixins: [
@@ -7,33 +9,38 @@ export default React.createClass({
         DynamicEventsMixin
     ],
     propTypes: {
-        number: React.PropTypes.number.isRequired,
-        method: React.PropTypes.string,
-        name: React.PropTypes.string,
-        url: React.PropTypes.string,
+        index: React.PropTypes.number.isRequired,
+        item: React.PropTypes.object.isRequired,
         onEdit: React.PropTypes.func,
         onDelete: React.PropTypes.func
     },
     render() {
+        const num = this.props.index + 1;
+        const event = trackerEvents.keyOf((this.props.item.event || '').toLowerCase());
+        const method = subscriberMethods.keyOf((this.props.item.method || '').toLowerCase());
+
         return (
             <tr>
                 <td>
-                    {this.props.number}
+                    {num}
                 </td>
                 <td>
-                    {this.props.name}
+                    {this.props.item.name}
                 </td>
                 <td>
-                    {this.props.method}
+                    {event}
                 </td>
                 <td>
-                    {this.props.url}
+                    {method}
+                </td>
+                <td>
+                    {this.props.item.url}
                 </td>
                 <td>
                     <button type="button" className="btn btn-success" onClick={this.emitAs('onEdit')}>Edit</button>
                 </td>
                 <td>
-                    <button type="button" className="btn btn-danger" onClick={this.emitAs('onDelete', () => this.props.number - 1)}>Delete</button>
+                    <button type="button" className="btn btn-danger" onClick={this.emitAs('onDelete', () => this.props.index)}>Delete</button>
                 </td>
             </tr>
         );

@@ -1,58 +1,53 @@
 import React from 'react/addons';
+import LinkedImmutableStateMixin from 'reactlink-immutable';
 import Dropdown from '../../../common/dropdown';
 import DynamicEventsMixin from '../../../../mixins/dynamic-events-mixin';
-import Subscriber from '../../../../models/subscriber';
+import subscriberMethods from '../../../../enums/subscriber-methods';
+import trackerEvents from '../../../../enums/tracker-events';
+import utils from '../../../../utils/components';
 
 export default React.createClass({
     mixins: [
         React.addons.PureRenderMixin,
-        React.addons.LinkedStateMixin,
+        LinkedImmutableStateMixin,
         DynamicEventsMixin
     ],
     propTypes: {
-        number: React.PropTypes.number.isRequired,
-        method: React.PropTypes.string,
-        name: React.PropTypes.string,
-        url: React.PropTypes.string
+        index: React.PropTypes.number.isRequired,
+        item: React.PropTypes.object.isRequired,
+        onSave: React.PropTypes.func,
+        onCancel: React.PropTypes.func
     },
     getInitialState() {
         return {
-            name: this.props.name || '',
-            method: this.props.method || '',
-            url: this.props.url || ''
+            item: this.props.item
         };
     },
     render() {
-        const method = (this.props.method || '').toLowerCase();
-        const methods = [
-            {
-                text: 'GET',
-                value: 'GET',
-                selected: method === 'get'
-            },
-            {
-                text: 'POST',
-                value: 'POST',
-                selected: method === 'post'
-            }
-        ];
+        const events = utils.createDropdownList(trackerEvents, this.state.item.event);
+        const methods = utils.createDropdownList(subscriberMethods, this.state.item.method);
+
+        const num = this.props.index + 1;
 
         return (
             <tr>
                 <td>
-                    {this.props.number}
+                    {num}
                 </td>
                 <td>
-                    <input className="form-control" type="text" valueLink={this.linkState('name')} />
+                    <input className="form-control" type="text" valueLink={this.linkImmutableState(['item', 'name'])} />
                 </td>
                 <td>
-                    <Dropdown items={methods} />
+                    <Dropdown items={events} valueLink={this.linkImmutableState(['item', 'event'])} />
                 </td>
                 <td>
-                    <input className="form-control" type="text" valueLink={this.linkState('url')} />
+                    <Dropdown items={methods} valueLink={this.linkImmutableState(['item', 'method'])} />
                 </td>
                 <td>
-                    <button type="button" className="btn btn-success" onClick={this.emitAs('onSave', () => new Subscriber(this.state))}>Save</button>
+                    <input className="form-control" type="text" valueLink={this.linkImmutableState(['item', 'url'])} />
+                </td>
+                <td>
+                    <button type="button" className="btn btn-success" onClick={this.emitAs('onSave', () => this.state.item)}>Save</button>
                 </td>
                 <td>
                     <button type="button" className="btn btn-default" onClick={this.emitAs('onCancel')}>Cancel</button>

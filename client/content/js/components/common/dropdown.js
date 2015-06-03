@@ -1,19 +1,17 @@
 import React from 'react/addons';
 import cn from 'classnames';
-import map from 'lodash/collection/map';
-import findWhere from 'lodash/collection/findWhere';
-import forEach from 'lodash/collection/forEach';
-import clone from 'lodash/lang/clone';
 
 export default React.createClass({
     propTypes: {
-        items: React.PropTypes.array
+        items: React.PropTypes.object,
+        onSelect: React.PropTypes.func,
+        valueLink: React.PropTypes.object
     },
 
     getInitialState() {
         return {
             opened: false,
-            items: this.props.items ? map(this.props.items, clone) : []
+            items: this.props.items
         };
     },
 
@@ -21,12 +19,12 @@ export default React.createClass({
         let selected;
         const items = this.state.items;
 
-        if (items && items.length) {
-            selected = findWhere(items, {selected: true});
+        if (items && items.count()) {
+            selected = items.find(i => i.selected);
         }
 
         if (!selected) {
-            selected = {text: '', value: ''};
+            selected = {text: '', value: '', selected: true };
         }
 
         const classNames = cn({
@@ -43,14 +41,14 @@ export default React.createClass({
                     <span className="caret"></span>
                 </button>
                 <ul className="dropdown-menu" role="menu">
-                    {map(this.props.items, i => {
+                    {this.props.items.toSeq().map(i => {
                         index += 1;
                         return (
-                                <li key={JSON.stringify(i.value)} role="presentation">
+                                <li key={JSON.stringify(i)} role="presentation">
                                     <a role="menuitem" tabIndex="-1" href="#" onClick={this._onSelect.bind(this, index)}>{i.text}</a>
                                 </li>
                                 );
-                    })}
+                    }).toArray()}
                  </ul>
             </div>
         );
@@ -63,12 +61,24 @@ export default React.createClass({
     },
 
     _onSelect(index) {
-        const items = this.state.items;
-        forEach(items, i => i.selected = false);
-        items[index].selected = true;
+        let items = this.state.items;
 
-        if (this.onChange) {
-            this.onChange(clone(items[index]));
+        items.forEach(i => {
+            i.selected = false;
+        });
+        items = items.update(index, (i) => {
+            i.selected = true;
+            return i;
+        });
+
+        const selected = items.get(index);
+
+        if (this.props.onSelect) {
+            this.props.onSelect(index, selected.value);
+        }
+
+        if (this.props.valueLink) {
+            this.props.valueLink.requestChange(selected.value);
         }
 
         this.setState({

@@ -1,7 +1,9 @@
 import {Record} from 'immutable';
+import methods from '../enums/subscriber-methods';
 
 export default Record({
     name: '',
-    method: 'GET',
+    event: '',
+    method: methods.GET,
     url: ''
 });

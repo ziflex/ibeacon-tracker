@@ -56,7 +56,8 @@
     "lodash": "~3.9.3",
     "bluebird": "~2.9.27",
     "humane-js": "~3.2.2",
-    "classnames": "~2.1.2"
+    "classnames": "~2.1.2",
+    "reactlink-immutable": "~0.1.4"
   },
   "devDependencies": {
     "babel": "^5.4.2",

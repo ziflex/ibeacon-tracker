@@ -9,11 +9,8 @@ export default React.createClass({
     ],
 
     propTypes: {
-        isNew: React.PropTypes.bool.isRequired,
-        number: React.PropTypes.number.isRequired,
-        method: React.PropTypes.string,
-        name: React.PropTypes.string,
-        url: React.PropTypes.string
+        index: React.PropTypes.number.isRequired,
+        item: React.PropTypes.object.isRequired
     },
 
     getInitialState() {
@@ -26,20 +23,16 @@ export default React.createClass({
         let control;
 
         if (!this.state.edit && !this.props.isNew) {
-            control = (<View {...this.props}
-                number={this.props.number}
-                name={this.props.name}
-                method={this.props.method}
-                url={this.props.url}
+            control = (<View
+                index={this.props.index}
+                item={this.props.item}
                 onEdit={this._onStartEdit}
                 onDelete={this._onDelete}
                 />);
         } else {
             control = (<Editor
-                number={this.props.number}
-                name={this.props.name}
-                method={this.props.method}
-                url={this.props.url}
+                index={this.props.index}
+                item={this.props.item}
                 onSave={this._onSave}
                 onCancel={this._onCancelEdit}
                 />);
@@ -62,8 +55,14 @@ export default React.createClass({
 
     _onSave(value) {
         if (this.props.onSave) {
-            this.props.onSave(this.props.number - 1, value.toJSON(), this.isNew);
+            this.props.onSave({
+                index: this.props.index,
+                value: value,
+                isNew: this.isNew
+            });
         }
+
+        this._onCancelEdit();
     },
 
     _onDelete(index) {

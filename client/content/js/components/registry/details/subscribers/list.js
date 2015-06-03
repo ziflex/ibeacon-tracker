@@ -9,18 +9,12 @@ export default React.createClass({
     ],
 
     propTypes: {
-        items: React.PropTypes.array,
+        items: React.PropTypes.object,
         onChange: React.PropTypes.func
     },
 
-    getInitialState() {
-        return {
-            items: this.props.items
-        };
-    },
-
     render() {
-        let num = 0;
+        let index = -1;
 
         return (
             <div>
@@ -29,6 +23,7 @@ export default React.createClass({
                         <tr>
                             <th>#</th>
                             <th>Name</th>
+                            <th>Event</th>
                             <th>Method</th>
                             <th>Url</th>
                             <th></th>
@@ -36,15 +31,12 @@ export default React.createClass({
                         </tr>
                     </thead>
                     <tbody>
-                        {this.state.items.toSeq().map(item => {
-                            num += 1;
+                        {this.props.items.toSeq().map(i => {
+                            index += 1;
                             return (<Item
-                                    key={item.method + item.url + num}
-                                    isNew={item.isNew || false}
-                                    number={num}
-                                    name={item.name}
-                                    method={item.method}
-                                    url={item.url}
+                                    key={i.toJSON()}
+                                    index={index}
+                                    item={i}
                                     onSave={this.delegateAs('onSave')}
                                     onDelete={this.delegateAs('onDelete')}
                                 />
@@ -60,10 +52,5 @@ export default React.createClass({
     },
 
     _onAdd() {
-        this.setState({
-            items: this.state.items.push({
-                isNew: true
-            })
-        });
     }
 });
