@@ -11,13 +11,10 @@ export default React.createClass({
     },
 
     onChange() {
-        const message = NotificationStore.getState();
+        const notification = NotificationStore.getState();
+        const className = 'humane-flatty-' + notification.get('level');
 
-        if (message.level === 'info') {
-            humane.log(message.message);
-        } else {
-            humane.log(message.message, {addnCls: 'humane-flatty-error'});
-        }
+        humane.log(notification.get('message'), { addnCls: className });
     },
 
     render() {

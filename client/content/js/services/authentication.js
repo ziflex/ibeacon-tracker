@@ -13,7 +13,7 @@ class AuthenticationService {
                     if (!err) {
                         resolve();
                     } else {
-                        reject('Invalid username or password');
+                        reject(err);
                     }
                 });
         });
@@ -27,7 +27,7 @@ class AuthenticationService {
                     if (!err) {
                         resolve();
                     } else {
-                        reject(err.toString());
+                        reject(err);
                     }
                 });
         });
