@@ -2,7 +2,9 @@ import React from 'react/addons';
 import List from './list';
 
 export default React.createClass({
-    mixins: [React.addons.PureRenderMixin],
+    mixins: [
+        React.addons.PureRenderMixin
+    ],
 
     propTypes: {
         entries: React.PropTypes.object.isRequired

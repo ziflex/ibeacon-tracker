@@ -7,7 +7,7 @@ export default {
     name: 'beacon-tracker',
     server: {
         port: 8080,
-        api: '/api'
+        apiEndpoint: '/api'
     },
     database: {
         connectionString: 'mongodb://localhost:27017/beacon-tracker'

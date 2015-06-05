@@ -12,7 +12,11 @@ import router from './router';
 import settings from './settings';
 import scanner from './services/scanner';
 
-mongoose.connect(settings.database.connectionString);
+mongoose.connect(settings.database.connectionString, (err) => {
+    if (err) {
+        logger.error('Could not connect to mongodb!', err.toString());
+    }
+});
 
 const server = express();
 server.use(bunyanMiddleware({
@@ -30,7 +34,7 @@ server.use(cookieParser());
 server.use(session({
     secret: 'keyboard cat',
     cookie: {
-        maxAge: 60000
+        maxAge: null
     },
     resave: false,
     saveUninitialized: false
@@ -38,10 +42,6 @@ server.use(session({
 server.use(passport.initialize());
 server.use(passport.session());
 server.use(router);
-
-passport.use(passportConfig.strategy);
-passport.serializeUser(passportConfig.serializeUser);
-passport.deserializeUser(passportConfig.deserializeUser);
 
 // catch 404 and forward to error handler
 server.use('/api/*', (req, res) => {
@@ -71,6 +71,13 @@ server.use(function ErrorHandler(err, req, res) {
     res.status(err.status || 500).end();
 });
 
-scanner.startScanning();
-server.listen(settings.server.port);
-logger.info('Listening on port', settings.server.port);
+passportConfig.configure(passport, (err) => {
+    if (!err) {
+        scanner.startScanning();
+        server.listen(settings.server.port);
+        logger.info('Listening on port', settings.server.port);
+    } else {
+        logger.error(err.toString());
+    }
+});
+

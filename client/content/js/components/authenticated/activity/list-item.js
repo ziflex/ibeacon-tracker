@@ -9,11 +9,11 @@ export default React.createClass({
     },
 
     render() {
-        const numder = this.props.index + 1;
+        const number = this.props.index + 1;
 
         return (
             <tr>
-                <td>{numder}</td>
+                <td>{number}</td>
                 <td>{this.props.item.name}</td>
             </tr>
         );

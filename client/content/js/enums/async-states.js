@@ -1,8 +1,8 @@
 import {Record} from 'immutable';
 
 const Enums = Record({
-    GET: 'get',
-    POST: 'post'
+    IDLE: 'idle',
+    PENDING: 'pending'
 });
 
 export default new Enums();

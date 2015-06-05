@@ -2,6 +2,7 @@ import _ from 'lodash';
 import settings from '../settings';
 import tracker from '../services/tracker';
 import registry from '../services/registry';
+import util from '../utils/route';
 
 const route = '/activity';
 
@@ -12,13 +13,14 @@ function toJSON(entry = {}) {
     };
 }
 
-// TODO: ADD 'routeUtil.isAuthenticated' for all route handlers
+function getActivity(req, res) {
+    registry.findAll(tracker.getList(), (current) => {
+        res.json(_.map(current, toJSON));
+    });
+}
+
 export default {
     use(router) {
-        router.get(settings.server.api + route, (req, res) => {
-            registry.findAll(tracker.getList(), (current) => {
-                res.json(_.map(current, toJSON));
-            });
-        });
+        router.get(settings.server.apiEndpoint + route, util.isAuthenticated, getActivity);
     }
 };

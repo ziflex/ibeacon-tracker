@@ -1,13 +1,18 @@
 import React from 'react/addons';
 import {Navigation} from 'react-router';
-import RegistryActions from '../../actions/registry';
+import RegistryActions from '../../../actions/registry';
 
 export default React.createClass({
-    mixins: [React.addons.PureRenderMixin, Navigation],
+    mixins: [
+        React.addons.PureRenderMixin,
+        Navigation
+    ],
+
     propTypes: {
         number: React.PropTypes.number.isRequired,
         item: React.PropTypes.object.isRequired
     },
+
     render() {
         const subNum = this.props.item.subscribers.count();
 
@@ -22,9 +27,11 @@ export default React.createClass({
             </tr>
         );
     },
+
     _onEdit() {
-        this.transitionTo('/registry/edit/:id', { id: this.props.item.id });
+        this.transitionTo('/home/registry/edit/:id', { id: this.props.item.id });
     },
+
     _onDelete() {
         RegistryActions.delete(this.props.item.id);
     }

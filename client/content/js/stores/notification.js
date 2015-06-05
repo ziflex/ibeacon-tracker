@@ -1,5 +1,6 @@
 import Immutable from 'immutable';
 import app from '../app';
+import AuthenticationActions from '../actions/authentication.js';
 
 const Notification = Immutable.Record({
     message: '',
@@ -8,6 +9,10 @@ const Notification = Immutable.Record({
 
 class NotificationStore {
     constructor() {
+        this.bindListeners({
+            onError: [AuthenticationActions.loginFail]
+        });
+
         this.state = new Notification();
     }
 

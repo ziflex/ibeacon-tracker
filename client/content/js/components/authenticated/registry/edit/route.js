@@ -1,20 +1,28 @@
 import React from 'react';
 import {State, RouteHandler} from 'react-router';
 import ReactStateMagicMixin from 'alt/mixins/ReactStateMagicMixin';
-import RegistryStore from '../../stores/registry';
-import RegistryActions from '../../actions/registry';
+import RegistryStore from '../../../../stores/registry';
 
 export default React.createClass({
-    mixins: [ReactStateMagicMixin, State],
+    mixins: [
+        ReactStateMagicMixin,
+        State
+    ],
+
     statics: {
         registerStores: {
             entries: RegistryStore
         },
+
         willTransitionTo: (transition, params, query, callback) => {
-            RegistryActions.find();
+            if (!RegistryStore.getState().count() && params.id) {
+                transition.redirect('/home/registry');
+            }
+
             callback();
         }
     },
+
     render() {
         return (
             <RouteHandler {...this.state} />

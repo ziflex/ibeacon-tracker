@@ -16,7 +16,7 @@ export default React.createClass({
         if (message.level === 'info') {
             humane.log(message.message);
         } else {
-            humane.log(message.message);
+            humane.log(message.message, {addnCls: 'humane-flatty-error'});
         }
     },
 

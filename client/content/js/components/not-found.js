@@ -1,6 +1,5 @@
 import React from 'react/addons';
-import {RouteHandler, State} from 'react-router';
-import Notification from './notification';
+import {State} from 'react-router';
 
 export default React.createClass({
     mixins: [
@@ -9,16 +8,14 @@ export default React.createClass({
 
     statics: {
         willTransitionTo: (transition, params, query, callback) => {
+            transition.redirect('home');
             callback();
         }
     },
 
     render() {
         return (
-            <div>
-                <RouteHandler />
-                <Notification />
-            </div>
+            <h2>Oops, page not found.</h2>
         );
     }
 });

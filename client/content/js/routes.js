@@ -1,25 +1,38 @@
 import React from 'react';
-import {Route, DefaultRoute} from 'react-router';
-import AppRoute from './components/route';
-import ActivityRoute from './components/activity/route';
-import ActivityContainer from './components/activity/container';
-import RegistryRoute from './components/registry/route';
-import RegistryContainer from './components/registry/container';
-import RegistryEditRoute from './components/registry/edit/route';
-import RegistryEditContainer from './components/registry/edit/container';
+import {
+    Route,
+    Redirect,
+    DefaultRoute,
+    createRoutesFromReactChildren,
+    NotFoundRoute
+    } from 'react-router';
+import RootRoute from './components/route';
+import NotFound from './components/not-found';
+import LoginRoute from './components/login/route';
+import HomeRoute from './components/authenticated/route';
+import ActivityRoute from './components/authenticated/activity/route';
+import ActivityContainer from './components/authenticated/activity/container';
+import RegistryRoute from './components/authenticated/registry/route';
+import RegistryContainer from './components/authenticated/registry/container';
+import RegistryEditRoute from './components/authenticated/registry/edit/route';
+import RegistryEditContainer from './components/authenticated/registry/edit/container';
 
-// declare our routes and their hierarchy
-export default (
-    <Route handler={AppRoute}>
-        <Route path="/" handler={ActivityRoute}>
-            <DefaultRoute handler={ActivityContainer} />
-        </Route>
-        <Route path="registry" handler={RegistryRoute}>
-            <DefaultRoute handler={RegistryContainer} />
-            <Route path="edit" handler={RegistryEditRoute}>
-                <DefaultRoute handler={RegistryEditContainer} />
-                <Route path=":id" handler={RegistryEditContainer} />
+export default createRoutesFromReactChildren(
+    <Route path="/" handler={RootRoute}>
+        <Route name="login" path="login" handler={LoginRoute} />
+        <Route name="home" path="home" handler={HomeRoute}>
+            <Redirect from="home" to="activity" />
+            <Route name="activity" path="activity" handler={ActivityRoute}>
+                <DefaultRoute handler={ActivityContainer} />
+            </Route>
+            <Route name="registry" path="registry" handler={RegistryRoute}>
+                <DefaultRoute handler={RegistryContainer} />
+                <Route path="edit" handler={RegistryEditRoute}>
+                    <DefaultRoute handler={RegistryEditContainer} />
+                    <Route path=":id" handler={RegistryEditContainer} />
+                </Route>
             </Route>
         </Route>
+        <NotFoundRoute handler={NotFound} />
     </Route>
 );

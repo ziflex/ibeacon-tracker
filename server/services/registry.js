@@ -75,32 +75,35 @@ class RegistryService {
     }
 
     update(callback) {
-        this[IS_UPDATING] = true;
-        logger.info('Updating registry...');
-        BeaconModel.find({}, (err, data) => {
-            let result = null;
-            let isEmpty = true;
+        if (!this[IS_UPDATING]) {
+            this[IS_UPDATING] = true;
 
-            if (!err) {
-                result = _.reduce(data, (res, i) => {
-                    isEmpty = false;
-                    res[uuid.generate(i)] = i;
-                    return res;
-                }, {});
-                logger.info('Registry is updated.');
-            } else {
-                logger.error(err);
-            }
+            BeaconModel.find({}, (err, data) => {
+                let result = null;
+                let isEmpty = true;
 
-            this[CACHE] = result;
-            this[IS_EMPTY] = isEmpty;
-            this[IS_UPDATING] = false;
-            this[QUEUE].each(i => i());
+                if (!err) {
+                    result = _.reduce(data, (res, i) => {
+                        isEmpty = false;
+                        res[uuid.generate(i)] = i;
+                        return res;
+                    }, {});
+                } else {
+                    logger.error(err);
+                }
 
-            if (callback) {
-                callback(err, result);
-            }
-        });
+                this[CACHE] = result;
+                this[IS_EMPTY] = isEmpty;
+                this[IS_UPDATING] = false;
+                this[QUEUE].each(i => i(err, result));
+
+                if (callback) {
+                    callback(err, result);
+                }
+            });
+        } else {
+            this[QUEUE].enqueue(callback);
+        }
     }
 }
 

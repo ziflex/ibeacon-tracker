@@ -1,7 +1,6 @@
 import React from 'react';
-import Router from 'react-router';
-import routes from './routes';
+import router from './router';
 
-Router.run(routes, Router.HistoryLocation, (Root) => {
-    React.render(<Root/>, document.body);
+router.run((Root) => {
+    React.render(<Root/>, document.getElementById('app'));
 });

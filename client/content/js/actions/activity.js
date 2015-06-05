@@ -3,6 +3,7 @@ import app from '../app';
 
 class ActivityActions {
     find() {
+        this.dispatch();
         service.findAsync()
             .then(result => this.actions.findComplete(result))
             .catch(reason => this.actions.findFail(reason));

@@ -1,6 +1,6 @@
 import React from 'react/addons';
 import Item from './list-item';
-import DynamicEventsMixin from '../../../../mixins/dynamic-events-mixin';
+import DynamicEventsMixin from '../../../../../mixins/dynamic-events-mixin';
 
 export default React.createClass({
     mixins: [

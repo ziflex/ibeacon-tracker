@@ -1,9 +1,9 @@
 import {Record} from 'immutable';
 
-const Events = Record({
+const Enums = Record({
     ALL: '',
     FOUND: 'found',
     LOST: 'lost'
 });
 
-export default new Events();
+export default new Enums();
