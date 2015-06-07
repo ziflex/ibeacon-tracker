@@ -1,6 +1,7 @@
 import React from 'react/addons';
 import LinkedImmutableStateMixin from 'reactlink-immutable';
 import {Navigation} from 'react-router';
+import UuidEditor from './uuid-editor';
 import SubscribersList from './subscribers/list';
 import RegistryActions from '../../../../actions/registry';
 import Beacon from '../../../../models/beacon';
@@ -41,13 +42,7 @@ export default React.createClass({
                 <div className="form-group">
                     <label htmlFor="uuid" className="col-sm-2 control-label">UUID</label>
                     <div className="col-sm-10">
-                        <input
-                            type="text"
-                            className="form-control"
-                            id="uuid"
-                            placeholder="XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX"
-                            valueLink={this.linkImmutableState(['item', 'uuid'])}
-                            />
+                        <UuidEditor valueLink={this.linkImmutableState(['item', 'uuid'])} />
                     </div>
                 </div>
                 <div className="form-group">
