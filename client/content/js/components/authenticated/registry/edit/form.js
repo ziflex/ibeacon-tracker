@@ -109,17 +109,9 @@ export default React.createClass({
 
     _onSubscriberSave(options) {
         let {index, value} = options;
-        let newCollection;
-        let isNew = index + 1 === this.state.item.count();
-
-        if (isNew) {
-            newCollection = this.state.item.subscribers.push(value);
-        } else {
-            newCollection = this.state.item.subscribers.set(index, value);
-        }
 
         this.setState({
-            item: this.state.item.set('subscribers', newCollection)
+            item: this.state.item.update('subscribers', list => list.set(index, value))
         });
     },
 

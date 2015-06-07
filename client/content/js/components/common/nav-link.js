@@ -3,7 +3,10 @@ import {Link, State} from 'react-router';
 /*import any from 'lodash/collection/any';*/
 
 export default React.createClass({
-    mixins: [State],
+    mixins: [
+        State
+    ],
+
     propTypes: {
         to: React.PropTypes.string.isRequired,
         params: React.PropTypes.object,
@@ -11,6 +14,7 @@ export default React.createClass({
         children: React.PropTypes.string,
         nested: React.PropTypes.array
     },
+
     render() {
         let isActive = this.isActive(this.props.to, this.props.params, this.props.query);
 

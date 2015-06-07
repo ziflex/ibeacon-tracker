@@ -1,6 +1,7 @@
 import React from 'react/addons';
 import View from './list-item-view';
 import Editor from './list-item-editor';
+import isEmpty from 'lodash/lang/isEmpty';
 
 export default React.createClass({
     mixins: [
@@ -14,15 +15,18 @@ export default React.createClass({
     },
 
     getInitialState() {
+        const isNew = isEmpty(this.props.item.url);
+
         return {
-            edit: false
+            edit: isNew,
+            isNew: isNew
         };
     },
 
     render() {
         let control;
 
-        if (!this.state.edit && !this.props.isNew) {
+        if (!this.state.edit) {
             control = (<View
                 index={this.props.index}
                 item={this.props.item}
@@ -48,9 +52,13 @@ export default React.createClass({
     },
 
     _onCancelEdit() {
-        this.setState({
-            edit: false
-        });
+        if (!this.state.isNew) {
+            this.setState({
+                edit: false
+            });
+        } else {
+            this._onDelete(this.props.index);
+        }
     },
 
     _onSave(value) {
@@ -58,11 +66,13 @@ export default React.createClass({
             this.props.onSave({
                 index: this.props.index,
                 value: value,
-                isNew: this.isNew
+                isNew: this.state.isNew
             });
         }
 
-        this._onCancelEdit();
+        this.setState({
+            edit: false
+        });
     },
 
     _onDelete(index) {
