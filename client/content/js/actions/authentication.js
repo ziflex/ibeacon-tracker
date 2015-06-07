@@ -6,12 +6,12 @@ class AuthenticationActions {
     login(username, password) {
         this.dispatch();
         service.login(username, password)
-            .then(() => this.actions.loginComplete())
+            .then(() => this.actions.loginComplete(username))
             .catch((reason) => this.actions.loginFail(reason));
     }
 
-    loginComplete() {
-        this.dispatch();
+    loginComplete(username) {
+        this.dispatch(username);
         router.transitionTo('activity');
     }
 

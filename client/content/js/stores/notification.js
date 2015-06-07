@@ -5,6 +5,7 @@ import NotificationActions from '../actions/notification';
 import AuthenticationActions from '../actions/authentication';
 import RegistryActions from '../actions/registry';
 import ActivityActions from '../actions/activity';
+import SettingsActions from '../actions/settings';
 
 class NotificationStore {
     constructor() {
@@ -20,7 +21,9 @@ class NotificationStore {
             onRegistrySaveSuccess: RegistryActions.saveComplete,
             onRegistrySaveError: RegistryActions.saveFail,
             onRegistryDeleteSuccess: RegistryActions.deleteComplete,
-            onRegistryDeleteError: RegistryActions.deleteFail
+            onRegistryDeleteError: RegistryActions.deleteFail,
+            onChangePasswordSuccess: SettingsActions.changePasswordComplete,
+            onChangePasswordError: SettingsActions.changePasswordFail
         });
 
         this.state = Map([
@@ -34,6 +37,18 @@ class NotificationStore {
             message: message,
             level: level
         }));
+    }
+
+    onInfo(message) {
+        this.setMessage(levels.INFO, message);
+    }
+
+    onSuccess(message) {
+        this.setMessage(levels.SUCCESS, message);
+    }
+
+    onError(message) {
+        this.setMessage(levels.ERROR, message);
     }
 
     onAuthenticationError() {
@@ -60,16 +75,12 @@ class NotificationStore {
         this.setMessage(levels.ERROR, 'Failed to fetch the list');
     }
 
-    onInfo(message) {
-        this.setMessage(levels.INFO, message);
+    onChangePasswordSuccess() {
+        this.setMessage(levels.SUCCESS, 'Password is successfully changed');
     }
 
-    onSuccess(message) {
-        this.setMessage(levels.SUCCESS, message);
-    }
-
-    onError(message) {
-        this.setMessage(levels.ERROR, message);
+    onChangePasswordError() {
+        this.setMessage(levels.ERROR, 'Failed to change the password');
     }
 }
 

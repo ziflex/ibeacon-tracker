@@ -16,6 +16,7 @@ import RegistryRoute from './components/authenticated/registry/route';
 import RegistryContainer from './components/authenticated/registry/container';
 import RegistryEditRoute from './components/authenticated/registry/edit/route';
 import RegistryEditContainer from './components/authenticated/registry/edit/container';
+import SettingsRoute from './components/authenticated/settings/route';
 
 export default createRoutesFromReactChildren(
     <Route path="/" handler={RootRoute}>
@@ -32,6 +33,7 @@ export default createRoutesFromReactChildren(
                     <Route path=":id" handler={RegistryEditContainer} />
                 </Route>
             </Route>
+            <Route name="settings" path="settings" handler={SettingsRoute} />
         </Route>
         <NotFoundRoute handler={NotFound} />
     </Route>

@@ -9,8 +9,9 @@ export default React.createClass({
         return (
             <div className="sidebar">
                 <ul className="nav nav-sidebar">
-                    <li><NavLink to="/home/activity">Activity</NavLink></li>
-                    <li><NavLink to="/home/registry" nested={['edit', ':id']} params={this.getParams()}>Registry</NavLink></li>
+                    <NavLink to="/home/activity">Activity</NavLink>
+                    <NavLink to="/home/registry" nested={['edit', ':id']} params={this.getParams()}>Registry</NavLink>
+                    <NavLink to="/home/settings">Settings</NavLink>
                 </ul>
             </div>
         );
