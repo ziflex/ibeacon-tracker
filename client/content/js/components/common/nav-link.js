@@ -1,6 +1,6 @@
 import React from 'react';
 import {Link, State} from 'react-router';
-/*import any from 'lodash/collection/any';*/
+import any from 'lodash/collection/any';
 
 export default React.createClass({
     mixins: [
@@ -18,15 +18,24 @@ export default React.createClass({
     render() {
         let isActive = this.isActive(this.props.to, this.props.params, this.props.query);
 
-/*        if (!isActive && this.props.nested) {
+        if (!isActive && this.props.nested) {
             let to = this.props.to;
 
             isActive = any(this.props.nested, (part) => {
+                let result = false;
                 to += '/' + part;
-                let href = this.context.router.makeHref(to, this.props.params, this.props.query);
-                return this.isActive(href, this.props.params, this.props.query);
+
+                // super ugly
+                try {
+                    let href = this.context.router.makeHref(to, this.props.params, this.props.query);
+                    result = this.isActive(href, this.props.params, this.props.query);
+                } catch (ex) {
+                    result = false;
+                }
+
+                return result;
             });
-        }*/
+        }
 
         return (
             <li className={isActive ? 'active' : null}>
