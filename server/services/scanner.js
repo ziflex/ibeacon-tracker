@@ -4,7 +4,6 @@ import hub from './event-hub';
 import notification from './notification';
 import tracker from './tracker';
 import registry from './registry';
-import logger from './logger';
 import trackingEvents from '../enums/tracking-events';
 
 const IS_RUNNING = Symbol('IS_RUNNING');
@@ -19,8 +18,6 @@ class ScanningService {
             tracker.track(peripheral);
         };
         this[ON_FOUND] = (beacon) => {
-            logger.info('Found', beacon.uuid, beacon.major, beacon.minor);
-
             process.nextTick(() => {
                 registry.find(beacon, (info) => {
                     if (info) {
@@ -30,8 +27,6 @@ class ScanningService {
             });
         };
         this[ON_LOST] = (beacon) => {
-            logger.info('Lost', beacon.uuid, beacon.major, beacon.minor);
-
             process.nextTick(() => {
                 registry.find(beacon, (info) => {
                     if (info) {

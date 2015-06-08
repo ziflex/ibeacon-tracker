@@ -33,7 +33,7 @@ class NotificationService {
                         if (!err) {
                             logger.info('Sent', event, 'notification to', subscriber.url);
                         } else {
-                            logger.warn(new Error('Failed to send notification to ' + subscriber.url + '. ' + err.toString()));
+                            logger.error(new Error('Failed to send notification to ' + subscriber.url + '. ' + err.toString()));
                         }
                     });
                 }

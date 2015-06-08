@@ -28,7 +28,7 @@ You will need the following things properly installed on your computer.
 * install `bluez` [how-to](http://www.jaredwolff.com/blog/get-started-with-bluetooth-low-energy/)
 * install `MongoDb` [how-to](http://docs.mongodb.org/manual/administration/install-on-linux/)
 * `git clone <repository-url>` this repository
-* `npm install`
+* `npm install && npm run build`
 * run this command in bash `find -path '\*noble*Release/hci-ble\' -exec sudo setcap cap_net_raw+eip '\{}\' \;`
 * run this command in bash `find -path '*bleno*Release/hci-ble' -exec sudo setcap cap_net_raw+eip '{}' \;`
 

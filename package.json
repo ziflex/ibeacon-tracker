@@ -9,7 +9,7 @@
     "build:client": "npm run build:client:js && npm run build:client:css && npm run build:client:html",
     "build:client:js": "npm run lint:client && mkdir -p dist/public/content/js/ && browserify client/content/js/boot.js > dist/public/content/js/app.js",
     "build:client:css": "lessc --clean-css='--s1 --advanced --compatibility=ie8' client/content/css/app.less dist/public/content/css/app.css",
-    "build:client:html": "cp client/index.html dist/public/index.html && cp client/404.html dist/public/404.html",
+    "build:client:html": "cp client/index.html dist/public/index.html",
     "clean": "rimraf dist",
     "lint": "npm run lint:server && npm run lint:client",
     "lint:server": "eslint server --config ./.eslintrc",
