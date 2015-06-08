@@ -2,6 +2,10 @@
 
 iBeacon tracker allows you to track any registered ibeacons and notify 3rd party services.
 
+## Features
+* tracks registered iBeacons
+* notifies subscribers on events (`found`, `lost`)
+
 ## Prerequisites
 
 You will need the following things properly installed on your computer.
@@ -40,9 +44,11 @@ You will need the following things properly installed on your computer.
 ### Production
 * `npm run start`
 
-### Deploying
-
-Specify what it takes to deploy your app.
+## Configuring
+* go to `htttp://localhost:8080` and log in using default credentials `admin:admin`.
+* in `registry` section create new entry specifying `name`, `uuid`, `major` and `minor`.
+* add subscribers which should be notified (**every subscriber should be specified as REST API method**).
+* click `save`.
 
 ## Further Reading / Useful Links
 
