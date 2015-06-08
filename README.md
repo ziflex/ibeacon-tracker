@@ -24,6 +24,8 @@ You will need the following things properly installed on your computer.
 ### Linux (Ubuntu)
 
  * Kernel version 3.6 or above
+ * ```bluez```
+ * ```bluez-utils```
  * ```libbluetooth-dev```
  * ```libcap2-bin```
 
