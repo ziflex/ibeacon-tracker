@@ -27,8 +27,10 @@ export default React.createClass({
                     <thead>
                         <tr>
                             <th>#</th>
-                            <th>UUID</th>
                             <th>Name</th>
+                            <th>UUID</th>
+                            <th>Major</th>
+                            <th>Minor</th>
                             <th>Subscribers</th>
                             <th>Edit</th>
                             <th>Delete</th>
@@ -37,7 +39,7 @@ export default React.createClass({
                     <tbody>
                         {this.props.items.toSeq().map((item) => {
                             num += 1;
-                            return (<Item key={item.uuid} number={num} item={item} />);
+                            return (<Item key={item.uuid + item.major + item.minor} number={num} item={item} />);
                         }).toArray()}
                     </tbody>
                 </table>

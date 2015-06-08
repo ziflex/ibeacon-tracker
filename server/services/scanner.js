@@ -19,7 +19,7 @@ class ScanningService {
             tracker.track(peripheral);
         };
         this[ON_FOUND] = (beacon) => {
-            logger.info('Found', beacon.uuid);
+            logger.info('Found', beacon.uuid, beacon.major, beacon.minor);
 
             process.nextTick(() => {
                 registry.find(beacon, (info) => {
@@ -30,7 +30,7 @@ class ScanningService {
             });
         };
         this[ON_LOST] = (beacon) => {
-            logger.info('Lost', beacon.uuid);
+            logger.info('Lost', beacon.uuid, beacon.major, beacon.minor);
 
             process.nextTick(() => {
                 registry.find(beacon, (info) => {

@@ -1,5 +1,6 @@
 import React from '../../../../../../../node_modules/react/addons';
 import values from 'lodash/object/values';
+import clone from 'lodash/lang/clone';
 
 export default React.createClass({
     propTypes: {
@@ -90,8 +91,13 @@ export default React.createClass({
             [part]: value
         });
 
+        // at this moment state isn't updated yet, so we have to do it manually
+        // probably it's a bug
+        const state = clone(this.state);
+        state[part] = value;
+
         if (this.props.valueLink) {
-            this.props.valueLink.requestChange(values(this.state).join('-'));
+            this.props.valueLink.requestChange(values(state).join('-'));
         }
     }
 });

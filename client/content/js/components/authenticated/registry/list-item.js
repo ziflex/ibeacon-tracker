@@ -19,8 +19,10 @@ export default React.createClass({
         return (
             <tr>
                 <td>{this.props.number}</td>
-                <td>{this.props.item.uuid}</td>
                 <td>{this.props.item.name}</td>
+                <td>{this.props.item.uuid}</td>
+                <td>{this.props.item.major}</td>
+                <td>{this.props.item.minor}</td>
                 <td>{subNum}</td>
                 <td><button type="button" className="btn btn-success" onClick={this._onEdit}>Edit</button></td>
                 <td><button type="button" className="btn btn-danger" onClick={this._onDelete}>Delete</button></td>
