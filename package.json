@@ -1,8 +1,8 @@
 {
-  "name": "beacon-tracking-service",
+  "name": "ibeacon-tracker",
   "version": "1.0.0",
-  "description": "Service for tracking beacons",
-  "main": "index.js",
+  "description": "Service for tracking iBeacons",
+  "main": "dist/server.js",
   "scripts": {
     "build": "npm run clean && npm run build:server && npm run build:client",
     "build:server": "npm run lint:server && babel server --out-dir dist",
@@ -31,7 +31,7 @@
     ]
   },
   "author": "",
-  "license": "ISC",
+  "license": "MIT",
   "dependencies": {
     "bleacon": "~0.2.3",
     "body-parser": "^1.12.4",
