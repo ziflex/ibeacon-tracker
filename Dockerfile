@@ -2,7 +2,7 @@ FROM node:0.12.4
 MAINTAINER Tim Voronov <ziflex@gmail.com>
 
 # Installation
-RUN apt-get update && apt-get install -y apt-utils libbluetooth-dev libcap2-bin bluez mongodb
+RUN apt-get update && apt-get install -y apt-utils libbluetooth-dev libcap2-bin bluez bluez-utils mongodb
 RUN npm install -g forever
 
 # Create the MongoDB data directory and run MongoDB
