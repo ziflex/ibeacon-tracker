@@ -14,8 +14,8 @@ WORKDIR "/ibeacon-tracker"
 
 # Installing dependencies
 RUN npm install
-RUN find -path '\*bleno*Release/hci-ble\' -exec sudo setcap cap_net_raw+eip '\{}\' \;
-RUN find -path '\*noble*Release/hci-ble\' -exec sudo setcap cap_net_raw+eip '\{}\' \;
+RUN find -path '*bleno*Release/hci-ble' -exec sudo setcap cap_net_raw+eip '{}' \;
+RUN find -path '*noble*Release/hci-ble' -exec sudo setcap cap_net_raw+eip '{}' \;
 
 # Build
 RUN npm run build
