@@ -4,13 +4,15 @@ const prettyStdOut = new PrettyStream();
 prettyStdOut.pipe(process.stdout);
 
 export default {
-    name: 'beacon-tracker',
+    name: 'ibeacon-tracker',
     server: {
         port: 8080,
         apiEndpoint: '/api'
     },
     database: {
-        connectionString: 'mongodb://localhost:27017/beacon-tracker'
+        host: 'localhost',
+        port: 27017,
+        name: 'ibeacon-tracker'
     },
     pool: {
         timeout: 10000,
@@ -24,7 +26,7 @@ export default {
             },
             {
                 level: 'error',
-                path: '/var/tmp/beacon-tracker.log'  // log ERROR and above to a file
+                path: '/var/tmp/ibeacon-tracker.log'  // log ERROR and above to a file
             }
         ]
     }

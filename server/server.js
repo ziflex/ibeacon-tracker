@@ -12,9 +12,13 @@ import router from './router';
 import settings from './settings';
 import scanner from './services/scanner';
 
-mongoose.connect(settings.database.connectionString, (err) => {
+function connectionString() {
+    return 'mongodb://' + settings.database.host + ':' + settings.database.port + '/' + settings.database.name;
+}
+
+mongoose.connect(connectionString(), (err) => {
     if (err) {
-        logger.error('Could not connect to mongodb!', err.toString());
+        logger.error('Failed to connect to database!\n', err.toString());
     }
 });
 
