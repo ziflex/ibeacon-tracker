@@ -3,6 +3,7 @@ import Symbol from 'symbol';
 import eventHub from './event-hub';
 import events from '../enums/tracking-events';
 import uuid from '../utils/uuid';
+import timer from '../utils/timer';
 import settings from '../settings';
 
 const POOL = Symbol('POOL');
@@ -22,7 +23,8 @@ class TrackingService {
 
             process.nextTick(func);
         };
-        setInterval(() => {
+
+        timer.setInterval(() => {
             const newPool = Object.create(null);
             const lost = [];
             const timestamp = new Date().getTime();

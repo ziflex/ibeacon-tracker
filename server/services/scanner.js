@@ -15,22 +15,24 @@ class ScanningService {
     constructor() {
         this[IS_RUNNING] = false;
         this[ON_DISCOVER] = (peripheral) => {
-            tracker.track(peripheral);
+            process.nextTick(function onDiscover() {
+                tracker.track(peripheral);
+            });
         };
         this[ON_FOUND] = (beacon) => {
-            process.nextTick(() => {
-                registry.find(beacon, (info) => {
-                    if (info) {
-                        notification.notify('found', info);
+            process.nextTick(function onFound() {
+                registry.find(beacon, function onEntryFound(entry) {
+                    if (entry) {
+                        notification.notify('found', entry);
                     }
                 });
             });
         };
         this[ON_LOST] = (beacon) => {
-            process.nextTick(() => {
-                registry.find(beacon, (info) => {
-                    if (info) {
-                        notification.notify('lost', info);
+            process.nextTick(function onLost() {
+                registry.find(beacon, function onEntryFound(entry) {
+                    if (entry) {
+                        notification.notify('lost', entry);
                     }
                 });
             });
@@ -59,8 +61,8 @@ class ScanningService {
 
         bleacon.stopScanning();
         bleacon.removeListener('discover', this[ON_DISCOVER]);
-        hub.removeListener(trackingEvents.FOUND, this[ON_FOUND]);
-        hub.removeListener(trackingEvents.LOST, this[ON_LOST]);
+        hub.off(trackingEvents.FOUND, this[ON_FOUND]);
+        hub.off(trackingEvents.LOST, this[ON_LOST]);
         this[IS_RUNNING] = false;
     }
 }
