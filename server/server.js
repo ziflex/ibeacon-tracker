@@ -11,6 +11,7 @@ import logger from './services/logger';
 import router from './router';
 import settings from './settings';
 import scanner from './services/scanner';
+import initializer from './config/initializer';
 
 function connectionString() {
     return 'mongodb://' + settings.database.host + ':' + settings.database.port + '/' + settings.database.name;
@@ -36,7 +37,7 @@ server.use(bodyParser.json());
 server.use(bodyParser.urlencoded({ extended: false }));
 server.use(cookieParser());
 server.use(session({
-    secret: 'keyboard cat',
+    secret: 'infusion-ibeacon-tracker',
     cookie: {
         maxAge: null
     },
@@ -45,6 +46,8 @@ server.use(session({
 }));
 server.use(passport.initialize());
 server.use(passport.session());
+passportConfig.configure(passport);
+
 server.use(router);
 
 // catch 404 and forward to error handler
@@ -75,7 +78,7 @@ server.use(function ErrorHandler(err, req, res) {
     res.status(err.status || 500).end();
 });
 
-passportConfig.configure(passport, (err) => {
+initializer.initialize(function onInitialization(err) {
     if (!err) {
         scanner.startScanning();
         server.listen(settings.server.port);
