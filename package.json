@@ -21,7 +21,7 @@
     "watch": "npm run watch:server & npm run watch:client",
     "debug": "NOBLE_REPORT_ALL_HCI_EVENTS=1 node-debug --web-port=8089 dist/server.js",
     "start:dev": "npm run build:client && NODE_ENV=development NOBLE_REPORT_ALL_HCI_EVENTS=1 npm run watch",
-    "start": "NOBLE_REPORT_ALL_HCI_EVENTS=1 forever dist/server.js"
+    "start": "forever dist/server.js --minUptime 5000 --spinSleepTime 2000"
   },
   "browserify": {
     "transform": [
