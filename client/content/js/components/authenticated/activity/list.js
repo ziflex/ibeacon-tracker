@@ -34,7 +34,7 @@ export default React.createClass({
                     <tbody>
                         {this.props.items.toSeq().map((item) => {
                             index += 1;
-                            return (<Item key={item.uuid + item.major + item.minor} index={index} item={item} />);
+                            return (<Item key={item.id} index={index} item={item} />);
                         }).toArray()}
                     </tbody>
                 </table>
