@@ -1,8 +1,9 @@
 import React from 'react/addons';
 import DynamicEventsMixin from '../../../mixins/dynamic-events-mixin';
 import Dropdown from '../dropdown';
+import StringEditor from './editors/string-editor';
+import JsonEditor from './editors/json-editor';
 import utils from '../../../utils/components';
-import isString from 'lodash/lang/isString';
 
 export default React.createClass({
     mixins: [
@@ -23,7 +24,7 @@ export default React.createClass({
     getInitialState() {
         return {
             itemKey: this.props.itemKey,
-            itemValue: isString(this.props.itemValue) ? this.props.itemValue : JSON.stringify(this.props.itemValue),
+            itemValue: this.props.itemValue,
             itemType: this.props.itemType || 'string'
         };
     },
@@ -55,9 +56,9 @@ export default React.createClass({
         let editor = null;
 
         if (this.state.itemType === 'string') {
-            editor = <input className="form-control" type="text" placeholder="value" valueLink={this.linkState('itemValue')} />;
+            editor = <StringEditor valueLink={this.linkState('itemValue')} />;
         } else {
-            editor = <textarea className="form-control" rows="10" valueLink={this.linkState('itemValue')} />;
+            editor = <JsonEditor valueLink={this.linkState('itemValue')} />;
         }
 
         return <td>{editor}</td>;
