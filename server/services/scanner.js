@@ -13,6 +13,7 @@ const ON_LOST = Symbol('ON_LOST');
 
 class ScanningService {
     constructor() {
+        process.env.NOBLE_REPORT_ALL_HCI_EVENTS = 1;
         this[IS_RUNNING] = false;
         this[ON_DISCOVER] = (peripheral) => {
             process.nextTick(function onDiscover() {
