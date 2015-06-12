@@ -38,7 +38,7 @@ export default React.createClass({
         const methods = utils.createDropdownList(subscriberMethods, this.state.item.method);
 
         return (
-            <Modal title={"Subscriber"}>
+            <Modal title={"Subscriber"} onRequestHide={this.props.onRequestHide}>
                 <div className="modal-body">
                     <div className="row">
                         <div className="col-sm-12">
