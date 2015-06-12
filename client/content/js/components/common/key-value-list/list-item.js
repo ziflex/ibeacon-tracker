@@ -61,9 +61,9 @@ export default React.createClass({
         }
     },
 
-    _onSave(key, value) {
+    _onSave(options) {
         if (this.props.onSave) {
-            this.props.onSave(key, value);
+            this.props.onSave(options);
         }
 
         this.setState({

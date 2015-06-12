@@ -96,11 +96,13 @@ export default React.createClass({
         }
 
         if (type === 'json') {
-            try {
-                value = JSON.parse(value);
-            } catch (ex) {
-                NotificationActions.error('Invalid type format');
-                return;
+            if (isString(value)) {
+                try {
+                    value = JSON.parse(value);
+                } catch (ex) {
+                    NotificationActions.error('Invalid type format');
+                    return;
+                }
             }
         }
 
