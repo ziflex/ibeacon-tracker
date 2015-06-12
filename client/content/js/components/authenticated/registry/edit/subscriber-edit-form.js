@@ -88,7 +88,7 @@ export default React.createClass({
         let tabs = [];
 
         tabs.push(
-            <TabPane eventKey={1} tab={"Headers"}>
+            <TabPane eventKey={1} tab={"Headers"} key={"headers"}>
                 <KeyValueList
                     items={this.props.item.headers}
                     valueLink={this.linkImmutableState(['item', 'headers'])}
@@ -97,7 +97,7 @@ export default React.createClass({
         );
 
         tabs.push(
-            <TabPane eventKey={2} tab={"Parameters"}>
+            <TabPane eventKey={2} tab={"Parameters"} key={"parameters"}>
                 <KeyValueList
                     items={this.props.item.params}
                     valueLink={this.linkImmutableState(['item', 'params'])}
@@ -107,7 +107,7 @@ export default React.createClass({
 
         if (this.state.item.method === subscriberMethods.POST) {
             tabs.push(
-                <TabPane eventKey={3} tab={"Form data"}>
+                <TabPane eventKey={3} tab={"Form data"} key={"form-data"}>
                     <KeyValueList
                         items={this.props.item.data}
                         types={List.of('string', 'json')}

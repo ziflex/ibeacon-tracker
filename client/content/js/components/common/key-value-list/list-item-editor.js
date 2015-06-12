@@ -56,9 +56,9 @@ export default React.createClass({
         let editor = null;
 
         if (this.state.itemType === 'string') {
-            editor = <StringEditor valueLink={this.linkState('itemValue')} />;
+            editor = (<StringEditor valueLink={this.linkState('itemValue')} />);
         } else {
-            editor = <JsonEditor valueLink={this.linkState('itemValue')} />;
+            editor = (<JsonEditor valueLink={this.linkState('itemValue')} />);
         }
 
         return <td>{editor}</td>;

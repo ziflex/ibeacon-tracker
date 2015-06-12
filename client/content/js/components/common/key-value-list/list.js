@@ -55,16 +55,16 @@ export default React.createClass({
 
     _renderHeader() {
         const columns = [
-            <th>Key</th>,
-            <th>Value</th>
+            <th key={"key"}>Key</th>,
+            <th key={"value"}>Value</th>
         ];
 
         if (this.props.types && this.props.types.count() > 1) {
-            columns.push(<th>Type</th>);
+            columns.push(<th key={"type"}>Type</th>);
         }
 
-        columns.push(<th></th>);
-        columns.push(<th></th>);
+        columns.push(<th key={"edit-save"}></th>);
+        columns.push(<th key={"remove-cancel"}></th>);
 
         return <tr>{columns}</tr>;
     },

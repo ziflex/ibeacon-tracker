@@ -11,7 +11,7 @@ export default React.createClass({
 
     propTypes: {
         itemKey: React.PropTypes.string.isRequired,
-        itemValue: React.PropTypes.string.isRequired,
+        itemValue: React.PropTypes.any.isRequired,
         itemType: React.PropTypes.string.isRequired,
         types: React.PropTypes.object
     },

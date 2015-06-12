@@ -6,9 +6,8 @@ export default React.createClass({
     ],
 
     propTypes: {
-        valueLink: React.PropTypes.object.valueLink
+        valueLink: React.PropTypes.object.isRequired
     },
-
 
     getInitialState() {
         return {
@@ -18,14 +17,13 @@ export default React.createClass({
 
     render() {
         return (
-            <div>
-                <textarea ref="editor"
-                          className="form-control"
-                          rows="10"
-                          placeholder="value"
-                          value={this.state.value}
-                    />
-            </div>
+            <textarea ref="editor"
+                      className="form-control"
+                      rows="10"
+                      placeholder="value"
+                      value={this.state.value}
+                      onChange={this._onChange}
+                />
         );
     },
 
