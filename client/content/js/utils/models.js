@@ -11,6 +11,14 @@ export default {
     },
 
     mapToSubscriber(entry) {
-        return new Subscriber(entry);
+        return new Subscriber({
+            name: entry.name,
+            event: entry.event,
+            method: entry.method,
+            url: entry.url,
+            params: Immutable.Map(entry.params),
+            headers: Immutable.Map(entry.headers),
+            data: Immutable.Map(entry.data)
+        });
     }
 };

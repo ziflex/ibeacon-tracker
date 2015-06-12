@@ -2,10 +2,9 @@ import React from 'react/addons';
 import LinkedImmutableStateMixin from 'reactlink-immutable';
 import {Navigation} from 'react-router';
 import UuidEditor from './uuid-editor';
-import SubscribersList from './subscribers/list';
+import SubscribersList from './subscribers-list';
 import RegistryActions from '../../../../actions/registry';
 import Beacon from '../../../../models/beacon';
-import Subscriber from '../../../../models/subscriber';
 
 export default React.createClass({
     mixins: [
@@ -78,9 +77,6 @@ export default React.createClass({
                             items={this.state.item.subscribers}
                             onSave={this._onSubscriberSave}
                             onDelete={this._onSubscriberDelete} />
-                        <div className="btn-group pull-right">
-                            <button type="button" className="btn btn-success" onClick={this._onAddSubscriber}>Add</button>
-                        </div>
                     </div>
                 </div>
                 <hr />
@@ -94,12 +90,6 @@ export default React.createClass({
                 </div>
             </form>
         );
-    },
-
-    _onAddSubscriber() {
-        this.setState({
-            item: this.state.item.update('subscribers', list => list.push(new Subscriber()))
-        });
     },
 
     _onSubscriberSave(options) {
