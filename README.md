@@ -54,8 +54,9 @@ You will need the following things properly installed on your computer.
 
 After registration app will start sending notifications when the ibeacon is found and/or lost. 
 
-By default, the RESTful API method recieves event name, uuid, major and minor numbers. 
-If ``GET`` method is used, arguments are passed as query parameters.
+By default, subscriber recieves event name, uuid, major and minor numbers. 
+If ``GET`` method is used, arguments are passed as query parameters in format ```?event={eventName}&uuid={uuid}&major={major}&minor={minor}```.
+Otherwise they will be passed as form data.
 
 Default behvaiour can be overridden.
 
