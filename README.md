@@ -1,6 +1,7 @@
 # iBeacon tracker
 
 iBeacon tracker allows you to track any registered ibeacons and notify 3rd party services.
+
 App is built on top of [bleno](https://github.com/sandeepmistry/bleno).
 
 ## Features
@@ -50,6 +51,13 @@ You will need the following things properly installed on your computer.
 * in `registry` section create new entry specifying `name`, `uuid`, `major` and `minor`.
 * add subscribers which should be notified (**every subscriber should be specified as REST API method**).
 * click `save`.
+
+After registration app will start sending notifications when the ibeacon is found and/or lost. 
+
+By default, the RESTful API method recieves event name, uuid, major and minor numbers. 
+If ``GET`` method is used, arguments are passed as query parameters.
+
+Default behvaiour can be overridden.
 
 ## Further Reading / Useful Links
 
