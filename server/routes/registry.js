@@ -43,6 +43,21 @@ function saveRegistry(req, res) {
             routeUtil.error(res, err);
         }
     };
+    const validate = (data, cb) => {
+        BeaconModel.findOne({
+            uuid: data.uuid,
+            major: data.major,
+            minor: data.minor
+        }, (err, found) => {
+            let validationErr = err;
+
+            if (found) {
+                validationErr = new Error('iBeacon already exists');
+            }
+
+            cb(validationErr);
+        });
+    };
 
     if (entry) {
         if (entry.id) {
@@ -50,8 +65,14 @@ function saveRegistry(req, res) {
                 callback(err, entry);
             });
         } else {
-            BeaconModel.create(entry, (err, data) => {
-                callback(err, toJSON(data));
+            validate(entry, (validationError) => {
+                if (!validationError) {
+                    BeaconModel.create(entry, (err, data) => {
+                        callback(err, toJSON(data));
+                    });
+                } else {
+                    util.bad(res, validationError.toString());
+                }
             });
         }
     } else {
