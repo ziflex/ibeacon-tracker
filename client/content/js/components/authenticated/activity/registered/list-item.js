@@ -1,7 +1,11 @@
 import React from 'react/addons';
+import {Navigation} from 'react-router';
 
 export default React.createClass({
-    mixins: [React.addons.PureRenderMixin],
+    mixins: [
+        React.addons.PureRenderMixin,
+        Navigation
+    ],
 
     propTypes: {
         index: React.PropTypes.number.isRequired,

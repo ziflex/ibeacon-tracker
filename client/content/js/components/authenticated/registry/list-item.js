@@ -1,6 +1,7 @@
 import React from 'react/addons';
 import {Navigation} from 'react-router';
 import RegistryActions from '../../../actions/registry';
+import uuid from '../../../utils/uuid';
 
 export default React.createClass({
     mixins: [
@@ -20,7 +21,7 @@ export default React.createClass({
             <tr>
                 <td>{this.props.number}</td>
                 <td>{this.props.item.name}</td>
-                <td>{this.props.item.uuid}</td>
+                <td>{uuid.format(this.props.item.uuid)}</td>
                 <td>{this.props.item.major}</td>
                 <td>{this.props.item.minor}</td>
                 <td>{subNum}</td>

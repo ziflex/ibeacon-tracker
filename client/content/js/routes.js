@@ -29,8 +29,8 @@ export default createRoutesFromReactChildren(
             <Route name="registry" path="registry" handler={RegistryRoute}>
                 <DefaultRoute handler={RegistryContainer} />
                 <Route path="edit" handler={RegistryEditRoute}>
-                    <DefaultRoute handler={RegistryEditContainer} />
-                    <Route path=":id" handler={RegistryEditContainer} />
+                    <DefaultRoute name="registry-new" handler={RegistryEditContainer} />
+                    <Route name="registry-edit" path=":id" handler={RegistryEditContainer} />
                 </Route>
             </Route>
             <Route name="settings" path="settings" handler={SettingsRoute} />

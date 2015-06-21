@@ -74,6 +74,12 @@ class RegistryService {
         }, this, beacons, callback, CACHE));
     }
 
+    getAll(callback) {
+        this[ENSURE](_.bind((cb, sym) => {
+            cb(_.clone(this[sym]));
+        }, this, callback, CACHE));
+    }
+
     update(callback) {
         if (!this[IS_UPDATING]) {
             this[IS_UPDATING] = true;

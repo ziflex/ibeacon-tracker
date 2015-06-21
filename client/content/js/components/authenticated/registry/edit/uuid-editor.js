@@ -1,6 +1,7 @@
 import React from '../../../../../../../node_modules/react/addons';
 import values from 'lodash/object/values';
 import clone from 'lodash/lang/clone';
+import uuid from '../../../../utils/uuid';
 
 export default React.createClass({
     propTypes: {
@@ -8,7 +9,7 @@ export default React.createClass({
     },
 
     getInitialState() {
-        const parts = this.props.valueLink.value ? this.props.valueLink.value.split('-') : [];
+        const parts = this.props.valueLink.value ? uuid.split(this.props.valueLink.value) : [];
 
         return {
             part1: parts.length >= 1 ? parts[0] : '',
@@ -24,60 +25,51 @@ export default React.createClass({
             <div className="row">
                 <div className="col-lg-3">
                     <input
-                        type="number"
+                        type="text"
                         className="form-control"
-                        min="10000000"
-                        max="99999999"
-                        step="1"
                         placeholder="XXXXXXXX"
+                        maxLength={8}
                         value={this.state.part1}
                         onChange={(event) => this._onChange('part1', event.target.value)}
                         />
                 </div>
                 <div className="col-lg-2">
                     <input
-                        type="number"
+                        type="text"
                         className="form-control"
-                        min="1000"
-                        max="9999"
-                        step="1"
                         placeholder="XXXX"
+                        maxLength={4}
                         value={this.state.part2}
                         onChange={(event) => this._onChange('part2', event.target.value)}
                         />
                 </div>
                 <div className="col-lg-2">
                     <input
-                        type="number"
+                        type="text"
                         className="form-control"
-                        min="1000"
-                        max="9999"
-                        step="1"
                         placeholder="XXXX"
+                        maxLength={4}
                         value={this.state.part3}
                         onChange={(event) => this._onChange('part3', event.target.value)}
                         />
                 </div>
                 <div className="col-lg-2">
                     <input
-                        type="number"
+                        type="text"
                         className="form-control"
-                        min="1000"
-                        max="9999"
-                        step="1"
+
                         placeholder="XXXX"
+                        maxLength={4}
                         value={this.state.part4}
                         onChange={(event) => this._onChange('part4', event.target.value)}
                         />
                 </div>
                 <div className="col-lg-3">
                     <input
-                        type="number"
+                        type="text"
                         className="form-control"
-                        min="100000000000"
-                        max="999999999999"
-                        step="1"
                         placeholder="XXXXXXXXXXXX"
+                        maxLength={12}
                         value={this.state.part5}
                         onChange={(event) => this._onChange('part5', event.target.value)}
                         />
@@ -97,7 +89,7 @@ export default React.createClass({
         state[part] = value;
 
         if (this.props.valueLink) {
-            this.props.valueLink.requestChange(values(state).join('-'));
+            this.props.valueLink.requestChange(values(state).join(''));
         }
     }
 });

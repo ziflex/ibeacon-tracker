@@ -5,24 +5,41 @@ import ActivityActions from '../actions/activity';
 class ActivityStore {
     constructor() {
         this.bindListeners({
-            onFind: ActivityActions.find,
-            onFindComplete: ActivityActions.findComplete,
-            onFindFail: ActivityActions.findFail
+            onFindAllComplete: ActivityActions.findAllComplete,
+            onFindAllFail: ActivityActions.findAllFail,
+            onFindRegisteredComplete: ActivityActions.findRegisteredComplete,
+            onFindRegisteredFail: ActivityActions.findRegisteredFail,
+            onFindUnregisteredComplete: ActivityActions.findUnregisteredComplete,
+            onFindUnregisteredFail: ActivityActions.findUnregisteredFail
         });
 
         this.state = Immutable.Map();
     }
 
-    onFind() {
-        this.setState(Immutable.Map());
+    onFindAllComplete(entries) {
+        this.setState(this.state.set('registered', entries.registered));
+        this.setState(this.state.set('unregistered', entries.unregistered));
     }
 
-    onFindComplete(entries) {
-        this.setState(entries);
+    onFindAllFail() {
+        this.setState(this.state.set('registered', Immutable.Map()));
+        this.setState(this.state.set('unregistered', Immutable.Map()));
     }
 
-    onFindFail() {
-        this.setState(Immutable.Map());
+    onFindRegisteredComplete(entries) {
+        this.setState(this.state.set('registered', entries));
+    }
+
+    onFindRegisteredFail() {
+        this.setState(this.state.set('registered', Immutable.Map()));
+    }
+
+    onFindUnregisteredComplete(entries) {
+        this.setState(this.state.set('unregistered', entries));
+    }
+
+    onFindUnregisteredFail() {
+        this.setState(this.state.set('unregistered', Immutable.Map()));
     }
 }
 

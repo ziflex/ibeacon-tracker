@@ -2,18 +2,50 @@ import service from '../services/activity';
 import app from '../app';
 
 class ActivityActions {
-    find() {
+    findAll() {
         this.dispatch();
-        service.findAsync()
-            .then(result => this.actions.findComplete(result))
-            .catch(reason => this.actions.findFail(reason));
+
+        service.findAllAsync()
+            .then(result => this.actions.findAllComplete(result))
+            .catch(reason => this.actions.findAllFail(reason));
     }
 
-    findComplete(entires) {
-        this.dispatch(entires);
+    findAllComplete(entries) {
+        this.dispatch(entries);
     }
 
-    findFail(reason) {
+    findAllFail(reason) {
+        this.dispatch(reason);
+    }
+
+    findRegistered() {
+        this.dispatch();
+
+        service.findRegisteredAsync()
+            .then(result => this.actions.findRegisteredComplete(result))
+            .catch(reason => this.actions.findRegisteredFail(reason));
+    }
+
+    findRegisteredComplete(entries) {
+        this.dispatch(entries);
+    }
+
+    findRegisteredFail(reason) {
+        this.dispatch(reason);
+    }
+
+    findUnregistered() {
+        this.dispatch();
+        service.findUnregisteredAsync()
+            .then(result => this.actions.findUnregisteredComplete(result))
+            .catch(reason => this.actions.findUnregisteredFail(reason));
+    }
+
+    findUnregisteredComplete(entries) {
+        this.dispatch(entries);
+    }
+
+    findUnregisteredFail(reason) {
         this.dispatch(reason);
     }
 }

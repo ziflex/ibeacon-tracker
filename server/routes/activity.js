@@ -1,26 +1,31 @@
-import _ from 'lodash';
 import settings from '../settings';
-import tracker from '../services/tracker';
-import registry from '../services/registry';
+import activity from '../services/activity';
 import util from '../utils/route';
 
 const route = '/activity';
 
-function toJSON(entry = {}) {
-    return {
-        id: entry._id,
-        name: entry.name
-    };
+function getActivityAll(req, res) {
+    activity.findAll(items => {
+        res.json(items);
+    });
 }
 
-function getActivity(req, res) {
-    registry.findAll(tracker.getList(), (current) => {
-        res.json(_.map(current, toJSON));
+function getActiveRegistered(req, res) {
+    activity.findRegistered(items => {
+        res.json(items);
+    });
+}
+
+function getActiveUnregistered(req, res) {
+    activity.findUnregistered(items => {
+        res.json(items);
     });
 }
 
 export default {
     use(router) {
-        router.get(settings.server.apiEndpoint + route, util.isAuthenticated, getActivity);
+        router.get(settings.server.apiEndpoint + route, util.isAuthenticated, getActivityAll);
+        router.get(settings.server.apiEndpoint + route + '/registered', util.isAuthenticated, getActiveRegistered);
+        router.get(settings.server.apiEndpoint + route + '/unregistered', util.isAuthenticated, getActiveUnregistered);
     }
 };

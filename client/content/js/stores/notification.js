@@ -15,7 +15,9 @@ class NotificationStore {
             onSuccess: NotificationActions.success,
             onGetListError: [
                 RegistryActions.findFail,
-                ActivityActions.findFail
+                ActivityActions.findAllFail,
+                ActivityActions.findRegisteredFail,
+                ActivityActions.findUnregisteredFail
             ],
             onAuthenticationError: AuthenticationActions.loginFail,
             onRegistrySaveSuccess: RegistryActions.saveComplete,

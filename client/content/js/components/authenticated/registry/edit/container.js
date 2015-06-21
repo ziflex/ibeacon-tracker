@@ -1,19 +1,33 @@
 import React from 'react/addons';
 import {State} from 'react-router';
 import Form from './form';
+import Beacon from '../../../../models/beacon';
 
 export default React.createClass({
-    mixins: [React.addons.PureRenderMixin, State],
+    mixins: [
+        React.addons.PureRenderMixin,
+        State
+    ],
+
     propTypes: {
-        entries: React.PropTypes.object.isRequired
+        items: React.PropTypes.object.isRequired
     },
+
     render() {
         const params = this.getParams();
-        const entry = params ? this.props.entries.get(params.id) : null;
+        let entry = null;
+
+        if (params && params.id) {
+            entry = this.props.items.get(params.id);
+        }
+
+        if (!entry) {
+            entry = new Beacon(this.getQuery());
+        }
 
         return (
             <div>
-                <h1>{entry ? 'Edit iBeacon' : 'Create iBeacon'}</h1>
+                <h1>{entry ? 'Edit' : 'Register'}</h1>
                 <Form item={entry} />
             </div>
         );

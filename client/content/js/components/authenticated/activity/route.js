@@ -12,11 +12,11 @@ export default React.createClass({
 
     statics: {
         registerStores: {
-            entries: ActivityStore
+            items: ActivityStore
         },
 
         willTransitionTo: (transition, params, query, callback) => {
-            ActivityActions.find();
+            ActivityActions.findAll();
             callback();
         }
     },

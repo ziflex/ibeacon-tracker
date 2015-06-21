@@ -11,7 +11,7 @@ export default React.createClass({
         to: React.PropTypes.string.isRequired,
         params: React.PropTypes.object,
         query: React.PropTypes.object,
-        children: React.PropTypes.string,
+        children: React.PropTypes.any,
         nested: React.PropTypes.array
     },
 

@@ -11,7 +11,7 @@ export default React.createClass({
 
     statics: {
         registerStores: {
-            entries: RegistryStore
+            items: RegistryStore
         },
 
         willTransitionTo: (transition, params, query, callback) => {

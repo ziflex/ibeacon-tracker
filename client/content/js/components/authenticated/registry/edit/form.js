@@ -4,7 +4,6 @@ import {Navigation} from 'react-router';
 import UuidEditor from './uuid-editor';
 import SubscribersList from './subscribers-list';
 import RegistryActions from '../../../../actions/registry';
-import Beacon from '../../../../models/beacon';
 
 export default React.createClass({
     mixins: [
@@ -19,7 +18,7 @@ export default React.createClass({
 
     getInitialState() {
         return {
-            item: this.props.item || new Beacon()
+            item: this.props.item
         };
     },
 
@@ -51,8 +50,8 @@ export default React.createClass({
                             type="number"
                             className="form-control"
                             id="major"
-                            min="0"
-                            max="65535"
+                            min={0}
+                            max={65535}
                             valueLink={this.linkImmutableState(['item', 'major'])}
                             />
                     </div>
@@ -64,8 +63,8 @@ export default React.createClass({
                             type="number"
                             className="form-control"
                             id="minor"
-                            min="0"
-                            max="65535"
+                            min={0}
+                            max={65535}
                             valueLink={this.linkImmutableState(['item', 'minor'])}
                             />
                     </div>

@@ -6,9 +6,10 @@
   "scripts": {
     "build": "npm run clean && npm run build:server && npm run build:client",
     "build:server": "npm run lint:server && babel server --out-dir dist",
-    "build:client": "npm run build:client:js && npm run build:client:css && npm run build:client:html",
+    "build:client": "npm run build:client:js && npm run build:client:css && npm run build:client:fonts && npm run build:client:html",
     "build:client:js": "npm run lint:client && mkdir -p dist/public/content/js/ && browserify client/content/js/boot.js > dist/public/content/js/app.js",
     "build:client:css": "lessc --clean-css='--s1 --advanced --compatibility=ie8' client/content/css/app.less dist/public/content/css/app.css",
+    "build:client:fonts": "mkdir -p dist/public/content/fonts/ && cp -v node_modules/bootstrap/fonts/* dist/public/content/fonts",
     "build:client:html": "cp client/index.html dist/public/index.html",
     "clean": "rimraf dist",
     "lint": "npm run lint:server && npm run lint:client",
