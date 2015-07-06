@@ -1,4 +1,4 @@
-import React from '../../../../../../../node_modules/react/addons';
+import React from 'react/addons';
 import values from 'lodash/object/values';
 import clone from 'lodash/lang/clone';
 import uuid from '../../../../../../../shared/utils/uuid';
