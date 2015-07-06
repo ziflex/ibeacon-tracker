@@ -1,6 +1,6 @@
 import React from 'react/addons';
 import {Navigation} from 'react-router';
-import uuid from '../../../../utils/uuid';
+import uuid from '../../../../../../../shared/utils/uuid';
 
 export default React.createClass({
     mixins: [

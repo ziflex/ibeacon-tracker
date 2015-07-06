@@ -1,9 +1,11 @@
 import React from 'react/addons';
 import LinkedImmutableStateMixin from 'reactlink-immutable';
 import {Navigation} from 'react-router';
+import {Input} from 'react-bootstrap';
 import UuidEditor from './uuid-editor';
 import SubscribersList from './subscribers-list';
 import RegistryActions from '../../../../actions/registry';
+import validator from '../../../../../../../shared/utils/validator';
 
 export default React.createClass({
     mixins: [
@@ -28,12 +30,14 @@ export default React.createClass({
                 <div className="form-group">
                     <label htmlFor="name" className="col-sm-2 control-label">Name</label>
                     <div className="col-sm-10">
-                        <input
+                        <Input
                             type="text"
-                            className="form-control"
+                            groupClassName="group-class"
+                            labelClassName="label-class"
                             id="name"
                             placeholder="Name"
                             valueLink={this.linkImmutableState(['item', 'name'])}
+                            bsStyle={this._validateName()}
                             />
                     </div>
                 </div>
@@ -89,6 +93,10 @@ export default React.createClass({
                 </div>
             </form>
         );
+    },
+
+    _validateName() {
+        return validator.name(this.props.item.name) ? 'success' : 'error';
     },
 
     _onSubscriberSave(options) {

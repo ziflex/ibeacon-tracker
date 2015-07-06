@@ -2,7 +2,7 @@ import _ from 'lodash';
 import Promise from 'bluebird';
 import registry from './registry';
 import tracker from './tracker';
-import uuid from '../utils/uuid';
+import uuid from '../shared/utils/uuid';
 
 class ActivityService {
 

@@ -1,7 +1,7 @@
 import React from '../../../../../../../node_modules/react/addons';
 import values from 'lodash/object/values';
 import clone from 'lodash/lang/clone';
-import uuid from '../../../../utils/uuid';
+import uuid from '../../../../../../../shared/utils/uuid';
 
 export default React.createClass({
     propTypes: {

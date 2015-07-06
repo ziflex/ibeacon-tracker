@@ -3,7 +3,7 @@ import _ from 'lodash';
 import hub from './event-hub';
 import logger from './logger';
 import BeaconModel from '../models/beacon';
-import uuid from '../utils/uuid';
+import uuid from '../shared/utils/uuid';
 import Queue from '../utils/queue';
 import events from '../enums/registry-events';
 

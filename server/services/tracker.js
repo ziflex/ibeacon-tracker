@@ -2,7 +2,7 @@ import _ from 'lodash';
 import Symbol from 'symbol';
 import eventHub from './event-hub';
 import events from '../enums/tracking-events';
-import uuid from '../utils/uuid';
+import uuid from '../shared/utils/uuid';
 import timer from '../utils/timer';
 import settings from '../settings';
 
