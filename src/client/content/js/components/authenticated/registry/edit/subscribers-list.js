@@ -1,5 +1,4 @@
 import React from 'react/addons';
-import ModalTrigger from 'react-bootstrap/lib/ModalTrigger';
 import Form from './subscriber-edit-form';
 import Item from './subscribers-list-item';
 import Subscriber from '../../../../models/subscriber';
@@ -52,9 +51,7 @@ export default React.createClass({
                         }).toArray()}
                     </tbody>
                 </table>
-                <ModalTrigger modal={this._renderModal()} >
-                    <button type="button" className="btn btn-success" onClick={this._onAdd}>Add</button>
-                </ModalTrigger>
+                <button type="button" className="btn btn-success" onClick={this._onAdd}>Add</button>
                 {this._renderModal()}
             </div>
         );
@@ -66,6 +63,7 @@ export default React.createClass({
         if (this.state.editItem) {
             result = (
                 <Form
+                    show={true}
                     index={this.state.editIndex}
                     item={this.state.editItem}
                     onSave={this._onSave}

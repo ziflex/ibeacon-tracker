@@ -1,7 +1,7 @@
 import React from 'react/addons';
 import LinkedImmutableStateMixin from 'reactlink-immutable';
 import {Navigation} from 'react-router';
-import {Input} from 'react-bootstrap';
+import Input from '../../../common/form/input';
 import UuidEditor from './uuid-editor';
 import SubscribersList from './subscribers-list';
 import RegistryActions from '../../../../actions/registry';
@@ -20,7 +20,8 @@ export default React.createClass({
 
     getInitialState() {
         return {
-            item: this.props.item
+            item: this.props.item,
+            validationErrors: null
         };
     },
 
@@ -32,30 +33,34 @@ export default React.createClass({
                     <div className="col-sm-10">
                         <Input
                             type="text"
-                            groupClassName="group-class"
-                            labelClassName="label-class"
                             id="name"
+                            name="name"
                             placeholder="Name"
+                            validationError={this._getValidationError('name')}
                             valueLink={this.linkImmutableState(['item', 'name'])}
-                            bsStyle={this._validateName()}
                             />
                     </div>
                 </div>
                 <div className="form-group">
                     <label htmlFor="uuid" className="col-sm-2 control-label">UUID</label>
                     <div className="col-sm-10">
-                        <UuidEditor valueLink={this.linkImmutableState(['item', 'uuid'])} />
+                        <UuidEditor
+                            name="uuid"
+                            validationError={this._getValidationError('uuid')}
+                            valueLink={this.linkImmutableState(['item', 'uuid'])}
+                            />
                     </div>
                 </div>
                 <div className="form-group">
                     <label htmlFor="major" className="col-sm-2 control-label">Major</label>
                     <div className="col-sm-10">
-                        <input
+                        <Input
                             type="number"
-                            className="form-control"
                             id="major"
+                            name="major"
                             min={0}
                             max={65535}
+                            validationError={this._getValidationError('major')}
                             valueLink={this.linkImmutableState(['item', 'major'])}
                             />
                     </div>
@@ -63,12 +68,13 @@ export default React.createClass({
                 <div className="form-group">
                     <label htmlFor="minor" className="col-sm-2 control-label">Minor</label>
                     <div className="col-sm-10">
-                        <input
+                        <Input
                             type="number"
-                            className="form-control"
                             id="minor"
+                            name="minor"
                             min={0}
                             max={65535}
+                            validationError={this._getValidationError('minor')}
                             valueLink={this.linkImmutableState(['item', 'minor'])}
                             />
                     </div>
@@ -95,10 +101,6 @@ export default React.createClass({
         );
     },
 
-    _validateName() {
-        return validator.name(this.props.item.name) ? 'success' : 'error';
-    },
-
     _onSubscriberSave(options) {
         let {index, value} = options;
 
@@ -119,11 +121,30 @@ export default React.createClass({
 
     _onSubmit(event) {
         event.preventDefault();
-        RegistryActions.save(this.state.item);
-        this.transitionTo('registry');
+
+        const result = validator.validate(this.state.item.toJS());
+
+        if (!result) {
+            RegistryActions.save(this.state.item);
+            this.transitionTo('registry');
+        } else {
+            this.setState({
+                validationErrors: result
+            });
+        }
     },
 
     _onCancel() {
         this.transitionTo('registry');
+    },
+
+    _getValidationError(key) {
+        let result = null;
+
+        if (this.state.validationErrors) {
+            result = this.state.validationErrors[key];
+        }
+
+        return result;
     }
 });

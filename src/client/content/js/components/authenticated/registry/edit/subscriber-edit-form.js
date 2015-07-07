@@ -18,9 +18,9 @@ export default React.createClass({
     ],
 
     propTypes: {
+        show: React.PropTypes.bool.isRequired,
         index: React.PropTypes.number.isRequired,
         item: React.PropTypes.object.isRequired,
-        onRequestHide: React.PropTypes.func,
         onSave: React.PropTypes.func,
         onCancel: React.PropTypes.func
     },
@@ -38,8 +38,14 @@ export default React.createClass({
         const methods = utils.createDropdownList(subscriberMethods, this.state.item.method);
 
         return (
-            <Modal title={"Subscriber"} onRequestHide={this.props.onRequestHide}>
-                <div className="modal-body">
+            <Modal
+                show={this.props.show}
+                onHide={this._onHide}
+                >
+                <Modal.Body>
+                    <Modal.Header>
+                        <Modal.Title>Subscriber</Modal.Title>
+                    </Modal.Header>
                     <div className="row">
                         <div className="col-sm-12">
                             <table className="table table-bordered">
@@ -75,22 +81,26 @@ export default React.createClass({
                             {this._renderTabs()}
                         </div>
                     </div>
-                </div>
-                <div className="modal-footer">
+                </Modal.Body>
+                <Modal.Footer>
                     <button type="button" className="btn btn-success" onClick={this._onSave}>Save</button>
                     <button type="button" className="btn btn-default" onClick={this._onCancel}>Cancel</button>
-                </div>
+                </Modal.Footer>
             </Modal>
         );
     },
 
     _renderTabs() {
         let tabs = [];
+        const item = this.props.item;
+        const headers = item ? item.headers : null;
+        const params = item ? item.params : null;
+        const data = item ? item.data : null;
 
         tabs.push(
             <TabPane eventKey={1} tab={"Headers"} key={"headers"}>
                 <KeyValueList
-                    items={this.props.item.headers}
+                    items={headers}
                     valueLink={this.linkImmutableState(['item', 'headers'])}
                     />
             </TabPane>
@@ -99,7 +109,7 @@ export default React.createClass({
         tabs.push(
             <TabPane eventKey={2} tab={"Parameters"} key={"parameters"}>
                 <KeyValueList
-                    items={this.props.item.params}
+                    items={params}
                     valueLink={this.linkImmutableState(['item', 'params'])}
                     />
             </TabPane>
@@ -109,7 +119,7 @@ export default React.createClass({
             tabs.push(
                 <TabPane eventKey={3} tab={"Form data"} key={"form-data"}>
                     <KeyValueList
-                        items={this.props.item.data}
+                        items={data}
                         types={List.of('string', 'json')}
                         valueLink={this.linkImmutableState(['item', 'data'])}
                         />
@@ -125,10 +135,6 @@ export default React.createClass({
     },
 
     _onSave() {
-        if (this.props.onRequestHide) {
-            this.props.onRequestHide();
-        }
-
         if (this.props.onSave) {
             this.props.onSave({
                 index: this.props.index,
@@ -138,12 +144,10 @@ export default React.createClass({
     },
 
     _onCancel() {
-        if (this.props.onRequestHide) {
-            this.props.onRequestHide();
-        }
-
         if (this.props.onCancel) {
             this.props.onCancel();
         }
-    }
+    },
+
+    _onHide() {}
 });

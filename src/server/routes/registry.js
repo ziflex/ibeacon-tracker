@@ -70,7 +70,7 @@ function saveRegistry(req, res) {
         })
         .pipe(function update(entry, next, done) { // update
             if (entry.id) {
-                BeaconModel.update({_id: entry.id}, _.omit(entry, 'id'), (err) => {
+                return BeaconModel.update({_id: entry.id}, _.omit(entry, 'id'), (err) => {
                     if (!err) {
                         return done({ success: true, data: entry });
                     }
@@ -96,7 +96,7 @@ function saveRegistry(req, res) {
         .on('done', (result) => {
             if (result.success) {
                 if (result.data) {
-                    return res.json(JSON.stringify(result.data));
+                    return res.json(result.data);
                 }
 
                 return routeUtil.ok(res);

@@ -2,6 +2,7 @@ import React from 'react/addons';
 import values from 'lodash/object/values';
 import clone from 'lodash/lang/clone';
 import uuid from '../../../../../../../shared/utils/uuid';
+import Input from '../../../common/form/input';
 
 export default React.createClass({
     propTypes: {
@@ -24,7 +25,7 @@ export default React.createClass({
         return (
             <div className="row">
                 <div className="col-lg-3">
-                    <input
+                    <Input
                         type="text"
                         className="form-control"
                         placeholder="XXXXXXXX"
@@ -34,7 +35,7 @@ export default React.createClass({
                         />
                 </div>
                 <div className="col-lg-2">
-                    <input
+                    <Input
                         type="text"
                         className="form-control"
                         placeholder="XXXX"
@@ -44,7 +45,7 @@ export default React.createClass({
                         />
                 </div>
                 <div className="col-lg-2">
-                    <input
+                    <Input
                         type="text"
                         className="form-control"
                         placeholder="XXXX"
@@ -54,7 +55,7 @@ export default React.createClass({
                         />
                 </div>
                 <div className="col-lg-2">
-                    <input
+                    <Input
                         type="text"
                         className="form-control"
 
@@ -65,7 +66,7 @@ export default React.createClass({
                         />
                 </div>
                 <div className="col-lg-3">
-                    <input
+                    <Input
                         type="text"
                         className="form-control"
                         placeholder="XXXXXXXXXXXX"

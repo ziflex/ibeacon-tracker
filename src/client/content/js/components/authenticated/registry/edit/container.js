@@ -28,7 +28,9 @@ export default React.createClass({
         return (
             <div>
                 <h1>{entry ? 'Edit' : 'Register'}</h1>
-                <Form item={entry} />
+                <div className="registry-edit-page">
+                    <Form item={entry} />
+                </div>
             </div>
         );
     }
