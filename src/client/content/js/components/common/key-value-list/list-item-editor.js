@@ -8,6 +8,7 @@ import utils from '../../../utils/components';
 import Input from '../form/input';
 import ValidationError from '../../../mixins/validation-mixin';
 import isEmpty from 'lodash/lang/isEmpty';
+import isString from 'lodash/lang/isString';
 
 export default React.createClass({
     mixins: [
@@ -106,6 +107,20 @@ export default React.createClass({
                 }
 
                 errors.value = '`value` is required';
+            } else {
+                if (this.state.item.type === 'json') {
+                    if (isString(this.state.item.value)) {
+                        try {
+                            JSON.parse(this.state.item.value);
+                        } catch (ex) {
+                            if (!errors) {
+                                errors = {};
+                            }
+
+                            errors.value = 'Invalid format!';
+                        }
+                    }
+                }
             }
 
             if (!errors) {

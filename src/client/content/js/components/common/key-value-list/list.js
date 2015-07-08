@@ -2,7 +2,6 @@ import React from 'react/addons';
 import Item from './list-item';
 import isEmpty from 'lodash/lang/isEmpty';
 import isString from 'lodash/lang/isString';
-import NotificationActions from '../../../actions/notification';
 import KeyValuePair from '../../../models/key-value-pair';
 
 export default React.createClass({
@@ -81,17 +80,6 @@ export default React.createClass({
             });
 
             return;
-        }
-
-        if (item.type === 'json') {
-            if (isString(item.value)) {
-                try {
-                    item = item.set('value', JSON.parse(item.value));
-                } catch (ex) {
-                    NotificationActions.error('Invalid type format');
-                    return;
-                }
-            }
         }
 
         items = items.set(index, item);
