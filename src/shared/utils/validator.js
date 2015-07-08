@@ -87,6 +87,15 @@ export default {
             message = '`url` is required!';
         }
 
+        if (result) {
+            const matched = value.match(/(ftp|http|https):\/\/(\w+:{0,1}\w*@)?(\S+)(:[0-9]+)?(\/|\/([\w#!:.?+=&%@!\-\/]))?/);
+
+            if (!matched) {
+                result = false;
+                message = '`url` is invalid!';
+            }
+        }
+
         return { result, message };
     },
 
