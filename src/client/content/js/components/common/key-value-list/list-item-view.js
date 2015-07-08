@@ -8,10 +8,9 @@ export default React.createClass({
     ],
 
     propTypes: {
+        index: React.PropTypes.number.isRequired,
         types: React.PropTypes.object,
-        itemKey: React.PropTypes.string.isRequired,
-        itemValue: React.PropTypes.any.isRequired,
-        itemType: React.PropTypes.string.isRequired,
+        item: React.PropTypes.object,
         onEdit: React.PropTypes.func,
         onDelete: React.PropTypes.func
     },
@@ -22,7 +21,7 @@ export default React.createClass({
         if (this.props.types && this.props.types.count() > 1) {
             typeColumn = (
                 <td>
-                    {this.props.itemType}
+                    {this.props.item.type}
                 </td>
             );
         }
@@ -30,17 +29,17 @@ export default React.createClass({
         return (
             <tr>
                 <td>
-                    {this.props.itemKey}
+                    {this.props.item.key}
                 </td>
                 <td>
-                    {this.props.itemValue}
+                    {this.props.item.value}
                 </td>
                 {typeColumn}
                 <td>
                     <button type="button" className="btn btn-success" onClick={this.emitAs('onEdit')}>Edit</button>
                 </td>
                 <td>
-                    <button type="button" className="btn btn-danger" onClick={this.emitAs('onDelete', () => this.props.itemKey)}>Delete</button>
+                    <button type="button" className="btn btn-danger" onClick={this.emitAs('onDelete', () => this.props.index)}>Delete</button>
                 </td>
             </tr>
         );

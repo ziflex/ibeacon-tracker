@@ -1,27 +1,21 @@
 import React from 'react/addons';
 import View from './list-item-view';
 import Editor from './list-item-editor';
-import isEmpty from 'lodash/lang/isEmpty';
 
 export default React.createClass({
     mixins: [
-        React.addons.PureRenderMixin,
-        React.addons.LinkedStateMixin
+        React.addons.PureRenderMixin
     ],
 
     propTypes: {
-        itemKey: React.PropTypes.string.isRequired,
-        itemValue: React.PropTypes.any.isRequired,
-        itemType: React.PropTypes.string.isRequired,
+        index: React.PropTypes.number.isRequired,
+        item: React.PropTypes.object.isRequired,
         types: React.PropTypes.object
     },
 
     getInitialState() {
-        const isNew = isEmpty(this.props.itemKey);
-
         return {
-            edit: isNew,
-            isNew: isNew
+            edit: this.props.item.isNew
         };
     },
 
@@ -52,12 +46,12 @@ export default React.createClass({
     },
 
     _onCancelEdit() {
-        if (!this.state.isNew) {
+        if (!this.props.item.isNew) {
             this.setState({
                 edit: false
             });
         } else {
-            this._onDelete(this.props.itemKey);
+            this._onDelete(this.props.index);
         }
     },
 

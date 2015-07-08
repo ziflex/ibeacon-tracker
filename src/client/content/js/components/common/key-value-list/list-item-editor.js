@@ -1,4 +1,5 @@
 import React from 'react/addons';
+import LinkedImmutableStateMixin from 'reactlink-immutable';
 import DynamicEventsMixin from '../../../mixins/dynamic-events-mixin';
 import Dropdown from '../dropdown';
 import StringEditor from './editors/string-editor';
@@ -8,24 +9,21 @@ import utils from '../../../utils/components';
 export default React.createClass({
     mixins: [
         React.addons.PureRenderMixin,
-        React.addons.LinkedStateMixin,
+        LinkedImmutableStateMixin,
         DynamicEventsMixin
     ],
 
     propTypes: {
+        index: React.PropTypes.number.isRequired,
         types: React.PropTypes.object,
-        itemKey: React.PropTypes.string.isRequired,
-        itemValue: React.PropTypes.any.isRequired,
-        itemType: React.PropTypes.string.isRequired,
+        item: React.PropTypes.object.isRequired,
         onSave: React.PropTypes.func,
         onCancel: React.PropTypes.func
     },
 
     getInitialState() {
         return {
-            itemKey: this.props.itemKey,
-            itemValue: this.props.itemValue,
-            itemType: this.props.itemType || 'string'
+            item: this.props.item
         };
     },
 
@@ -37,7 +35,7 @@ export default React.createClass({
                         className="form-control"
                         type="text"
                         placeholder="key"
-                        valueLink={this.linkState('itemKey')}
+                        valueLink={this.linkImmutableState(['item', 'key'])}
                         />
                 </td>
                 {this._renderItemValueEditor()}
@@ -55,10 +53,10 @@ export default React.createClass({
     _renderItemValueEditor() {
         let editor = null;
 
-        if (this.state.itemType === 'string') {
-            editor = (<StringEditor valueLink={this.linkState('itemValue')} />);
+        if (this.state.item.type === 'string') {
+            editor = (<StringEditor valueLink={this.linkImmutableState(['item', 'key'])} />);
         } else {
-            editor = (<JsonEditor valueLink={this.linkState('itemValue')} />);
+            editor = (<JsonEditor valueLink={this.linkImmutableState(['item', 'key'])} />);
         }
 
         return <td>{editor}</td>;
@@ -70,7 +68,7 @@ export default React.createClass({
         if (this.props.types && this.props.types.count() > 1) {
             editor = (
                 <td>
-                    <Dropdown items={utils.createDropdownList(this.props.types, this.state.itemType)} valueLink={this.linkState('itemType')} />
+                    <Dropdown items={utils.createDropdownList(this.props.types, this.state.item.type)} valueLink={this.linkImmutableState(['item', 'type'])} />
                 </td>
             );
         }
@@ -81,9 +79,8 @@ export default React.createClass({
     _onSave() {
         if (this.props.onSave) {
             this.props.onSave({
-                key: this.state.itemKey,
-                value: this.state.itemValue,
-                type: this.state.itemType
+                index: this.props.index,
+                item: this.state.item
             });
         }
     }

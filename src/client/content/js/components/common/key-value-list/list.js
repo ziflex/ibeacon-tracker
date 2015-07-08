@@ -3,6 +3,7 @@ import Item from './list-item';
 import isEmpty from 'lodash/lang/isEmpty';
 import isString from 'lodash/lang/isString';
 import NotificationActions from '../../../actions/notification';
+import KeyValuePair from '../../../models/key-value-pair';
 
 export default React.createClass({
     propTypes: {
@@ -14,14 +15,12 @@ export default React.createClass({
 
     getInitialState() {
         return {
-            items: this.props.items,
-            types: this.props.types
+            types: this.props.types,
+            items: this._convertPropItems(this.props.items)
         };
     },
 
     render() {
-        let index = -1;
-
         return (
             <div>
                 <table className="table table-bordered">
@@ -29,16 +28,13 @@ export default React.createClass({
                         {this._renderHeader()}
                     </thead>
                     <tbody>
-                        {this.state.items.toSeq().map((v, k) => {
-                            index += 1;
+                        {this.state.items.toSeq().map((item, index) => {
                             return (
                                 <Item
                                     key={index}
                                     index={index}
                                     types={this.props.types}
-                                    itemKey={k}
-                                    itemValue={v}
-                                    itemType={this._getItemType(v)}
+                                    item={item}
                                     onSave={this._onSave}
                                     onDelete={this._onDelete}
                                     />
@@ -70,35 +66,27 @@ export default React.createClass({
     },
 
     _onAdd() {
-        if (this._hasEmptyRow()) {
-            return;
-        }
-
         this.setState({
-            items: this.state.items.set('', '')
+            items: this.state.items.set(this.state.items.size, new KeyValuePair())
         });
     },
 
     _onSave(options) {
-        let {key, value, type} = options;
+        let {index, item} = options;
         let items = this.state.items;
 
-        if (this._hasEmptyRow()) {
-            items = items.remove('');
-        }
-
-        if (isEmpty(key) || isEmpty(value)) {
+        if (isEmpty(item.key) || isEmpty(item.value)) {
             this.setState({
-                items: items
+                items: items.remove(index)
             });
 
             return;
         }
 
-        if (type === 'json') {
-            if (isString(value)) {
+        if (item.type === 'json') {
+            if (isString(item.value)) {
                 try {
-                    value = JSON.parse(value);
+                    item = item.set('value', JSON.parse(item.value));
                 } catch (ex) {
                     NotificationActions.error('Invalid type format');
                     return;
@@ -106,23 +94,23 @@ export default React.createClass({
             }
         }
 
-        items = items.set(key, value);
+        items = items.set(index, item);
 
         this.setState({
             items: items
         });
 
-        this._onChange(items);
+        this._onChange(this._convertStateItems(items));
     },
 
-    _onDelete(key) {
-        const items = this.state.items.remove(key);
+    _onDelete(index) {
+        const items = this.state.items.remove(index);
 
         this.setState({
             items: items
         });
 
-        this._onChange(items);
+        this._onChange(this._convertStateItems(items));
     },
 
     _onChange(items) {
@@ -135,11 +123,22 @@ export default React.createClass({
         }
     },
 
-    _hasEmptyRow() {
-        return this.state.items.has('');
+    _convertStateItems(items) {
+        return items.toSeq().mapEntries((entry) => {
+            const pair = entry[1];
+            return [pair.key, pair.value];
+        }).toMap();
     },
 
-    _getItemType(value) {
-        return isString(value) ? 'string' : 'json';
+    _convertPropItems(items) {
+        return items.toSeq().mapEntries((entry, index) => {
+            const [key, value] = entry;
+            return [index, new KeyValuePair({
+                key: key,
+                value: value,
+                type: isString(value) ? 'string' : 'json',
+                isNew: false
+            })];
+        }).toMap();
     }
 });
