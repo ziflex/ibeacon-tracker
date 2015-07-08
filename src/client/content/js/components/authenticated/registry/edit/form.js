@@ -5,12 +5,14 @@ import Input from '../../../common/form/input';
 import UuidEditor from './uuid-editor';
 import SubscribersList from './subscribers-list';
 import RegistryActions from '../../../../actions/registry';
+import ValidationMixin from '../../../../mixins/validation-mixin';
 import validator from '../../../../../../../shared/utils/validator';
 
 export default React.createClass({
     mixins: [
         React.addons.PureRenderMixin,
         LinkedImmutableStateMixin,
+        ValidationMixin,
         Navigation
     ],
 
@@ -36,7 +38,7 @@ export default React.createClass({
                             id="name"
                             name="name"
                             placeholder="Name"
-                            validationError={this._getValidationError('name')}
+                            validationError={this.getValidationError('name')}
                             valueLink={this.linkImmutableState(['item', 'name'])}
                             />
                     </div>
@@ -46,7 +48,7 @@ export default React.createClass({
                     <div className="col-sm-10">
                         <UuidEditor
                             name="uuid"
-                            validationError={this._getValidationError('uuid')}
+                            validationError={this.getValidationError('uuid')}
                             valueLink={this.linkImmutableState(['item', 'uuid'])}
                             />
                     </div>
@@ -60,7 +62,7 @@ export default React.createClass({
                             name="major"
                             min={0}
                             max={65535}
-                            validationError={this._getValidationError('major')}
+                            validationError={this.getValidationError('major')}
                             valueLink={this.linkImmutableState(['item', 'major'])}
                             />
                     </div>
@@ -74,7 +76,7 @@ export default React.createClass({
                             name="minor"
                             min={0}
                             max={65535}
-                            validationError={this._getValidationError('minor')}
+                            validationError={this.getValidationError('minor')}
                             valueLink={this.linkImmutableState(['item', 'minor'])}
                             />
                     </div>
@@ -136,15 +138,5 @@ export default React.createClass({
 
     _onCancel() {
         this.transitionTo('registry');
-    },
-
-    _getValidationError(key) {
-        let result = null;
-
-        if (this.state.validationErrors) {
-            result = this.state.validationErrors[key];
-        }
-
-        return result;
     }
 });

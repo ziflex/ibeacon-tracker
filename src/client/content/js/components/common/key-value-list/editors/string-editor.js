@@ -1,4 +1,5 @@
 import React from 'react/addons';
+import Input from '../../form/input';
 
 export default React.createClass({
     mixins: [
@@ -6,7 +7,8 @@ export default React.createClass({
     ],
 
     propTypes: {
-        valueLink: React.PropTypes.object.isRequired
+        valueLink: React.PropTypes.object.isRequired,
+        validationError: React.PropTypes.string
     },
 
     getInitialState() {
@@ -18,10 +20,11 @@ export default React.createClass({
 
     render() {
         return (
-            <input className="form-control"
+            <Input className="form-control"
                    type="text"
                    placeholder="value"
                    value={this.state.value}
+                   validationError={this.props.validationError}
                    onChange={this._onChange}
                 />
         );

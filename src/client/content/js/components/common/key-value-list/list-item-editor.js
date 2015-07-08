@@ -5,12 +5,16 @@ import Dropdown from '../dropdown';
 import StringEditor from './editors/string-editor';
 import JsonEditor from './editors/json-editor';
 import utils from '../../../utils/components';
+import Input from '../form/input';
+import ValidationError from '../../../mixins/validation-mixin';
+import isEmpty from 'lodash/lang/isEmpty';
 
 export default React.createClass({
     mixins: [
         React.addons.PureRenderMixin,
         LinkedImmutableStateMixin,
-        DynamicEventsMixin
+        DynamicEventsMixin,
+        ValidationError
     ],
 
     propTypes: {
@@ -23,7 +27,8 @@ export default React.createClass({
 
     getInitialState() {
         return {
-            item: this.props.item
+            item: this.props.item,
+            validationErrors: null
         };
     },
 
@@ -31,10 +36,11 @@ export default React.createClass({
         return (
             <tr>
                 <td>
-                    <input
+                    <Input
                         className="form-control"
                         type="text"
                         placeholder="key"
+                        validationError={this.getValidationError('key')}
                         valueLink={this.linkImmutableState(['item', 'key'])}
                         />
                 </td>
@@ -54,9 +60,17 @@ export default React.createClass({
         let editor = null;
 
         if (this.state.item.type === 'string') {
-            editor = (<StringEditor valueLink={this.linkImmutableState(['item', 'key'])} />);
+            editor = (<StringEditor
+                validationError={this.getValidationError('value')}
+                valueLink={this.linkImmutableState(['item', 'value'])}
+                />
+            );
         } else {
-            editor = (<JsonEditor valueLink={this.linkImmutableState(['item', 'key'])} />);
+            editor = (<JsonEditor
+                validationError={this.getValidationError('key')}
+                valueLink={this.linkImmutableState(['item', 'value'])}
+                />
+            );
         }
 
         return <td>{editor}</td>;
@@ -78,10 +92,38 @@ export default React.createClass({
 
     _onSave() {
         if (this.props.onSave) {
-            this.props.onSave({
-                index: this.props.index,
-                item: this.state.item
-            });
+            let errors = null;
+
+            if (isEmpty(this.state.item.key)) {
+                errors = {
+                    'key': '`key` is required'
+                };
+            }
+
+            if (isEmpty(this.state.item.value)) {
+                if (!errors) {
+                    errors = {};
+                }
+
+                errors.value = '`value` is required';
+            }
+
+            if (!errors) {
+                if (this.state.validationErrors) {
+                    this.setState({
+                        validationErrors: null
+                    });
+                }
+
+                this.props.onSave({
+                    index: this.props.index,
+                    item: this.state.item
+                });
+            } else {
+                this.setState({
+                    validationErrors: errors
+                });
+            }
         }
     }
 });
