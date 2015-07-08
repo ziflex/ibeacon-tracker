@@ -67,7 +67,7 @@ export default React.createClass({
             );
         } else {
             editor = (<JsonEditor
-                validationError={this.getValidationError('key')}
+                validationError={this.getValidationError('value')}
                 valueLink={this.linkImmutableState(['item', 'value'])}
                 />
             );

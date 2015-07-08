@@ -1,4 +1,5 @@
 import React from 'react/addons';
+import Input from '../../form/input';
 
 export default React.createClass({
     mixins: [
@@ -6,7 +7,8 @@ export default React.createClass({
     ],
 
     propTypes: {
-        valueLink: React.PropTypes.object.isRequired
+        valueLink: React.PropTypes.object.isRequired,
+        validationError: React.PropTypes.string
     },
 
     getInitialState() {
@@ -17,12 +19,13 @@ export default React.createClass({
 
     render() {
         return (
-            <textarea ref="editor"
-                      className="form-control"
-                      rows="10"
-                      placeholder="value"
-                      value={this.state.value}
-                      onChange={this._onChange}
+            <Input
+                type="textarea"
+                className="form-control"
+                placeholder="value"
+                validationError={this.props.validationError}
+                value={this.state.value}
+                onChange={this._onChange}
                 />
         );
     },
