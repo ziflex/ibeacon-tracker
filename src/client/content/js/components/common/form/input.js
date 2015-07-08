@@ -16,6 +16,7 @@ export default React.createClass({
     render() {
         let component = null;
         let input = (<Input
+            hasFeedback
             {...this.props}
             bsStyle={this._validationState()}
             />);

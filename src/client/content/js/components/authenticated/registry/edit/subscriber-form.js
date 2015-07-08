@@ -10,6 +10,8 @@ import subscriberMethods from '../../../../enums/subscriber-methods';
 import trackerEvents from '../../../../enums/tracker-events';
 import utils from '../../../../utils/components';
 import Subscriber from '../../../../models/subscriber';
+import Input from '../../../common/form/input';
+import validator from '../../../../../../../shared/utils/validator';
 
 export default React.createClass({
     mixins: [
@@ -29,7 +31,8 @@ export default React.createClass({
         return {
             item: this.props.item || new Subscriber(),
             headers: false,
-            params: false
+            params: false,
+            validationErrors: null
         };
     },
 
@@ -60,7 +63,12 @@ export default React.createClass({
                                 <tbody>
                                 <tr>
                                     <td>
-                                        <input className="form-control" type="text" valueLink={this.linkImmutableState(['item', 'name'])} />
+                                        <Input
+                                            className="form-control"
+                                            type="text"
+                                            valueLink={this.linkImmutableState(['item', 'name'])}
+                                            validationError={this._getValidationError('name')}
+                                            />
                                     </td>
                                     <td>
                                         <Dropdown items={events} valueLink={this.linkImmutableState(['item', 'event'])} />
@@ -69,7 +77,12 @@ export default React.createClass({
                                         <Dropdown items={methods} valueLink={this.linkImmutableState(['item', 'method'])} />
                                     </td>
                                     <td>
-                                        <input className="form-control" type="text" valueLink={this.linkImmutableState(['item', 'url'])} />
+                                        <Input
+                                            className="form-control"
+                                            type="text"
+                                            valueLink={this.linkImmutableState(['item', 'url'])}
+                                            validationError={this._getValidationError('url')}
+                                            />
                                     </td>
                                 </tr>
                                 </tbody>
@@ -136,10 +149,18 @@ export default React.createClass({
 
     _onSave() {
         if (this.props.onSave) {
-            this.props.onSave({
-                index: this.props.index,
-                value: this.state.item
-            });
+            const result = validator.validateSubscriber(this.state.item.toJS());
+
+            if (!result) {
+                this.props.onSave({
+                    index: this.props.index,
+                    value: this.state.item
+                });
+            } else {
+                this.setState({
+                    validationErrors: result
+                });
+            }
         }
     },
 
@@ -149,5 +170,15 @@ export default React.createClass({
         }
     },
 
-    _onHide() {}
+    _onHide() {},
+
+    _getValidationError(key) {
+        let result = null;
+
+        if (this.state.validationErrors) {
+            result = this.state.validationErrors[key];
+        }
+
+        return result;
+    }
 });
