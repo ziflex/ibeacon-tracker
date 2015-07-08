@@ -1,5 +1,5 @@
 import React from 'react/addons';
-import Form from './subscriber-edit-form';
+import Form from './subscriber-form';
 import Item from './subscribers-list-item';
 import Subscriber from '../../../../models/subscriber';
 
