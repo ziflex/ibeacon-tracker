@@ -9,7 +9,7 @@ RUN npm install -g strong-pm && sl-pm-install
 RUN mkdir -p /data/db && chown -R mongodb:mongodb /data/db
 
 # Cloning project
-RUN git clone https://github.com/ziflex/ibeacon-tracker.git
+RUN git clone https://github.com/ziflex/ibeacon-tracker.git --branch deploy
 WORKDIR "/ibeacon-tracker"
 
 # Installing dependencies
