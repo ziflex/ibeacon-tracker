@@ -19,15 +19,6 @@ export default {
         interval: 10000
     },
     logger: {
-        streams: [
-            {
-                level: 'info',
-                stream: prettyStdOut            // log INFO and above to stdout
-            },
-            {
-                level: 'error',
-                path: '/var/tmp/ibeacon-tracker.log'  // log ERROR and above to a file
-            }
-        ]
+        stream: prettyStdOut
     }
 };
