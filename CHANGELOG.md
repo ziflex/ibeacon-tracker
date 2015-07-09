@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.3.2
+
+Contains only one hot fix.
+
+### Fixed
+
+* when ``uuid`` was parsed incorrectly and the registry list threw an exception 
+
 ## 0.3.1
 
 ### Added
