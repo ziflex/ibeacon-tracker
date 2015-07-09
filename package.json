@@ -1,9 +1,11 @@
 {
   "name": "ibeacon-tracker",
-  "version": "0.3.0",
+  "version": "0.3.1",
   "description": "Service for tracking iBeacons",
   "main": "dist/server.js",
   "scripts": {
+    "build:production:pack": "slc build --install --scripts --bundle --pack",
+    "build:production:commit": "slc build --install --scripts --bundle --commit",
     "build": "npm run clean && npm run build:server && npm run build:shared && npm run build:client",
     "build:shared": "npm run lint:shared && babel src/shared --out-dir dist/shared",
     "build:server": "npm run lint:server && babel src/server --out-dir dist",
@@ -23,8 +25,7 @@
     "watch:server": "nodemon --watch src/shared --watch src/server --ext js --exec 'npm run build:shared && npm run build:server && node dist/server'",
     "watch": "npm run watch:server & npm run watch:client",
     "debug": "NOBLE_REPORT_ALL_HCI_EVENTS=1 node-debug --web-port=8089 dist/server.js",
-    "dev": "npm run clean && npm run build:client && NODE_ENV=development NOBLE_REPORT_ALL_HCI_EVENTS=1 npm run watch",
-    "start": "forever dist/server.js --minUptime 5000 --spinSleepTime 2000"
+    "dev": "npm run clean && npm run build:client && NODE_ENV=development NOBLE_REPORT_ALL_HCI_EVENTS=1 npm run watch"
   },
   "browserify": {
     "transform": [
@@ -36,13 +37,12 @@
   "author": "",
   "license": "MIT",
   "dependencies": {
-    "alt": "~0.16.7",
+    "alt": "^0.17.1",
     "bleacon": "~0.2.3",
     "bluebird": "^2.9.32",
     "body-parser": "^1.13.2",
     "bootstrap": "^3.3.5",
     "bunyan": "~1.3.5",
-    "bunyan-middleware": "~0.2.0",
     "bunyan-prettystream": "~0.1.3",
     "classnames": "^2.1.3",
     "cookie-parser": "^1.3.5",
@@ -76,7 +76,35 @@
     "babelify": "~6.1.2",
     "eslint-plugin-react": "~2.4.0",
     "watchify": "~3.2.2",
-    "nodemon": "~1.3.7",
     "watch": "~0.16.0"
-  }
+  },
+  "bundleDependencies": [
+    "alt",
+    "bleacon",
+    "bluebird",
+    "body-parser",
+    "bootstrap",
+    "bunyan",
+    "bunyan-middleware",
+    "bunyan-prettystream",
+    "classnames",
+    "cookie-parser",
+    "express",
+    "express-session",
+    "humane-js",
+    "immutable",
+    "lodash",
+    "mongod",
+    "mongoose",
+    "passport",
+    "passport-local",
+    "passport-local-mongoose",
+    "piperline",
+    "react",
+    "react-bootstrap",
+    "react-router",
+    "reactlink-immutable",
+    "superagent",
+    "symbol"
+  ]
 }

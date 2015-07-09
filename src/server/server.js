@@ -5,7 +5,6 @@ import cookieParser from 'cookie-parser';
 import session from 'express-session';
 import passport from 'passport';
 import passportConfig from './config/passport';
-import bunyanMiddleware from 'bunyan-middleware';
 import mongoose from 'mongoose';
 import logger from './services/logger';
 import router from './router';
@@ -24,13 +23,6 @@ mongoose.connect(connectionString(), (err) => {
 });
 
 const server = express();
-server.use(bunyanMiddleware({
-    headerName: 'X-Request-Id',
-    propertyName: 'reqId',
-    logName: 'req_id',
-    obscureHeaders: [],
-    logger: logger
-}));
 server.use('/', express.static(path.join(__dirname, '/public')));
 server.use('/content', express.static(path.join(__dirname, '/public/content')));
 server.use(bodyParser.json());
