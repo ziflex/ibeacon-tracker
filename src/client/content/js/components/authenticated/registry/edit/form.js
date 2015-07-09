@@ -7,6 +7,7 @@ import SubscribersList from './subscribers-list';
 import RegistryActions from '../../../../actions/registry';
 import ValidationMixin from '../../../../mixins/validation-mixin';
 import validator from '../../../../../../../shared/utils/validator';
+import NotificationActions from '../../../../actions/notification';
 
 export default React.createClass({
     mixins: [
@@ -130,6 +131,7 @@ export default React.createClass({
             RegistryActions.save(this.state.item);
             this.transitionTo('registry');
         } else {
+            NotificationActions.error('Validation error!');
             this.setState({
                 validationErrors: result
             });

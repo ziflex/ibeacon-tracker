@@ -34,7 +34,7 @@ export default {
             result = value.length === uuidLen;
 
             if (!result) {
-                message = '`uuid` must contain ${uuidLen} characters';
+                message = `'uuid' must contain ${uuidLen} characters`;
             }
         }
 
@@ -44,13 +44,14 @@ export default {
     major(value) {
         let result = false;
         let message = null;
+        let parsed = parseInt(value, 10);
 
-        if (isNumber(value)) {
-            result = (value >= MIN_MAJ_MIN && value <= MAX_MAJ_MIN);
+        if (isNumber(parsed)) {
+            result = (parsed >= MIN_MAJ_MIN && parsed <= MAX_MAJ_MIN);
         }
 
         if (!result) {
-            message = '`major` is required and must be in range between ${MIN_MAJ_MIN} and ${MAX_MAJ_MIN}';
+            message = `'major' is required and must be in range between ${MIN_MAJ_MIN} and ${MAX_MAJ_MIN}`;
         }
 
         return {result, message};
@@ -59,13 +60,14 @@ export default {
     minor(value) {
         let result = false;
         let message = null;
+        let parsed = parseInt(value, 10);
 
-        if (isNumber(value)) {
-            result = (value >= MIN_MAJ_MIN && value <= MAX_MAJ_MIN);
+        if (isNumber(parsed)) {
+            result = (parsed >= MIN_MAJ_MIN && parsed <= MAX_MAJ_MIN);
         }
 
         if (!result) {
-            message = '`minor` is required and must be in range between ${MIN_MAJ_MIN} and ${MAX_MAJ_MIN}';
+            message = `'minor' is required and must be in range between ${MIN_MAJ_MIN} and ${MAX_MAJ_MIN}`;
         }
 
         return {result, message};
@@ -113,6 +115,18 @@ export default {
 
                     result[key] = validation.message;
                 }
+            }
+        });
+
+        forEach(beacon.subscribers, (value, index) => {
+            let errors = this.validateSubscriber(value);
+
+            if (errors) {
+                if (!result) {
+                    result = {};
+                }
+
+                result['subscriber_' + index] = errors;
             }
         });
 

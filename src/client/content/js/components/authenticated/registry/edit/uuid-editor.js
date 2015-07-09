@@ -6,7 +6,8 @@ import Input from '../../../common/form/input';
 
 export default React.createClass({
     propTypes: {
-        valueLink: React.PropTypes.object
+        valueLink: React.PropTypes.object,
+        validationError: React.PropTypes.string
     },
 
     getInitialState() {
@@ -17,7 +18,8 @@ export default React.createClass({
             part2: parts.length >= 2 ? parts[1] : '',
             part3: parts.length >= 3 ? parts[2] : '',
             part4: parts.length >= 4 ? parts[3] : '',
-            part5: parts.length >= 5 ? parts[4] : ''
+            part5: parts.length >= 5 ? parts[4] : '',
+            validationError: null
         };
     },
 
@@ -31,6 +33,7 @@ export default React.createClass({
                         placeholder="XXXXXXXX"
                         maxLength={8}
                         value={this.state.part1}
+                        validationError={this.props.validationError}
                         onChange={(event) => this._onChange('part1', event.target.value)}
                         />
                 </div>
@@ -41,6 +44,7 @@ export default React.createClass({
                         placeholder="XXXX"
                         maxLength={4}
                         value={this.state.part2}
+                        validationError={this.props.validationError}
                         onChange={(event) => this._onChange('part2', event.target.value)}
                         />
                 </div>
@@ -51,6 +55,7 @@ export default React.createClass({
                         placeholder="XXXX"
                         maxLength={4}
                         value={this.state.part3}
+                        validationError={this.props.validationError}
                         onChange={(event) => this._onChange('part3', event.target.value)}
                         />
                 </div>
@@ -62,6 +67,7 @@ export default React.createClass({
                         placeholder="XXXX"
                         maxLength={4}
                         value={this.state.part4}
+                        validationError={this.props.validationError}
                         onChange={(event) => this._onChange('part4', event.target.value)}
                         />
                 </div>
@@ -72,6 +78,7 @@ export default React.createClass({
                         placeholder="XXXXXXXXXXXX"
                         maxLength={12}
                         value={this.state.part5}
+                        validationError={this.props.validationError}
                         onChange={(event) => this._onChange('part5', event.target.value)}
                         />
                 </div>

@@ -12,6 +12,7 @@ import utils from '../../../../utils/components';
 import Subscriber from '../../../../models/subscriber';
 import Input from '../../../common/form/input';
 import validator from '../../../../../../../shared/utils/validator';
+import NotificationActions from '../../../../actions/notification';
 
 export default React.createClass({
     mixins: [
@@ -157,6 +158,7 @@ export default React.createClass({
                     value: this.state.item
                 });
             } else {
+                NotificationActions.error('Validation error!');
                 this.setState({
                     validationErrors: result
                 });
