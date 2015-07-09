@@ -1,8 +1,8 @@
-# iBeacon tracker
+# iBeacon Tracker
 
-iBeacon tracker allows you to track any registered ibeacons and notify 3rd party services.
+``iBeacon Tracker`` allows you to track any registered iBeacons and notify 3rd party services.
 
-App is built on top of [bleno](https://github.com/sandeepmistry/bleno).
+It's built on top of [bleno](https://github.com/sandeepmistry/bleno).
 
 ## Features
 * tracks registered iBeacons
@@ -17,7 +17,7 @@ You will need the following things properly installed on your computer.
 * [Babel](https://babeljs.io/)
 * [Bluez](http://www.bluez.org/)
 * [MongoDB](https://www.mongodb.org/downloads)
-* [Forever](https://www.npmjs.com/package/forever)
+* [StrongLoop](http://loopback.io/)
 
 ### OS X
 
@@ -38,27 +38,29 @@ You will need the following things properly installed on your computer.
 * run this command in bash `find -path '*noble*Release/hci-ble' -exec sudo setcap cap_net_raw+eip '{}' \;`
 * run this command in bash `find -path '*bleno*Release/hci-ble' -exec sudo setcap cap_net_raw+eip '{}' \;`
 
-## Running / Development
+## Development / Production
 
 ### Development
-* `npm run start:dev`
+* `npm run build` - builds the project
+* `npm run dev` - runs local server
 
 ### Production
-* `npm run start`
+* `npm run build:production:commit` -- creates / update 'deploy' branch with production ready package
+* `npm run build:production:pack` -- creates archive with production ready package
 
 ## Configuring
-* go to `htttp://localhost:8080` and log in using default credentials `admin:admin`.
+* go to `http://localhost:8080` and log in using default credentials `admin:admin`.
 * in `registry` section create new entry specifying `name`, `uuid`, `major` and `minor`.
 * add subscribers which should be notified (**every subscriber should be specified as REST API method**).
 * click `save`.
 
-After registration app will start sending notifications when the ibeacon is found and/or lost. 
+After registration app will start sending notifications when the iBeacon is found and/or lost. 
 
-By default, subscriber recieves event name, uuid, major and minor numbers. 
+By default, subscriber receives event name, uuid, major and minor numbers. 
 If ``GET`` method is used, arguments are passed as query parameters in format ```?event={eventName}&uuid={uuid}&major={major}&minor={minor}```.
 Otherwise they will be passed as form data.
 
-Default behvaiour can be overridden.
+Default behaviour can be overridden.
 
 ## Further Reading / Useful Links
 

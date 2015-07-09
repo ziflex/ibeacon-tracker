@@ -1,6 +1,7 @@
 .idea
 .eslintrc
 .gitignore
+*.log
 
 node_modules
 src
