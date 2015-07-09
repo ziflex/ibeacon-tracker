@@ -1,4 +1,5 @@
 import isString from 'lodash/lang/isString';
+import isEmpty from 'lodash/lang/isEmpty';
 
 export default {
     /*
@@ -31,9 +32,10 @@ export default {
     * Splits uuid into chunks.
     */
     split(uuid) {
-        return uuid
+        return !isEmpty(uuid) ? uuid
+            .replace(/-/g, '')
             .match(/^([0-9a-f]{8})([0-9a-f]{4})([0-9a-f]{4})([0-9a-f]{4})([0-9a-f]{12})$/i)
-            .splice(1);
+            .splice(1) : [];
     },
 
     /*
