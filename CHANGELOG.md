@@ -9,6 +9,7 @@
 ### Fixed
 
 * after updating registry, notification wasn't fired.
+* notifications appear twice. 
 
 ## 0.3.2
 
