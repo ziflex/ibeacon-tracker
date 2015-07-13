@@ -95,6 +95,8 @@ function saveRegistry(req, res) {
         })
         .on('done', (result) => {
             if (result.success) {
+                notify();
+
                 if (result.data) {
                     return res.json(result.data);
                 }

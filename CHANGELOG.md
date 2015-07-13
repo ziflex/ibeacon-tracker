@@ -1,5 +1,15 @@
 # Changelog
 
+## 0.3.3
+
+### Updated
+
+* ``emit`` in EventHub is async now.
+
+### Fixed
+
+* after updating registry, notification wasn't fired.
+
 ## 0.3.2
 
 Contains only one hot fix.
