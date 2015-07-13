@@ -2,7 +2,6 @@ import React from 'react/addons';
 import {State, RouteHandler} from 'react-router';
 import Header from './header';
 import Sidebar from './sidebar';
-import Notification from './../notification';
 import AuthenticationStore from '../../stores/authentication';
 
 export default React.createClass({
@@ -34,7 +33,6 @@ export default React.createClass({
                         </div>
                     </div>
                 </div>
-                <Notification />
             </div>
         );
     }

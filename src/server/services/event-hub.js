@@ -17,7 +17,9 @@ class EventHubService {
     }
 
     emit(...args) {
-        this[EMITTER].emit(...args);
+        process.nextTick(() => {
+            this[EMITTER].emit(...args);
+        });
     }
 }
 

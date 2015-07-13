@@ -3,13 +3,13 @@ MAINTAINER Tim Voronov <ziflex@gmail.com>
 
 # Installation
 RUN apt-get update && apt-get install -y apt-utils libbluetooth-dev libcap2-bin bluez mongodb
-RUN npm install -g forever
+RUN npm install -g strong-pm && sl-pm-install
 
 # Create the MongoDB data directory and run MongoDB
-RUN mkdir -p /data/db /var/log/mongodb /var/run/mongodb
+RUN mkdir -p /data/db && chown -R mongodb:mongodb /data/db
 
 # Cloning project
-RUN git clone https://github.com/ziflex/ibeacon-tracker.git
+RUN git clone https://github.com/ziflex/ibeacon-tracker.git --branch deploy
 WORKDIR "/ibeacon-tracker"
 
 # Installing dependencies
@@ -24,4 +24,4 @@ RUN npm run build
 EXPOSE 8080
 
 # Run command
-CMD mongod & npm run start
+CMD mongod & slc start --cluster="off"
