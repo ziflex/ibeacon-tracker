@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.3.4
+
+### Fixed
+
+* stopped saving data form in 'json' format.
+
 ## 0.3.3
 
 ### Updated

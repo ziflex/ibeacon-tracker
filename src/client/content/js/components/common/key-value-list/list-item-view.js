@@ -1,5 +1,6 @@
 import React from 'react/addons';
 import DynamicEventsMixin from '../../../mixins/dynamic-events-mixin';
+import isString from 'lodash/lang/isString';
 
 export default React.createClass({
     mixins: [
@@ -17,6 +18,8 @@ export default React.createClass({
 
     render() {
         let typeColumn = null;
+        const key = this.props.item.key;
+        const value = this.props.item.value || '';
 
         if (this.props.types && this.props.types.count() > 1) {
             typeColumn = (
@@ -29,10 +32,10 @@ export default React.createClass({
         return (
             <tr>
                 <td>
-                    {this.props.item.key}
+                    {key}
                 </td>
                 <td>
-                    {this.props.item.value}
+                    {isString(value) ? value : JSON.stringify(value)}
                 </td>
                 {typeColumn}
                 <td>

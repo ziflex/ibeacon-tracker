@@ -1,6 +1,6 @@
 {
   "name": "ibeacon-tracker",
-  "version": "0.3.3",
+  "version": "0.3.4",
   "description": "Service for tracking iBeacons",
   "main": "dist/server.js",
   "scripts": {
@@ -85,7 +85,6 @@
     "body-parser",
     "bootstrap",
     "bunyan",
-    "bunyan-middleware",
     "bunyan-prettystream",
     "classnames",
     "cookie-parser",
