@@ -94,24 +94,25 @@ export default React.createClass({
     _onSave() {
         if (this.props.onSave) {
             let errors = null;
+            let item = this.state.item;
 
-            if (isEmpty(this.state.item.key)) {
+            if (isEmpty(item.key)) {
                 errors = {
                     'key': '`key` is required'
                 };
             }
 
-            if (isEmpty(this.state.item.value)) {
+            if (isEmpty(item.value)) {
                 if (!errors) {
                     errors = {};
                 }
 
                 errors.value = '`value` is required';
             } else {
-                if (this.state.item.type === 'json') {
-                    if (isString(this.state.item.value)) {
+                if (item.type === 'json') {
+                    if (isString(item.value)) {
                         try {
-                            JSON.parse(this.state.item.value);
+                            item = item.set('value', JSON.parse(item.value));
                         } catch (ex) {
                             if (!errors) {
                                 errors = {};
@@ -132,7 +133,7 @@ export default React.createClass({
 
                 this.props.onSave({
                     index: this.props.index,
-                    item: this.state.item
+                    item: item
                 });
             } else {
                 this.setState({
