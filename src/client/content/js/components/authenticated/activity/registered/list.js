@@ -1,5 +1,6 @@
 import React from 'react/addons';
 import Item from './list-item';
+import uuid from '../../../../../../../shared/utils/uuid';
 
 export default React.createClass({
     mixins: [
@@ -17,7 +18,7 @@ export default React.createClass({
         if (this.props.items) {
             items = this.props.items.toSeq().map((item) => {
                 index += 1;
-                return (<Item key={item.id} index={index} item={item} />);
+                return (<Item key={uuid.generate(item)} index={index} item={item} />);
             }).toArray();
         }
 
@@ -27,6 +28,10 @@ export default React.createClass({
                     <tr>
                         <th>#</th>
                         <th>Name</th>
+                        <th>Proximity</th>
+                        <th>Accuracy</th>
+                        <th>Power</th>
+                        <th>Last seen</th>
                     </tr>
                 </thead>
                 <tbody>

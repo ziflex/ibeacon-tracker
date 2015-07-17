@@ -45,10 +45,20 @@ class ActivityService {
             const result = [];
             const registry = _.indexBy(items, generate);
             _.forEach(detected, (i) => {
-                const isRegistered = !_.isUndefined(registry[generate(i)]);
+                const match = registry[generate(i)];
+                const isRegistered = !_.isUndefined(match);
 
                 if (isRegistered === registered) {
-                    result.push(i);
+                    result.push({
+                        name: _.get(match, 'name'),
+                        uuid: uuid.normalize(i),
+                        major: i.major,
+                        minor: i.minor,
+                        proximity: i.proximity,
+                        accuracy: i.accuracy,
+                        measuredPower: i.measuredPower,
+                        lastSeen: i.lastSeen
+                    });
                 }
             });
 

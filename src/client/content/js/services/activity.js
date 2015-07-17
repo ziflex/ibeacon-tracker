@@ -2,8 +2,8 @@ import client from 'superagent';
 import Promise from 'bluebird';
 import map from 'lodash/collection/map';
 import Immutable from 'immutable';
+import Activity from '../models/activity';
 import settings from '../settings';
-import utils from '../utils/models';
 
 class ActivityService {
 
@@ -18,12 +18,12 @@ class ActivityService {
                             unregistered: null
                         };
 
-                        result.registered = Immutable.Map(map((res.body || {}).registered, i => {
-                            return [i.id, utils.mapToBeacon(i)];
+                        result.registered = Immutable.List(map((res.body || {}).registered, i => {
+                            return new Activity(i);
                         }));
 
-                        result.unregistered = Immutable.Map(map((res.body || {}).unregistered, i => {
-                            return [i.id, utils.mapToBeacon(i)];
+                        result.unregistered = Immutable.List(map((res.body || {}).unregistered, i => {
+                            return new Activity(i);
                         }));
 
                         resolve(result);
@@ -40,8 +40,8 @@ class ActivityService {
                 .set('Accept', 'application/json')
                 .end((err, res) => {
                     if (!err) {
-                        resolve(Immutable.Map(map(res.body || [], i => {
-                            return [i.id, utils.mapToBeacon(i)];
+                        resolve(Immutable.List(map(res.body || [], i => {
+                            return new Activity(i);
                         })));
                     } else {
                         reject(err);
@@ -56,8 +56,8 @@ class ActivityService {
                 .set('Accept', 'application/json')
                 .end((err, res) => {
                     if (!err) {
-                        resolve(Immutable.Map(map(res.body || [], i => {
-                            return [i.id, utils.mapToBeacon(i)];
+                        resolve(Immutable.List(map(res.body || [], i => {
+                            return new Activity(i);
                         })));
                     } else {
                         reject(err);

@@ -5,6 +5,7 @@
 ### Added
 
 * enable/disable registered iBeacons
+* extended information in activity page (`proximity`, `accuracy`, `measuredPower`, `lastSeen`)
 
 ## 0.3.4
 

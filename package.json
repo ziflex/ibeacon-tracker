@@ -52,6 +52,7 @@
     "humane-js": "~3.2.2",
     "immutable": "^3.7.4",
     "lodash": "~3.9.3",
+    "moment": "^2.10.3",
     "mongod": "~1.3.0",
     "mongoose": "^4.0.6",
     "passport": "^0.2.2",

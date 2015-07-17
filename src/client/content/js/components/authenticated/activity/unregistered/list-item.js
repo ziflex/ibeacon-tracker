@@ -1,6 +1,7 @@
 import React from 'react/addons';
 import {Navigation} from 'react-router';
 import uuid from '../../../../../../../shared/utils/uuid';
+import moment from 'moment';
 
 export default React.createClass({
     mixins: [
@@ -22,6 +23,10 @@ export default React.createClass({
                 <td>{uuid.format(this.props.item.uuid)}</td>
                 <td>{this.props.item.major}</td>
                 <td>{this.props.item.minor}</td>
+                <td>{this.props.item.proximity}</td>
+                <td>{this.props.item.accuracy.toFixed(4)}</td>
+                <td>{this.props.item.measuredPower}</td>
+                <td>{moment(this.props.item.lastSeen).fromNow()}</td>
                 <td><button type="button" className="btn btn-success" onClick={this._onRegister}>Register</button></td>
             </tr>
         );
