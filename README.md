@@ -7,6 +7,7 @@ It's built on top of [bleno](https://github.com/sandeepmistry/bleno).
 ## Features
 * tracks registered iBeacons
 * notifies subscribers on events (`found`, `lost`)
+* web-based dashboard
 
 ## Prerequisites
 

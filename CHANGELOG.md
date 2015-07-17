@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.4.0
+
+### Added
+
+* enable/disable registered iBeacons
+
 ## 0.3.4
 
 ### Fixed

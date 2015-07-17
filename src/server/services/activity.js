@@ -1,6 +1,6 @@
-import _ from 'lodash';
 import Promise from 'bluebird';
-import registry from './registry';
+import _ from 'lodash';
+import BeaconModel from '../models/beacon';
 import tracker from './tracker';
 import uuid from '../shared/utils/uuid';
 
@@ -8,31 +8,51 @@ class ActivityService {
 
     findAll(callback) {
         // Callback is used to keep consistency throughout the services
-        Promise.props({
-            registered: new Promise(resolve => this.findRegistered(resolve)),
-            unregistered: new Promise(resolve => this.findUnregistered(resolve))
-        }).then(callback);
-    }
-
-    findRegistered(callback) {
-        registry.findAll(tracker.getList(), (current) => {
-            callback(_.map(current, (i) => {
-                return i.toObject();
-            }));
+        const registered = new Promise((resolve, reject) => {
+            this.find(true, (err, items) => {
+                if (err) return reject(err);
+                resolve(items);
+            });
         });
+
+        const unregistered = new Promise((resolve, reject) => {
+            this.find(false, (err, items) => {
+                if (err) return reject(err);
+                resolve(items);
+            });
+        });
+
+        Promise.props({
+            registered: registered,
+            unregistered: unregistered
+        }).then((props) => callback(null, props)).catch((reason) => callback(reason, null));
     }
 
-    findUnregistered(callback) {
-        registry.getAll((registered) => {
-            const result = [];
+    find(registered, callback) {
+        const detected = tracker.getList();
+        const query = BeaconModel.find({
+            uuid: { $in: _.map(detected, (i) => i.uuid) },
+            major: { $in: _.map(detected, (i) => i.major) },
+            minor: { $in: _.map(detected, (i) => i.minor) }
+        });
 
-            _.forEach(tracker.getList(), (i) => {
-                if (!registered[uuid.generate(i)]) {
-                    result.push(_.clone(i));
+        query.exec((err, items) => {
+            if (err) {
+                return callback(err, null);
+            }
+
+            const generate = _.bind(uuid.generate, uuid);
+            const result = [];
+            const registry = _.indexBy(items, generate);
+            _.forEach(detected, (i) => {
+                const isRegistered = !_.isUndefined(registry[generate(i)]);
+
+                if (isRegistered === registered) {
+                    result.push(i);
                 }
             });
 
-            callback(result);
+            return callback(null, result);
         });
     }
 }

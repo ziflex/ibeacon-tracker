@@ -27,6 +27,7 @@ export default React.createClass({
                     <thead>
                         <tr>
                             <th>#</th>
+                            <th>Enabled</th>
                             <th>Name</th>
                             <th>UUID</th>
                             <th>Major</th>

@@ -7,10 +7,12 @@ import BeaconModel from '../models/beacon';
 import events from '../enums/registry-events';
 import util from '../utils/route';
 import validator from '../shared/utils/validator';
+import logger from '../services/logger';
 
 const route = '/registry';
 
 function notify() {
+    logger.info('Registry has been updated.');
     hub.emit(events.CHANGED);
 }
 
@@ -21,7 +23,8 @@ function toPlainObject(entry = {}) {
         uuid: entry.uuid,
         major: entry.major,
         minor: entry.minor,
-        subscribers: entry.subscribers || []
+        subscribers: entry.subscribers || [],
+        enabled: entry.enabled
     };
 }
 

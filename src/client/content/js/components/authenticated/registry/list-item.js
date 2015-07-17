@@ -1,4 +1,5 @@
 import React from 'react/addons';
+import cn from 'classnames';
 import {Navigation} from 'react-router';
 import RegistryActions from '../../../actions/registry';
 import uuid from '../../../../../../shared/utils/uuid';
@@ -16,10 +17,16 @@ export default React.createClass({
 
     render() {
         const subNum = this.props.item.subscribers.count();
+        const enabled = cn({
+            'glyphicon-ok-circle': this.props.item.enabled,
+            'glyphicon-ban-circle': !this.props.item.enabled,
+            'glyphicon': true
+        });
 
         return (
             <tr>
                 <td>{this.props.number}</td>
+                <td><span className={enabled} aria-hidden="true"></span></td>
                 <td>{this.props.item.name}</td>
                 <td>{uuid.format(this.props.item.uuid)}</td>
                 <td>{this.props.item.major}</td>

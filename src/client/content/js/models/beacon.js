@@ -6,5 +6,6 @@ export default Record({
     uuid: '',
     major: 0,
     minor: 0,
-    subscribers: List()
+    subscribers: List(),
+    enabled: true
 });

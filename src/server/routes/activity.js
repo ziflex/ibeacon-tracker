@@ -5,20 +5,23 @@ import util from '../utils/route';
 const route = '/activity';
 
 function getActivityAll(req, res) {
-    activity.findAll(items => {
-        res.json(items);
+    activity.findAll((err, items) => {
+        if (err) return util.error(res, err);
+        return res.json(items);
     });
 }
 
 function getActiveRegistered(req, res) {
-    activity.findRegistered(items => {
-        res.json(items);
+    activity.find(true, (err, items) => {
+        if (err) return util.error(res, err);
+        return res.json(items);
     });
 }
 
 function getActiveUnregistered(req, res) {
-    activity.findUnregistered(items => {
-        res.json(items);
+    activity.find(false, (err, items) => {
+        if (err) return util.error(res, err);
+        return res.json(items);
     });
 }
 

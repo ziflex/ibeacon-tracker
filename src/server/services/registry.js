@@ -53,38 +53,11 @@ class RegistryService {
         }, this, beacon, callback, CACHE));
     }
 
-    findAll(beacons, callback) {
-        if (!beacons || !beacons.length) {
-            callback([]);
-            return;
-        }
-
-        this[ENSURE](_.bind((b, cb, sym) => {
-            const result = [];
-            _.forEach(b, (i) => {
-                const guid = uuid.generate(i);
-                const found = this[sym][guid];
-
-                if (found) {
-                    result.push(found);
-                }
-            });
-
-            cb(result);
-        }, this, beacons, callback, CACHE));
-    }
-
-    getAll(callback) {
-        this[ENSURE](_.bind((cb, sym) => {
-            cb(_.clone(this[sym]));
-        }, this, callback, CACHE));
-    }
-
     update(callback) {
         if (!this[IS_UPDATING]) {
             this[IS_UPDATING] = true;
 
-            BeaconModel.find({}, (err, data) => {
+            BeaconModel.find({ enabled: true }, (err, data) => {
                 let result = null;
                 let isEmpty = true;
 

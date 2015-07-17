@@ -2,6 +2,7 @@ import React from 'react/addons';
 import LinkedImmutableStateMixin from 'reactlink-immutable';
 import {Navigation} from 'react-router';
 import Input from '../../../common/form/input';
+import Checkbox from '../../../common/form/checkbox';
 import UuidEditor from './uuid-editor';
 import SubscribersList from './subscribers-list';
 import RegistryActions from '../../../../actions/registry';
@@ -31,6 +32,16 @@ export default React.createClass({
     render() {
         return (
             <form className="form-horizontal" onSubmit={this._onSubmit}>
+                <div className="form-group">
+                    <label htmlFor="disabled" className="col-sm-2 control-label">Enabled</label>
+                    <div className="col-sm-10">
+                        <Checkbox
+                            id="enabled"
+                            name="enabled"
+                            valueLink={this.linkImmutableState(['item', 'enabled'])}
+                            />
+                    </div>
+                </div>
                 <div className="form-group">
                     <label htmlFor="name" className="col-sm-2 control-label">Name</label>
                     <div className="col-sm-10">

@@ -18,7 +18,8 @@ export default {
             url: entry.url,
             params: Immutable.Map(entry.params),
             headers: Immutable.Map(entry.headers),
-            data: Immutable.Map(entry.data)
+            data: Immutable.Map(entry.data),
+            enable: entry.enabled
         });
     }
 };
