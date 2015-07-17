@@ -2,6 +2,8 @@ import React from 'react/addons';
 import Item from './list-item';
 import isEmpty from 'lodash/lang/isEmpty';
 import isString from 'lodash/lang/isString';
+import isUndefined from 'lodash/lang/isUndefined';
+import isNull from 'lodash/lang/isNull';
 import KeyValuePair from '../../../models/key-value-pair';
 
 export default React.createClass({
@@ -73,8 +75,15 @@ export default React.createClass({
     _onSave(options) {
         let {index, item} = options;
         let items = this.state.items;
+        let valueIsEmpty = false;
 
-        if (isEmpty(item.key) || isEmpty(item.value)) {
+        if (isString(item.value)) {
+            valueIsEmpty = isEmpty(item.value);
+        } else {
+            valueIsEmpty = isUndefined(item.value) || isNull(item.value);
+        }
+
+        if (isEmpty(item.key) || valueIsEmpty) {
             this.setState({
                 items: items.remove(index)
             });
