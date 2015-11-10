@@ -2,21 +2,27 @@ import React from 'react/addons';
 import Input from '../../form/input';
 
 export default React.createClass({
-    mixins: [
-        React.addons.PureRenderMixin
-    ],
-
     propTypes: {
         valueLink: React.PropTypes.object.isRequired,
         validationError: React.PropTypes.string
     },
-
+    mixins: [
+        React.addons.PureRenderMixin
+    ],
     getInitialState() {
         return {
             value: JSON.stringify(this.props.valueLink.value)
         };
     },
+    _onChange(event) {
+        const value = event.target.value;
 
+        this.setState({value: value});
+
+        if (this.props.valueLink) {
+            this.props.valueLink.requestChange(value);
+        }
+    },
     render() {
         return (
             <Input
@@ -28,15 +34,5 @@ export default React.createClass({
                 onChange={this._onChange}
                 />
         );
-    },
-
-    _onChange(event) {
-        const value = event.target.value;
-
-        this.setState({value: value});
-
-        if (this.props.valueLink) {
-            this.props.valueLink.requestChange(value);
-        }
     }
 });

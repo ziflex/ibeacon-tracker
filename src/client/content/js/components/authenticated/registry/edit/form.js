@@ -11,17 +11,15 @@ import validator from '../../../../../../../shared/utils/validator';
 import NotificationActions from '../../../../actions/notification';
 
 export default React.createClass({
+    propTypes: {
+        item: React.PropTypes.object
+    },
     mixins: [
         React.addons.PureRenderMixin,
         LinkedImmutableStateMixin,
         ValidationMixin,
         Navigation
     ],
-
-    propTypes: {
-        item: React.PropTypes.object
-    },
-
     getInitialState() {
         return {
             item: this.props.item,
@@ -29,6 +27,43 @@ export default React.createClass({
         };
     },
 
+    _onSubscriberSave(options) {
+        const {index, value} = options;
+
+        this.setState({
+            item: this.state.item.update('subscribers', list => list.set(index, value))
+        });
+    },
+
+    _onSubscriberDelete(index) {
+        if (index > -1) {
+            this.setState({
+                item: this.state.item.update('subscribers', (current) => {
+                    return current.remove(index);
+                })
+            });
+        }
+    },
+
+    _onSubmit(event) {
+        event.preventDefault();
+
+        const result = validator.validate(this.state.item.toJS());
+
+        if (!result) {
+            RegistryActions.save(this.state.item);
+            this.transitionTo('registry');
+        } else {
+            NotificationActions.error('Validation error!');
+            this.setState({
+                validationErrors: result
+            });
+        }
+    },
+
+    _onCancel() {
+        this.transitionTo('registry');
+    },
     render() {
         return (
             <form className="form-horizontal" onSubmit={this._onSubmit}>
@@ -113,43 +148,5 @@ export default React.createClass({
                 </div>
             </form>
         );
-    },
-
-    _onSubscriberSave(options) {
-        let {index, value} = options;
-
-        this.setState({
-            item: this.state.item.update('subscribers', list => list.set(index, value))
-        });
-    },
-
-    _onSubscriberDelete(index) {
-        if (index > -1) {
-            this.setState({
-                item: this.state.item.update('subscribers', (current) => {
-                    return current.remove(index);
-                })
-            });
-        }
-    },
-
-    _onSubmit(event) {
-        event.preventDefault();
-
-        const result = validator.validate(this.state.item.toJS());
-
-        if (!result) {
-            RegistryActions.save(this.state.item);
-            this.transitionTo('registry');
-        } else {
-            NotificationActions.error('Validation error!');
-            this.setState({
-                validationErrors: result
-            });
-        }
-    },
-
-    _onCancel() {
-        this.transitionTo('registry');
     }
 });

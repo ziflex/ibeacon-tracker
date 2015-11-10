@@ -11,13 +11,6 @@ import isEmpty from 'lodash/lang/isEmpty';
 import isString from 'lodash/lang/isString';
 
 export default React.createClass({
-    mixins: [
-        React.addons.PureRenderMixin,
-        LinkedImmutableStateMixin,
-        DynamicEventsMixin,
-        ValidationError
-    ],
-
     propTypes: {
         index: React.PropTypes.number.isRequired,
         types: React.PropTypes.object,
@@ -25,7 +18,12 @@ export default React.createClass({
         onSave: React.PropTypes.func,
         onCancel: React.PropTypes.func
     },
-
+    mixins: [
+        React.addons.PureRenderMixin,
+        LinkedImmutableStateMixin,
+        DynamicEventsMixin,
+        ValidationError
+    ],
     getInitialState() {
         return {
             item: this.props.item,
@@ -33,44 +31,20 @@ export default React.createClass({
         };
     },
 
-    render() {
-        return (
-            <tr>
-                <td>
-                    <Input
-                        className="form-control"
-                        type="text"
-                        placeholder="key"
-                        validationError={this.getValidationError('key')}
-                        valueLink={this.linkImmutableState(['item', 'key'])}
-                        />
-                </td>
-                {this._renderItemValueEditor()}
-                {this._renderItemTypeEditor()}
-                <td>
-                    <button type="button" className="btn btn-success" onClick={this._onSave}>Save</button>
-                </td>
-                <td>
-                    <button type="button" className="btn btn-default" onClick={this.emitAs('onCancel')}>Cancel</button>
-                </td>
-            </tr>
-        );
-    },
-
     _renderItemValueEditor() {
         let editor = null;
 
         if (this.state.item.type === 'string') {
             editor = (<StringEditor
-                validationError={this.getValidationError('value')}
-                valueLink={this.linkImmutableState(['item', 'value'])}
-                />
+                    validationError={this.getValidationError('value')}
+                    valueLink={this.linkImmutableState(['item', 'value'])}
+                    />
             );
         } else {
             editor = (<JsonEditor
-                validationError={this.getValidationError('value')}
-                valueLink={this.linkImmutableState(['item', 'value'])}
-                />
+                    validationError={this.getValidationError('value')}
+                    valueLink={this.linkImmutableState(['item', 'value'])}
+                    />
             );
         }
 
@@ -141,5 +115,28 @@ export default React.createClass({
                 });
             }
         }
+    },
+    render() {
+        return (
+            <tr>
+                <td>
+                    <Input
+                        className="form-control"
+                        type="text"
+                        placeholder="key"
+                        validationError={this.getValidationError('key')}
+                        valueLink={this.linkImmutableState(['item', 'key'])}
+                        />
+                </td>
+                {this._renderItemValueEditor()}
+                {this._renderItemTypeEditor()}
+                <td>
+                    <button type="button" className="btn btn-success" onClick={this._onSave}>Save</button>
+                </td>
+                <td>
+                    <button type="button" className="btn btn-default" onClick={this.emitAs('onCancel')}>Cancel</button>
+                </td>
+            </tr>
+        );
     }
 });

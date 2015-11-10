@@ -4,15 +4,13 @@ import Form from './form';
 import Beacon from '../../../../models/beacon';
 
 export default React.createClass({
+    propTypes: {
+        items: React.PropTypes.object.isRequired
+    },
     mixins: [
         React.addons.PureRenderMixin,
         State
     ],
-
-    propTypes: {
-        items: React.PropTypes.object.isRequired
-    },
-
     render() {
         const params = this.getParams();
         let entry = null;

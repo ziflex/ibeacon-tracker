@@ -6,7 +6,9 @@ export default React.createClass({
     propTypes: {
         items: React.PropTypes.object
     },
-
+    _onRefresh() {
+        ActivityActions.findRegistered();
+    },
     render() {
         return (
             <div>
@@ -19,9 +21,5 @@ export default React.createClass({
                 </div>
             </div>
         );
-    },
-
-    _onRefresh() {
-        ActivityActions.findRegistered();
     }
 });

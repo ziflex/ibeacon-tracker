@@ -15,11 +15,6 @@ import validator from '../../../../../../../shared/utils/validator';
 import NotificationActions from '../../../../actions/notification';
 
 export default React.createClass({
-    mixins: [
-        React.addons.PureRenderMixin,
-        LinkedImmutableStateMixin
-    ],
-
     propTypes: {
         show: React.PropTypes.bool.isRequired,
         index: React.PropTypes.number.isRequired,
@@ -27,7 +22,10 @@ export default React.createClass({
         onSave: React.PropTypes.func,
         onCancel: React.PropTypes.func
     },
-
+    mixins: [
+        React.addons.PureRenderMixin,
+        LinkedImmutableStateMixin
+    ],
     getInitialState() {
         return {
             item: this.props.item || new Subscriber(),
@@ -36,7 +34,81 @@ export default React.createClass({
             validationErrors: null
         };
     },
+    _renderTabs() {
+        const tabs = [];
+        const item = this.props.item;
+        const headers = item ? item.headers : null;
+        const params = item ? item.params : null;
+        const data = item ? item.data : null;
 
+        tabs.push(
+            <TabPane eventKey={1} tab={"Headers"} key={"headers"}>
+                <KeyValueList
+                    items={headers}
+                    valueLink={this.linkImmutableState(['item', 'headers'])}
+                    />
+            </TabPane>
+        );
+
+        tabs.push(
+            <TabPane eventKey={2} tab={"Parameters"} key={"parameters"}>
+                <KeyValueList
+                    items={params}
+                    valueLink={this.linkImmutableState(['item', 'params'])}
+                    />
+            </TabPane>
+        );
+
+        if (this.state.item.method === subscriberMethods.POST) {
+            tabs.push(
+                <TabPane eventKey={3} tab={"Form data"} key={"form-data"}>
+                    <KeyValueList
+                        items={data}
+                        types={List.of('string', 'json')}
+                        valueLink={this.linkImmutableState(['item', 'data'])}
+                        />
+                </TabPane>
+            );
+        }
+
+        return (
+            <TabbedArea defaultActiveKey={1}>
+                {tabs}
+            </TabbedArea>
+        );
+    },
+    _onSave() {
+        if (this.props.onSave) {
+            const result = validator.validateSubscriber(this.state.item.toJS());
+
+            if (!result) {
+                this.props.onSave({
+                    index: this.props.index,
+                    value: this.state.item
+                });
+            } else {
+                NotificationActions.error('Validation error!');
+                this.setState({
+                    validationErrors: result
+                });
+            }
+        }
+    },
+    _onCancel() {
+        if (this.props.onCancel) {
+            this.props.onCancel();
+        }
+    },
+    _onHide() {},
+    _getValidationError(key) {
+        let result = null;
+
+        if (this.state.validationErrors) {
+            result = this.state.validationErrors[key];
+        }
+
+        return result;
+    },
     render() {
         const events = utils.createDropdownList(trackerEvents, this.state.item.event);
         const methods = utils.createDropdownList(subscriberMethods, this.state.item.method);
@@ -102,85 +174,5 @@ export default React.createClass({
                 </Modal.Footer>
             </Modal>
         );
-    },
-
-    _renderTabs() {
-        let tabs = [];
-        const item = this.props.item;
-        const headers = item ? item.headers : null;
-        const params = item ? item.params : null;
-        const data = item ? item.data : null;
-
-        tabs.push(
-            <TabPane eventKey={1} tab={"Headers"} key={"headers"}>
-                <KeyValueList
-                    items={headers}
-                    valueLink={this.linkImmutableState(['item', 'headers'])}
-                    />
-            </TabPane>
-        );
-
-        tabs.push(
-            <TabPane eventKey={2} tab={"Parameters"} key={"parameters"}>
-                <KeyValueList
-                    items={params}
-                    valueLink={this.linkImmutableState(['item', 'params'])}
-                    />
-            </TabPane>
-        );
-
-        if (this.state.item.method === subscriberMethods.POST) {
-            tabs.push(
-                <TabPane eventKey={3} tab={"Form data"} key={"form-data"}>
-                    <KeyValueList
-                        items={data}
-                        types={List.of('string', 'json')}
-                        valueLink={this.linkImmutableState(['item', 'data'])}
-                        />
-                </TabPane>
-            );
-        }
-
-        return (
-            <TabbedArea defaultActiveKey={1}>
-                {tabs}
-            </TabbedArea>
-        );
-    },
-
-    _onSave() {
-        if (this.props.onSave) {
-            const result = validator.validateSubscriber(this.state.item.toJS());
-
-            if (!result) {
-                this.props.onSave({
-                    index: this.props.index,
-                    value: this.state.item
-                });
-            } else {
-                NotificationActions.error('Validation error!');
-                this.setState({
-                    validationErrors: result
-                });
-            }
-        }
-    },
-
-    _onCancel() {
-        if (this.props.onCancel) {
-            this.props.onCancel();
-        }
-    },
-
-    _onHide() {},
-
-    _getValidationError(key) {
-        let result = null;
-
-        if (this.state.validationErrors) {
-            result = this.state.validationErrors[key];
-        }
-
-        return result;
     }
 });

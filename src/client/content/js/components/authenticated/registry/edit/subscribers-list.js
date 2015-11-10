@@ -4,22 +4,66 @@ import Item from './subscribers-list-item';
 import Subscriber from '../../../../models/subscriber';
 
 export default React.createClass({
-    mixins: [
-        React.addons.PureRenderMixin
-    ],
-
     propTypes: {
         items: React.PropTypes.object,
         onSave: React.PropTypes.func,
         onDelete: React.PropTypes.func
     },
-
+    mixins: [
+        React.addons.PureRenderMixin
+    ],
     getInitialState() {
         return {
             editIndex: null
         };
     },
+    _onAdd() {
+        this.setState({
+            editIndex: this.props.items.count(),
+            editItem: new Subscriber()
+        });
+    },
+    _onDelete(index) {
+        if (this.props.onDelete) {
+            this.props.onDelete(index);
+        }
+    },
+    _onEdit(index) {
+        this.setState({
+            editIndex: index,
+            editItem: this.props.items.get(index)
+        });
+    },
+    _onSave(options) {
+        this._onCancel();
 
+        if (this.props.onSave) {
+            this.props.onSave(options);
+        }
+    },
+    _onCancel() {
+        this.setState({
+            editIndex: -1,
+            editItem: null
+        });
+    },
+    _renderModal() {
+        let result = <span></span>;
+
+        if (this.state.editItem) {
+            result = (
+                <Form
+                    show={true}
+                    index={this.state.editIndex}
+                    item={this.state.editItem}
+                    onSave={this._onSave}
+                    onCancel={this._onCancel}
+                    />
+            );
+        }
+
+        return result;
+    },
     render() {
         let index = -1;
 
@@ -55,58 +99,5 @@ export default React.createClass({
                 {this._renderModal()}
             </div>
         );
-    },
-
-    _renderModal() {
-        let result = <span></span>;
-
-        if (this.state.editItem) {
-            result = (
-                <Form
-                    show={true}
-                    index={this.state.editIndex}
-                    item={this.state.editItem}
-                    onSave={this._onSave}
-                    onCancel={this._onCancel}
-                    />
-            );
-        }
-
-        return result;
-    },
-
-    _onAdd() {
-        this.setState({
-            editIndex: this.props.items.count(),
-            editItem: new Subscriber()
-        });
-    },
-
-    _onDelete(index) {
-        if (this.props.onDelete) {
-            this.props.onDelete(index);
-        }
-    },
-
-    _onEdit(index) {
-        this.setState({
-            editIndex: index,
-            editItem: this.props.items.get(index)
-        });
-    },
-
-    _onSave(options) {
-        this._onCancel();
-
-        if (this.props.onSave) {
-            this.props.onSave(options);
-        }
-    },
-
-    _onCancel() {
-        this.setState({
-            editIndex: -1,
-            editItem: null
-        });
     }
 });

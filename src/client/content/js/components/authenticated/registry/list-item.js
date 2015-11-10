@@ -5,16 +5,20 @@ import RegistryActions from '../../../actions/registry';
 import uuid from '../../../../../../shared/utils/uuid';
 
 export default React.createClass({
-    mixins: [
-        React.addons.PureRenderMixin,
-        Navigation
-    ],
-
     propTypes: {
         number: React.PropTypes.number.isRequired,
         item: React.PropTypes.object.isRequired
     },
-
+    mixins: [
+        React.addons.PureRenderMixin,
+        Navigation
+    ],
+    _onEdit() {
+        this.transitionTo('/home/registry/edit/:id', { id: this.props.item.id });
+    },
+    _onDelete() {
+        RegistryActions.delete(this.props.item.id);
+    },
     render() {
         const subNum = this.props.item.subscribers.count();
         const enabled = cn({
@@ -36,13 +40,5 @@ export default React.createClass({
                 <td><button type="button" className="btn btn-danger" onClick={this._onDelete}>Delete</button></td>
             </tr>
         );
-    },
-
-    _onEdit() {
-        this.transitionTo('/home/registry/edit/:id', { id: this.props.item.id });
-    },
-
-    _onDelete() {
-        RegistryActions.delete(this.props.item.id);
     }
 });

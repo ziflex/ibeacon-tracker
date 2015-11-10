@@ -3,10 +3,6 @@ import {Link, State} from 'react-router';
 import any from 'lodash/collection/any';
 
 export default React.createClass({
-    mixins: [
-        State
-    ],
-
     propTypes: {
         to: React.PropTypes.string.isRequired,
         params: React.PropTypes.object,
@@ -14,7 +10,9 @@ export default React.createClass({
         children: React.PropTypes.any,
         nested: React.PropTypes.array
     },
-
+    mixins: [
+        State
+    ],
     render() {
         let isActive = this.isActive(this.props.to, this.props.params, this.props.query);
 
@@ -27,7 +25,7 @@ export default React.createClass({
 
                 // super ugly
                 try {
-                    let href = this.context.router.makeHref(to, this.props.params, this.props.query);
+                    const href = this.context.router.makeHref(to, this.props.params, this.props.query);
                     result = this.isActive(href, this.props.params, this.props.query);
                 } catch (ex) {
                     result = false;

@@ -9,7 +9,6 @@ export default React.createClass({
         valueLink: React.PropTypes.object,
         validationError: React.PropTypes.string
     },
-
     getInitialState() {
         const parts = this.props.valueLink.value ? uuid.split(this.props.valueLink.value) : [];
 
@@ -22,7 +21,20 @@ export default React.createClass({
             validationError: null
         };
     },
+    _onChange(part, value) {
+        this.setState({
+            [part]: value
+        });
 
+        // at this moment state isn't updated yet, so we have to do it manually
+        // probably it's a bug
+        const state = clone(this.state);
+        state[part] = value;
+
+        if (this.props.valueLink) {
+            this.props.valueLink.requestChange(values(state).join(''));
+        }
+    },
     render() {
         return (
             <div className="row">
@@ -84,20 +96,5 @@ export default React.createClass({
                 </div>
             </div>
         );
-    },
-
-    _onChange(part, value) {
-        this.setState({
-            [part]: value
-        });
-
-        // at this moment state isn't updated yet, so we have to do it manually
-        // probably it's a bug
-        const state = clone(this.state);
-        state[part] = value;
-
-        if (this.props.valueLink) {
-            this.props.valueLink.requestChange(values(state).join(''));
-        }
     }
 });

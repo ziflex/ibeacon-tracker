@@ -3,16 +3,14 @@ import {Navigation} from 'react-router';
 import moment from 'moment';
 
 export default React.createClass({
-    mixins: [
-        React.addons.PureRenderMixin,
-        Navigation
-    ],
-
     propTypes: {
         index: React.PropTypes.number.isRequired,
         item: React.PropTypes.object.isRequired
     },
-
+    mixins: [
+        React.addons.PureRenderMixin,
+        Navigation
+    ],
     render() {
         const number = this.props.index + 1;
 

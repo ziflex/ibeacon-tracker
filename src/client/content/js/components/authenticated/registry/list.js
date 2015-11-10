@@ -4,21 +4,21 @@ import Immutable from 'immutable';
 import Item from './list-item';
 
 export default React.createClass({
+    propTypes: {
+        items: React.PropTypes.object.isRequired
+    },
     mixins: [
         React.addons.PureRenderMixin,
         Navigation
     ],
-
-    propTypes: {
-        items: React.PropTypes.object.isRequired
-    },
-
     getDefaultProps() {
         return {
             items: Immutable.Map()
         };
     },
-
+    _onNew() {
+        this.transitionTo('/home/registry/edit');
+    },
     render() {
         let num = 0;
         return (
@@ -52,9 +52,5 @@ export default React.createClass({
                 </div>
             </div>
         );
-    },
-
-    _onNew() {
-        this.transitionTo('/home/registry/edit');
     }
 });

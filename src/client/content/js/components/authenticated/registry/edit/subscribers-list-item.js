@@ -4,18 +4,16 @@ import subscriberMethods from '../../../../enums/subscriber-methods';
 import trackerEvents from '../../../../enums/tracker-events';
 
 export default React.createClass({
-    mixins: [
-        React.addons.PureRenderMixin,
-        DynamicEventsMixin
-    ],
-
     propTypes: {
         index: React.PropTypes.number.isRequired,
         item: React.PropTypes.object.isRequired,
         onEdit: React.PropTypes.func,
         onDelete: React.PropTypes.func
     },
-
+    mixins: [
+        React.addons.PureRenderMixin,
+        DynamicEventsMixin
+    ],
     render() {
         const num = this.props.index + 1;
         const event = trackerEvents.keyOf((this.props.item.event || '').toLowerCase());

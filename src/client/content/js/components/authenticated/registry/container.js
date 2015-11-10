@@ -2,14 +2,12 @@ import React from 'react/addons';
 import List from './list';
 
 export default React.createClass({
-    mixins: [
-        React.addons.PureRenderMixin
-    ],
-
     propTypes: {
         entries: React.PropTypes.object.isRequired
     },
-
+    mixins: [
+        React.addons.PureRenderMixin
+    ],
     render() {
         return (
             <div>

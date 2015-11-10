@@ -7,7 +7,6 @@ export default React.createClass({
     componentDidMount() {
         NotificationStore.listen(this.onChange);
     },
-
     onChange() {
         const notification = NotificationStore.getState();
         const lvl = notification.get('level');
@@ -15,12 +14,10 @@ export default React.createClass({
 
         humane.log(notification.get('message'), { addnCls: cn });
     },
-
-    render() {
-        return (<div></div>);
-    },
-
     componentDidUnmount() {
         NotificationStore.unlisten(this.onChange);
+    },
+    render() {
+        return (<div></div>);
     }
 });

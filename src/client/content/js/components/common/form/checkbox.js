@@ -2,10 +2,6 @@ import React from 'react/addons';
 import cn from 'classnames';
 
 export default React.createClass({
-    mixins: [
-        React.addons.PureRenderMixin
-    ],
-
     propTypes: {
         id: React.PropTypes.string,
         name: React.PropTypes.string,
@@ -13,7 +9,9 @@ export default React.createClass({
         onChange: React.PropTypes.func,
         valueLink: React.PropTypes.object
     },
-
+    mixins: [
+        React.addons.PureRenderMixin
+    ],
     getInitialState() {
         let checked = true;
 
@@ -27,7 +25,19 @@ export default React.createClass({
             checked: checked || false
         };
     },
+    _onToggle() {
+        const checked = !this.state.checked;
 
+        if (this.props.valueLink) {
+            this.props.valueLink.requestChange(checked);
+        }
+
+        if (this.props.onChange) {
+            this.props.onChange(checked);
+        }
+
+        this.setState({checked: checked});
+    },
     render() {
         const id = this.props.id;
         const name = this.props.name;
@@ -53,19 +63,5 @@ export default React.createClass({
                 </div>
             </div>
         );
-    },
-
-    _onToggle() {
-        const checked = !this.state.checked;
-
-        if (this.props.valueLink) {
-            this.props.valueLink.requestChange(checked);
-        }
-
-        if (this.props.onChange) {
-            this.props.onChange(checked);
-        }
-
-        this.setState({checked: checked});
     }
 });

@@ -4,7 +4,7 @@ export default {
 
         try {
             JSON.parse(value);
-        } catch(ex) {
+        } catch (ex) {
             result = false;
         }
 

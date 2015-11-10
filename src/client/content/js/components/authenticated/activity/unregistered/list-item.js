@@ -4,16 +4,21 @@ import uuid from '../../../../../../../shared/utils/uuid';
 import moment from 'moment';
 
 export default React.createClass({
-    mixins: [
-        React.addons.PureRenderMixin,
-        Navigation
-    ],
-
     propTypes: {
         index: React.PropTypes.number.isRequired,
         item: React.PropTypes.object.isRequired
     },
-
+    mixins: [
+        React.addons.PureRenderMixin,
+        Navigation
+    ],
+    _onRegister() {
+        this.transitionTo('registry-new', null, {
+            uuid: this.props.item.uuid,
+            major: this.props.item.major,
+            minor: this.props.item.minor
+        });
+    },
     render() {
         const number = this.props.index + 1;
 
@@ -30,13 +35,5 @@ export default React.createClass({
                 <td><button type="button" className="btn btn-success" onClick={this._onRegister}>Register</button></td>
             </tr>
         );
-    },
-
-    _onRegister() {
-        this.transitionTo('registry-new', null, {
-            uuid: this.props.item.uuid,
-            major: this.props.item.major,
-            minor: this.props.item.minor
-        });
     }
 });

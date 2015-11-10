@@ -2,21 +2,22 @@ import React from 'react';
 import SettingsActions from '../../../actions/settings';
 
 export default React.createClass({
-    mixins: [
-        React.addons.LinkedStateMixin
-    ],
-
     propTypes: {
         disabled: React.PropTypes.bool,
         username: React.PropTypes.string
     },
-
+    mixins: [
+        React.addons.LinkedStateMixin
+    ],
     getInitialState() {
         return {
             newPassword: ''
         };
     },
-
+    _onSubmit(event) {
+        event.preventDefault();
+        SettingsActions.changePassword(this.props.username, this.state.newPassword);
+    },
     render() {
         const attrs = {};
 
@@ -51,10 +52,5 @@ export default React.createClass({
                 </form>
             </div>
         );
-    },
-
-    _onSubmit(event) {
-        event.preventDefault();
-        SettingsActions.changePassword(this.props.username, this.state.newPassword);
     }
 });

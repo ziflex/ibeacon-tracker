@@ -12,10 +12,12 @@ export default React.createClass({
             'right'
         ])
     },
-
+    _validationState() {
+        return isEmpty(this.props.validationError) ? 'success' : 'error';
+    },
     render() {
         let component = null;
-        let input = (<Input
+        const input = (<Input
             hasFeedback
             {...this.props}
             bsStyle={this._validationState()}
@@ -44,9 +46,5 @@ export default React.createClass({
                 {component}
             </ButtonToolbar>
         );
-    },
-
-    _validationState() {
-        return isEmpty(this.props.validationError) ? 'success' : 'error';
     }
 });

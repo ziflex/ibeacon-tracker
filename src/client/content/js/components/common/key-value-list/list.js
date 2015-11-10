@@ -13,41 +13,11 @@ export default React.createClass({
         onChange: React.PropTypes.func,
         valueLink: React.PropTypes.object
     },
-
     getInitialState() {
         return {
             types: this.props.types,
             items: this._convertPropItems(this.props.items)
         };
-    },
-
-    render() {
-        return (
-            <div>
-                <table className="table table-bordered">
-                    <thead>
-                        {this._renderHeader()}
-                    </thead>
-                    <tbody>
-                        {this.state.items.toSeq().map((item, index) => {
-                            return (
-                                <Item
-                                    key={index}
-                                    index={index}
-                                    types={this.props.types}
-                                    item={item}
-                                    onSave={this._onSave}
-                                    onDelete={this._onDelete}
-                                    />
-                            );
-                        }).toArray()}
-                    </tbody>
-                </table>
-                <div>
-                    <button type="button" className="btn btn-success" onClick={this._onAdd}>Add</button>
-                </div>
-            </div>
-        );
     },
 
     _renderHeader() {
@@ -73,7 +43,7 @@ export default React.createClass({
     },
 
     _onSave(options) {
-        let {index, item} = options;
+        const {index, item} = options;
         let items = this.state.items;
         let valueIsEmpty = false;
 
@@ -137,5 +107,33 @@ export default React.createClass({
                 isNew: false
             })];
         }).toMap();
+    },
+    render() {
+        return (
+            <div>
+                <table className="table table-bordered">
+                    <thead>
+                        {this._renderHeader()}
+                    </thead>
+                    <tbody>
+                        {this.state.items.toSeq().map((item, index) => {
+                            return (
+                                <Item
+                                    key={index}
+                                    index={index}
+                                    types={this.props.types}
+                                    item={item}
+                                    onSave={this._onSave}
+                                    onDelete={this._onDelete}
+                                    />
+                            );
+                        }).toArray()}
+                    </tbody>
+                </table>
+                <div>
+                    <button type="button" className="btn btn-success" onClick={this._onAdd}>Add</button>
+                </div>
+            </div>
+        );
     }
 });

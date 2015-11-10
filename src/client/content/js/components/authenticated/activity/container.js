@@ -5,14 +5,12 @@ import Registered from './registered/container';
 import Unregistered from './unregistered/container';
 
 export default React.createClass({
-    mixins: [
-        React.addons.PureRenderMixin
-    ],
-
     propTypes: {
         items: React.PropTypes.object.isRequired
     },
-
+    mixins: [
+        React.addons.PureRenderMixin
+    ],
     render() {
         return (
             <div>

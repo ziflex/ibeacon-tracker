@@ -2,21 +2,22 @@ import React from 'react/addons';
 import AuthenticationActions from '../../actions/authentication';
 
 export default React.createClass({
-    mixins: [
-        React.addons.LinkedStateMixin
-    ],
-
     propTypes: {
         disabled: React.PropTypes.bool
     },
-
+    mixins: [
+        React.addons.LinkedStateMixin
+    ],
     getInitialState() {
         return {
             username: '',
             password: ''
         };
     },
-
+    _onSubmit(event) {
+        event.preventDefault();
+        AuthenticationActions.login(this.state.username, this.state.password);
+    },
     render() {
         const attrs = {};
 
@@ -51,10 +52,5 @@ export default React.createClass({
                 </button>
             </form>
         );
-    },
-
-    _onSubmit(event) {
-        event.preventDefault();
-        AuthenticationActions.login(this.state.username, this.state.password);
     }
 });

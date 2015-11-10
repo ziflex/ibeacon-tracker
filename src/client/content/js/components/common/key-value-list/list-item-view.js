@@ -3,11 +3,6 @@ import DynamicEventsMixin from '../../../mixins/dynamic-events-mixin';
 import isString from 'lodash/lang/isString';
 
 export default React.createClass({
-    mixins: [
-        React.addons.PureRenderMixin,
-        DynamicEventsMixin
-    ],
-
     propTypes: {
         index: React.PropTypes.number.isRequired,
         types: React.PropTypes.object,
@@ -15,7 +10,10 @@ export default React.createClass({
         onEdit: React.PropTypes.func,
         onDelete: React.PropTypes.func
     },
-
+    mixins: [
+        React.addons.PureRenderMixin,
+        DynamicEventsMixin
+    ],
     render() {
         let typeColumn = null;
         const key = this.props.item.key;

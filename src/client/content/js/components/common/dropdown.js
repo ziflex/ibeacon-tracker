@@ -7,14 +7,43 @@ export default React.createClass({
         onSelect: React.PropTypes.func,
         valueLink: React.PropTypes.object
     },
-
     getInitialState() {
         return {
             opened: false,
             items: this.props.items
         };
     },
+    _onToggle() {
+        this.setState({
+            opened: !this.state.opened
+        });
+    },
+    _onSelect(index) {
+        let items = this.state.items;
 
+        items.forEach(i => {
+            i.selected = false;
+        });
+        items = items.update(index, (i) => {
+            i.selected = true;
+            return i;
+        });
+
+        const selected = items.get(index);
+
+        if (this.props.onSelect) {
+            this.props.onSelect(index, selected.value);
+        }
+
+        if (this.props.valueLink) {
+            this.props.valueLink.requestChange(selected.value);
+        }
+
+        this.setState({
+            opened: false,
+            items: items
+        });
+    },
     render() {
         let selected;
         const items = this.state.items;
@@ -52,38 +81,5 @@ export default React.createClass({
                  </ul>
             </div>
         );
-    },
-
-    _onToggle() {
-        this.setState({
-            opened: !this.state.opened
-        });
-    },
-
-    _onSelect(index) {
-        let items = this.state.items;
-
-        items.forEach(i => {
-            i.selected = false;
-        });
-        items = items.update(index, (i) => {
-            i.selected = true;
-            return i;
-        });
-
-        const selected = items.get(index);
-
-        if (this.props.onSelect) {
-            this.props.onSelect(index, selected.value);
-        }
-
-        if (this.props.valueLink) {
-            this.props.valueLink.requestChange(selected.value);
-        }
-
-        this.setState({
-            opened: false,
-            items: items
-        });
     }
 });

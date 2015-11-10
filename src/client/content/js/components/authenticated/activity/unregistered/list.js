@@ -3,14 +3,12 @@ import Item from './list-item';
 import uuid from '../../../../../../../shared/utils/uuid';
 
 export default React.createClass({
-    mixins: [
-        React.addons.PureRenderMixin
-    ],
-
     propTypes: {
         items: React.PropTypes.object
     },
-
+    mixins: [
+        React.addons.PureRenderMixin
+    ],
     render() {
         let index = -1;
         let items = null;
