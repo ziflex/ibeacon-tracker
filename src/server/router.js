@@ -6,7 +6,7 @@ const router = express.Router();
 const normalizedPath = path.join(__dirname, 'routes');
 
 fs.readdirSync(normalizedPath).forEach((file) => {
-    let route = require('./routes/' + file);
+    const route = require('./routes/' + file);
 
     if (route.use) {
         route.use(router);

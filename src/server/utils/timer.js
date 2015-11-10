@@ -9,7 +9,7 @@ export default {
                 if (_.isUndefined(timesLeft) || timesLeft-- > 0) {
                     try {
                         cb.call(null);
-                    } catch(e) {
+                    } catch (e) {
                         timesLeft = 0;
                         throw e.toString();
                     }

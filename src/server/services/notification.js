@@ -3,7 +3,7 @@ import _ from 'lodash';
 import logger from './logger';
 
 function buildRequest(event, beacon, subscriber) {
-    let method = (subscriber.method || 'get').toLowerCase();
+    const method = (subscriber.method || 'get').toLowerCase();
     let request = null;
     const data = {
         event: event,

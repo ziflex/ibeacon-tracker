@@ -3,7 +3,6 @@ import HistoryModel from '../models/history';
 import Symbol from 'es6-symbol';
 import _ from 'lodash';
 import events from '../enums/tracking-events';
-import logger from 'logger';
 
 const IS_STARTED = Symbol('IS_STARTED');
 const ON_FOUND = Symbol('ON_FOUND');
