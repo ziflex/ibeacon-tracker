@@ -6,8 +6,7 @@
     "node": true
   },
   "plugins": [
-    "react",
-    "jasmine"
+    "react"
   ],
   "rules": {
     "indent": [2, 4],

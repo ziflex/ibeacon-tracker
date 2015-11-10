@@ -44,7 +44,7 @@ export default {
     major(value) {
         let result = false;
         let message = null;
-        let parsed = parseInt(value, 10);
+        const parsed = parseFloat(value);
 
         if (isNumber(parsed)) {
             result = (parsed >= MIN_MAJ_MIN && parsed <= MAX_MAJ_MIN);
@@ -60,7 +60,7 @@ export default {
     minor(value) {
         let result = false;
         let message = null;
-        let parsed = parseInt(value, 10);
+        const parsed = parseFloat(value);
 
         if (isNumber(parsed)) {
             result = (parsed >= MIN_MAJ_MIN && parsed <= MAX_MAJ_MIN);
@@ -106,7 +106,7 @@ export default {
 
         forEach(beacon, (value, key) => {
             if (this[key]) {
-                let validation = this[key](value);
+                const validation = this[key](value);
 
                 if (!validation.result) {
                     if (!result) {
@@ -119,7 +119,7 @@ export default {
         });
 
         forEach(beacon.subscribers, (value, index) => {
-            let errors = this.validateSubscriber(value);
+            const errors = this.validateSubscriber(value);
 
             if (errors) {
                 if (!result) {
@@ -141,7 +141,7 @@ export default {
             const methodKey = strings.camelize(prefix, key);
 
             if (this[methodKey]) {
-                let validation = this[methodKey](value);
+                const validation = this[methodKey](value);
 
                 if (!validation.result) {
                     if (!result) {

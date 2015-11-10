@@ -2,9 +2,10 @@ import isString from 'lodash/lang/isString';
 import isEmpty from 'lodash/lang/isEmpty';
 
 export default {
-    /*
-    * Generates new uuid based on uuid, major and minor numbers.
-    */
+
+    /**
+     * Generates new uuid based on uuid, major and minor numbers.
+     */
     generate(beacon) {
         let result = '';
 
@@ -17,9 +18,9 @@ export default {
         return result.toLowerCase();
     },
 
-    /*
-    *  Normalizes Beacon's uuid, removing dash characters.
-    */
+    /**
+     *  Normalizes Beacon's uuid, removing dash characters.
+     */
     normalize(beacon) {
         if (!beacon) {
             return '';
