@@ -1,5 +1,5 @@
 import React from 'react/addons';
-import {State, RouteHandler} from 'react-router';
+import { State, RouteHandler } from 'react-router';
 import Header from './header';
 import Sidebar from './sidebar';
 import AuthenticationStore from '../../stores/authentication';

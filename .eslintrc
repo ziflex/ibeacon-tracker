@@ -3,9 +3,10 @@
   "parser": "babel-eslint",
   "env": {
     "browser": true,
-    "node": true
+    "mocha": true
   },
   "plugins": [
+    "mocha",
     "react"
   ],
   "rules": {
@@ -13,6 +14,6 @@
     "comma-dangle": 0,
     "id-length": 0,
     "new-cap": 0,
-    "react/jsx-boolean-value": 0
+    "react/jsx-indent-props": [2, 4]
   }
 }

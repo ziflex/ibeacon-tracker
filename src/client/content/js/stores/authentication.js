@@ -1,4 +1,4 @@
-import {Map} from 'immutable';
+import { Map } from 'immutable';
 import app from '../app';
 import asyncStates from '../enums/async-states';
 import AuthenticationActions from '../actions/authentication';

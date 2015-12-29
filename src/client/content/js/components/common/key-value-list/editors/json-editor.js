@@ -17,7 +17,7 @@ export default React.createClass({
     _onChange(event) {
         const value = event.target.value;
 
-        this.setState({value: value});
+        this.setState({ value });
 
         if (this.props.valueLink) {
             this.props.valueLink.requestChange(value);
@@ -32,7 +32,7 @@ export default React.createClass({
                 validationError={this.props.validationError}
                 value={this.state.value}
                 onChange={this._onChange}
-                />
+            />
         );
     }
 });

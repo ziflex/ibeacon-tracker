@@ -1,4 +1,4 @@
-import {Record} from 'immutable';
+import { Record } from 'immutable';
 
 const Enum = Record({
     FOUND: 'beacon:found',

@@ -18,7 +18,7 @@ export default React.createClass({
     _onChange(event) {
         const value = event.target.value;
 
-        this.setState({value: value});
+        this.setState({ value });
 
         if (this.props.valueLink) {
             this.props.valueLink.requestChange(value);
@@ -27,12 +27,12 @@ export default React.createClass({
     render() {
         return (
             <Input className="form-control"
-                   type="text"
-                   placeholder="value"
-                   value={this.state.value}
-                   validationError={this.props.validationError}
-                   onChange={this._onChange}
-                />
+                type="text"
+                placeholder="value"
+                value={this.state.value}
+                validationError={this.props.validationError}
+                onChange={this._onChange}
+            />
         );
     }
 });

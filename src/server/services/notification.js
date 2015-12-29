@@ -6,7 +6,7 @@ function buildRequest(event, beacon, subscriber) {
     const method = (subscriber.method || 'get').toLowerCase();
     let request = null;
     const data = {
-        event: event,
+        event,
         uuid: beacon.uuid,
         major: beacon.major,
         minor: beacon.minor

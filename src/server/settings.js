@@ -11,7 +11,7 @@ export default {
     },
     database: {
         host: 'localhost',
-        port: 27017,
+        port: 30251,
         name: 'ibeacon-tracker'
     },
     pool: {

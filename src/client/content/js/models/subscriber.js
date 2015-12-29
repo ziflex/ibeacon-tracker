@@ -1,4 +1,4 @@
-import {Record, Map} from 'immutable';
+import { Record, Map } from 'immutable';
 import methods from '../enums/subscriber-methods';
 
 export default Record({

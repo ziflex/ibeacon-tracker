@@ -1,5 +1,5 @@
 import React from 'react';
-import {State, RouteHandler} from 'react-router';
+import { State, RouteHandler } from 'react-router';
 import ReactStateMagicMixin from 'alt/mixins/ReactStateMagicMixin';
 import ActivityStore from '../../../stores/activity';
 import ActivityActions from '../../../actions/activity';

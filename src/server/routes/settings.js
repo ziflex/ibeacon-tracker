@@ -10,7 +10,7 @@ function changePassword(req, res) {
         return util.bad(res);
     }
 
-    const {username, newPassword} = req.body;
+    const { username, newPassword } = req.body;
 
     if (_.isEmpty(username) || _.isEmpty(newPassword)) {
         return util.bad(res);

@@ -1,5 +1,5 @@
 import React from 'react';
-import {State, RouteHandler} from 'react-router';
+import { State, RouteHandler } from 'react-router';
 import ReactStateMagicMixin from 'alt/mixins/ReactStateMagicMixin';
 import RegistryStore from '../../../../stores/registry';
 

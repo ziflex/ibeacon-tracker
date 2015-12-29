@@ -1,7 +1,7 @@
 import isArray from 'lodash/lang/isArray';
 import isString from 'lodash/lang/isString';
 import map from 'lodash/collection/map';
-import {Map} from 'immutable';
+import { Map } from 'immutable';
 
 export default {
     createDropdownList(items, value) {

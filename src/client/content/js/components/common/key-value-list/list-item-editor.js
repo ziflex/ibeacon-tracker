@@ -35,16 +35,18 @@ export default React.createClass({
         let editor = null;
 
         if (this.state.item.type === 'string') {
-            editor = (<StringEditor
+            editor = (
+                <StringEditor
                     validationError={this.getValidationError('value')}
                     valueLink={this.linkImmutableState(['item', 'value'])}
-                    />
+                />
             );
         } else {
-            editor = (<JsonEditor
+            editor = (
+                <JsonEditor
                     validationError={this.getValidationError('value')}
                     valueLink={this.linkImmutableState(['item', 'value'])}
-                    />
+                />
             );
         }
 
@@ -107,7 +109,7 @@ export default React.createClass({
 
                 this.props.onSave({
                     index: this.props.index,
-                    item: item
+                    item
                 });
             } else {
                 this.setState({
@@ -126,7 +128,7 @@ export default React.createClass({
                         placeholder="key"
                         validationError={this.getValidationError('key')}
                         valueLink={this.linkImmutableState(['item', 'key'])}
-                        />
+                    />
                 </td>
                 {this._renderItemValueEditor()}
                 {this._renderItemTypeEditor()}

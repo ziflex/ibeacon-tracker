@@ -42,8 +42,7 @@ export default React.createClass({
         });
     },
 
-    _onSave(options) {
-        const {index, item} = options;
+    _onSave({ index, item }) {
         let items = this.state.items;
         let valueIsEmpty = false;
 
@@ -64,7 +63,7 @@ export default React.createClass({
         items = items.set(index, item);
 
         this.setState({
-            items: items
+            items
         });
 
         this._onChange(this._convertStateItems(items));
@@ -74,7 +73,7 @@ export default React.createClass({
         const items = this.state.items.remove(index);
 
         this.setState({
-            items: items
+            items
         });
 
         this._onChange(this._convertStateItems(items));
@@ -101,8 +100,8 @@ export default React.createClass({
         return items.toSeq().mapEntries((entry, index) => {
             const [key, value] = entry;
             return [index, new KeyValuePair({
-                key: key,
-                value: value,
+                key,
+                value,
                 type: isString(value) ? 'string' : 'json',
                 isNew: false
             })];
@@ -125,7 +124,7 @@ export default React.createClass({
                                     item={item}
                                     onSave={this._onSave}
                                     onDelete={this._onDelete}
-                                    />
+                                />
                             );
                         }).toArray()}
                     </tbody>

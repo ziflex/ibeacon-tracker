@@ -1,5 +1,5 @@
 import React from 'react/addons';
-import {State} from 'react-router';
+import { State } from 'react-router';
 import Form from './form';
 import Beacon from '../../../../models/beacon';
 

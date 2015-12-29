@@ -53,17 +53,21 @@ export default React.createClass({
         let control;
 
         if (!this.state.edit) {
-            control = (<View
-                {...this.props}
-                onEdit={this._onStartEdit}
-                onDelete={this._onDelete}
-                />);
+            control = (
+                <View
+                    {...this.props}
+                    onEdit={this._onStartEdit}
+                    onDelete={this._onDelete}
+                />
+            );
         } else {
-            control = (<Editor
-                {...this.props}
-                onSave={this._onSave}
-                onCancel={this._onCancelEdit}
-                />);
+            control = (
+                <Editor
+                    {...this.props}
+                    onSave={this._onSave}
+                    onCancel={this._onCancelEdit}
+                />
+            );
         }
 
         return control;

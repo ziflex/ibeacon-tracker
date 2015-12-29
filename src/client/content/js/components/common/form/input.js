@@ -1,5 +1,10 @@
 import React from 'react/addons';
-import {Input, ButtonToolbar, OverlayTrigger, Popover} from 'react-bootstrap';
+import {
+    Input,
+    ButtonToolbar,
+    OverlayTrigger,
+    Popover
+} from 'react-bootstrap';
 import isEmpty from 'lodash/lang/isEmpty';
 
 export default React.createClass({
@@ -17,11 +22,13 @@ export default React.createClass({
     },
     render() {
         let component = null;
-        const input = (<Input
-            hasFeedback
-            {...this.props}
-            bsStyle={this._validationState()}
-            />);
+        const input = (
+            <Input
+                hasFeedback
+                {...this.props}
+                bsStyle={this._validationState()}
+            />
+        );
 
         if (this.props.validationError) {
             const popover = (

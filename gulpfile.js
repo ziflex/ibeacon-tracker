@@ -1,3 +1,4 @@
+/*eslint-disable */
 var path = require('path');
 var runSequence = require('run-sequence');
 var $ = require('gulp-load-plugins')({
@@ -119,3 +120,5 @@ $.gulp.task('serve', function task() {
 $.gulp.task('default', function task(done) {
     runSequence('build', ['serve', 'watch'], done);
 });
+
+/*eslint-enable */

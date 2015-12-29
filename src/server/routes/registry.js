@@ -42,13 +42,13 @@ function saveRegistry(req, res) {
     pipeline.create()
         .pipe(function validate(entry, next, done) { // validation
             if (!entry) {
-                return done({success: false, data: 'Missed parameters'});
+                return done({ success: false, data: 'Missed parameters' });
             }
 
             const validation = validator.validate(entry);
 
             if (validation) {
-                return done({success: false, data: validation});
+                return done({ success: false, data: validation });
             }
 
             if (!entry.id) {
@@ -59,7 +59,7 @@ function saveRegistry(req, res) {
                 }, (err, found) => {
                     if (!err) {
                         if (found) {
-                            return done({success: true, data: 'Beacon is not unique!'});
+                            return done({ success: true, data: 'Beacon is not unique!' });
                         }
 
                         return next(entry);
@@ -73,7 +73,7 @@ function saveRegistry(req, res) {
         })
         .pipe(function update(entry, next, done) { // update
             if (entry.id) {
-                return BeaconModel.update({_id: entry.id}, _.omit(entry, 'id'), (err) => {
+                return BeaconModel.update({ _id: entry.id }, _.omit(entry, 'id'), (err) => {
                     if (!err) {
                         return done({ success: true, data: entry });
                     }
@@ -87,7 +87,7 @@ function saveRegistry(req, res) {
         .pipe(function create(entry, next, done) { // creation
             BeaconModel.create(entry, (err, data) => {
                 if (!err) {
-                    return next({success: true, data: toPlainObject(data)});
+                    return next({ success: true, data: toPlainObject(data) });
                 }
 
                 done(err);

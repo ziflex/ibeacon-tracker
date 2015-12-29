@@ -1,5 +1,5 @@
 import React from 'react/addons';
-import {State} from 'react-router';
+import { State } from 'react-router';
 
 export default React.createClass({
     mixins: [

@@ -14,7 +14,7 @@ export default {
     },
 
     bad(res, msg = 'Bad request') {
-        return res.status(400).json({message: msg});
+        return res.status(400).json({ message: msg });
     },
 
     error(res, err) {

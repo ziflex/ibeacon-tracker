@@ -41,7 +41,7 @@ export default React.createClass({
 
         this.setState({
             opened: false,
-            items: items
+            items
         });
     },
     render() {
@@ -53,7 +53,7 @@ export default React.createClass({
         }
 
         if (!selected) {
-            selected = {text: '', value: '', selected: true };
+            selected = { text: '', value: '', selected: true };
         }
 
         const classNames = cn({

@@ -1,3 +1,4 @@
+/*eslint-disable */
 var path = require('path');
 
 var ROOT_DIR = path.resolve(__dirname, '..');
@@ -46,3 +47,4 @@ module.exports = {
     }
   }
 };
+/*eslint-enable */

@@ -47,7 +47,7 @@ export default React.createClass({
                         value={this.state.part1}
                         validationError={this.props.validationError}
                         onChange={(event) => this._onChange('part1', event.target.value)}
-                        />
+                    />
                 </div>
                 <div className="col-lg-2">
                     <Input
@@ -58,7 +58,7 @@ export default React.createClass({
                         value={this.state.part2}
                         validationError={this.props.validationError}
                         onChange={(event) => this._onChange('part2', event.target.value)}
-                        />
+                    />
                 </div>
                 <div className="col-lg-2">
                     <Input
@@ -69,7 +69,7 @@ export default React.createClass({
                         value={this.state.part3}
                         validationError={this.props.validationError}
                         onChange={(event) => this._onChange('part3', event.target.value)}
-                        />
+                    />
                 </div>
                 <div className="col-lg-2">
                     <Input
@@ -81,7 +81,7 @@ export default React.createClass({
                         value={this.state.part4}
                         validationError={this.props.validationError}
                         onChange={(event) => this._onChange('part4', event.target.value)}
-                        />
+                    />
                 </div>
                 <div className="col-lg-3">
                     <Input
@@ -92,7 +92,7 @@ export default React.createClass({
                         value={this.state.part5}
                         validationError={this.props.validationError}
                         onChange={(event) => this._onChange('part5', event.target.value)}
-                        />
+                    />
                 </div>
             </div>
         );

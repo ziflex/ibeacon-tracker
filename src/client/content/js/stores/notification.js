@@ -1,4 +1,4 @@
-import {Map} from 'immutable';
+import { Map } from 'immutable';
 import app from '../app';
 import levels from '../enums/notification-levels';
 import NotificationActions from '../actions/notification';
@@ -36,8 +36,8 @@ class NotificationStore {
 
     setMessage(level, message) {
         this.setState(this.state.merge({
-            message: message,
-            level: level
+            message,
+            level
         }));
     }
 

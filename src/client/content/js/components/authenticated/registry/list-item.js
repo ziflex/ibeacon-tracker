@@ -1,6 +1,6 @@
 import React from 'react/addons';
 import cn from 'classnames';
-import {Navigation} from 'react-router';
+import { Navigation } from 'react-router';
 import RegistryActions from '../../../actions/registry';
 import uuid from '../../../../../../shared/utils/uuid';
 

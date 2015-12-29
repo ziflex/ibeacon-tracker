@@ -36,7 +36,7 @@ export default React.createClass({
                     autoFocus=""
                     valueLink={this.linkState('username')}
                     {...attrs}
-                    />
+                />
                 <label htmlFor="inputPassword" className="sr-only">Password</label>
                 <input
                     type="password"
@@ -46,7 +46,7 @@ export default React.createClass({
                     required=""
                     valueLink={this.linkState('password')}
                     {...attrs}
-                    />
+                />
                 <button className="btn btn-lg btn-primary btn-block" type="submit" {...attrs}>
                     {this.disabled ? 'Wait...' : 'Login'}
                 </button>

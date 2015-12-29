@@ -41,7 +41,7 @@ class RegistryService {
     deleteAsync(id) {
         return new Promise((resolve, reject) => {
             client.del(settings.endpoint + '/registry')
-                .send({id: id})
+                .send({ id })
                 .set('Accept', 'application/json')
                 .end((err) => {
                     if (!err) {

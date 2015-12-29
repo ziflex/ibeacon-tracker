@@ -1,5 +1,5 @@
 import React from 'react';
-import {State} from 'react-router';
+import { State } from 'react-router';
 import NavLink from '../common/nav-link';
 
 export default React.createClass({
@@ -19,7 +19,7 @@ export default React.createClass({
                         nested={['edit', ':id']}
                         params={this.getParams()}
                         query={this.getQuery()}
-                        >
+                    >
                         Registry
                     </NavLink>
                     <NavLink to="/home/settings">

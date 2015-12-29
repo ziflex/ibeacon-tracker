@@ -1,6 +1,6 @@
 import React from 'react/addons';
 import LinkedImmutableStateMixin from 'reactlink-immutable';
-import {Navigation} from 'react-router';
+import { Navigation } from 'react-router';
 import Input from '../../../common/form/input';
 import Checkbox from '../../../common/form/checkbox';
 import UuidEditor from './uuid-editor';
@@ -27,9 +27,7 @@ export default React.createClass({
         };
     },
 
-    _onSubscriberSave(options) {
-        const {index, value} = options;
-
+    _onSubscriberSave({ index, value }) {
         this.setState({
             item: this.state.item.update('subscribers', list => list.set(index, value))
         });
@@ -74,7 +72,7 @@ export default React.createClass({
                             id="enabled"
                             name="enabled"
                             valueLink={this.linkImmutableState(['item', 'enabled'])}
-                            />
+                        />
                     </div>
                 </div>
                 <div className="form-group">
@@ -87,7 +85,7 @@ export default React.createClass({
                             placeholder="Name"
                             validationError={this.getValidationError('name')}
                             valueLink={this.linkImmutableState(['item', 'name'])}
-                            />
+                        />
                     </div>
                 </div>
                 <div className="form-group">
@@ -97,7 +95,7 @@ export default React.createClass({
                             name="uuid"
                             validationError={this.getValidationError('uuid')}
                             valueLink={this.linkImmutableState(['item', 'uuid'])}
-                            />
+                        />
                     </div>
                 </div>
                 <div className="form-group">
@@ -111,7 +109,7 @@ export default React.createClass({
                             max={65535}
                             validationError={this.getValidationError('major')}
                             valueLink={this.linkImmutableState(['item', 'major'])}
-                            />
+                        />
                     </div>
                 </div>
                 <div className="form-group">
@@ -125,7 +123,7 @@ export default React.createClass({
                             max={65535}
                             validationError={this.getValidationError('minor')}
                             valueLink={this.linkImmutableState(['item', 'minor'])}
-                            />
+                        />
                     </div>
                 </div>
                 <div className="form-group">
@@ -134,7 +132,8 @@ export default React.createClass({
                         <SubscribersList
                             items={this.state.item.subscribers}
                             onSave={this._onSubscriberSave}
-                            onDelete={this._onSubscriberDelete} />
+                            onDelete={this._onSubscriberDelete}
+                        />
                     </div>
                 </div>
                 <hr />

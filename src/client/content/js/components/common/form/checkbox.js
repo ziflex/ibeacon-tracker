@@ -36,7 +36,7 @@ export default React.createClass({
             this.props.onChange(checked);
         }
 
-        this.setState({checked: checked});
+        this.setState({ checked });
     },
     render() {
         const id = this.props.id;
@@ -55,7 +55,7 @@ export default React.createClass({
                     type="checkbox"
                     checked={this.state.checked}
                     data-toggle="toggle"
-                    />
+                />
                 <div className="toggle-group">
                     <label className="btn btn-primary toggle-on" onClick={this._onToggle}>On</label>
                     <label className="btn btn-default active toggle-off" onClick={this._onToggle}>Off</label>

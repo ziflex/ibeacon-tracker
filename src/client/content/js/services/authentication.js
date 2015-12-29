@@ -7,7 +7,7 @@ class AuthenticationService {
     login(username, password) {
         return new Promise((resolve, reject) => {
             client.post(settings.endpoint + '/auth/login')
-                .send({username: username, password: password})
+                .send({ username, password })
                 .set('Accept', 'application/json')
                 .end((err) => {
                     if (!err) {

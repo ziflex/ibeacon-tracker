@@ -1,4 +1,4 @@
-import {EventEmitter} from 'events';
+import { EventEmitter } from 'events';
 import Symbol from 'symbol';
 
 const EMITTER = Symbol('EMITTER');

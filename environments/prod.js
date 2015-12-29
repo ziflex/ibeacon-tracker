@@ -1,3 +1,4 @@
+/*eslint-disable */
 module.exports = {
     name: 'prod',
     build: {
@@ -9,3 +10,4 @@ module.exports = {
         singleRun: true
     }
 };
+/*eslint-enable */

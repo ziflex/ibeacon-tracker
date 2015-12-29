@@ -14,7 +14,7 @@ class HistoryService {
         this[CREATE] = _.bind(function create(event, beacon) {
             HistoryModel.create({
                 date: new Date(),
-                event: event,
+                event,
                 uuid: beacon.uuid,
                 major: beacon.major,
                 minor: beacon.minor

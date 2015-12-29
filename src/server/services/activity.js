@@ -23,8 +23,8 @@ class ActivityService {
         });
 
         Promise.props({
-            registered: registered,
-            unregistered: unregistered
+            registered,
+            unregistered
         }).then((props) => callback(null, props)).catch((reason) => callback(reason, null));
     }
 

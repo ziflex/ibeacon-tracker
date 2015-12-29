@@ -79,4 +79,3 @@ initializer.initialize(function onInitialization(err) {
         logger.error(err.toString());
     }
 });
-

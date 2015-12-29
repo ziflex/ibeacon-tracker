@@ -1,5 +1,5 @@
 import React from 'react/addons';
-import {RouteHandler, State} from 'react-router';
+import { RouteHandler, State } from 'react-router';
 import Notification from './notification';
 
 export default React.createClass({

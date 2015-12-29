@@ -1,5 +1,5 @@
 import React from 'react';
-import {Link, State} from 'react-router';
+import { Link, State } from 'react-router';
 import any from 'lodash/collection/any';
 
 export default React.createClass({

@@ -6,7 +6,7 @@ function initializeUsers() {
         UserModel.findByUsername('admin', (err, user) => {
             if (!err) {
                 if (!user) {
-                    return UserModel.register(new UserModel({username: 'admin'}), 'admin', (regErr) => {
+                    return UserModel.register(new UserModel({ username: 'admin' }), 'admin', (regErr) => {
                         if (!regErr) {
                             return resolve();
                         }

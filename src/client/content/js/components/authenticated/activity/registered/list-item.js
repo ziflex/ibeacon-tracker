@@ -1,5 +1,5 @@
 import React from 'react/addons';
-import {Navigation} from 'react-router';
+import { Navigation } from 'react-router';
 import moment from 'moment';
 
 export default React.createClass({

@@ -53,12 +53,12 @@ export default React.createClass({
         if (this.state.editItem) {
             result = (
                 <Form
-                    show={true}
+                    show
                     index={this.state.editIndex}
                     item={this.state.editItem}
                     onSave={this._onSave}
                     onCancel={this._onCancel}
-                    />
+                />
             );
         }
 
@@ -84,7 +84,8 @@ export default React.createClass({
                     <tbody>
                         {this.props.items.toSeq().map(i => {
                             index += 1;
-                            return (<Item
+                            return (
+                                <Item
                                     key={index}
                                     index={index}
                                     item={i}

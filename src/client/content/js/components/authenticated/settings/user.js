@@ -39,7 +39,7 @@ export default React.createClass({
                                 placeholder="Password"
                                 valueLink={this.linkState('newPassword')}
                                 {...attrs}
-                                />
+                            />
                         </div>
                     </div>
                     <div className="form-group">

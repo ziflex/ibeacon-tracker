@@ -1,5 +1,5 @@
 import React from 'react/addons';
-import {State, Navigation} from 'react-router';
+import { State, Navigation } from 'react-router';
 import ReactStateMagicMixin from 'alt/mixins/ReactStateMagicMixin';
 import AuthenticationStore from '../../stores/authentication';
 import Container from './container';

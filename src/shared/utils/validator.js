@@ -54,7 +54,7 @@ export default {
             message = `'major' is required and must be in range between ${MIN_MAJ_MIN} and ${MAX_MAJ_MIN}`;
         }
 
-        return {result, message};
+        return { result, message };
     },
 
     minor(value) {
@@ -70,7 +70,7 @@ export default {
             message = `'minor' is required and must be in range between ${MIN_MAJ_MIN} and ${MAX_MAJ_MIN}`;
         }
 
-        return {result, message};
+        return { result, message };
     },
 
     subscriberName(value) {

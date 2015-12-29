@@ -3,7 +3,7 @@ import LinkedImmutableStateMixin from 'reactlink-immutable';
 import TabbedArea from 'react-bootstrap/lib/TabbedArea';
 import TabPane from 'react-bootstrap/lib/TabPane';
 import Modal from 'react-bootstrap/lib/Modal';
-import {List} from 'immutable';
+import { List } from 'immutable';
 import Dropdown from '../../../common/dropdown';
 import KeyValueList from '../../../common/key-value-list/list';
 import subscriberMethods from '../../../../enums/subscriber-methods';
@@ -46,7 +46,7 @@ export default React.createClass({
                 <KeyValueList
                     items={headers}
                     valueLink={this.linkImmutableState(['item', 'headers'])}
-                    />
+                />
             </TabPane>
         );
 
@@ -55,7 +55,7 @@ export default React.createClass({
                 <KeyValueList
                     items={params}
                     valueLink={this.linkImmutableState(['item', 'params'])}
-                    />
+                />
             </TabPane>
         );
 
@@ -66,7 +66,7 @@ export default React.createClass({
                         items={data}
                         types={List.of('string', 'json')}
                         valueLink={this.linkImmutableState(['item', 'data'])}
-                        />
+                    />
                 </TabPane>
             );
         }
@@ -117,7 +117,7 @@ export default React.createClass({
             <Modal
                 show={this.props.show}
                 onHide={this._onHide}
-                >
+            >
                 <Modal.Body>
                     <Modal.Header>
                         <Modal.Title>Subscriber</Modal.Title>
@@ -141,7 +141,7 @@ export default React.createClass({
                                             type="text"
                                             valueLink={this.linkImmutableState(['item', 'name'])}
                                             validationError={this._getValidationError('name')}
-                                            />
+                                        />
                                     </td>
                                     <td>
                                         <Dropdown items={events} valueLink={this.linkImmutableState(['item', 'event'])} />
@@ -155,7 +155,7 @@ export default React.createClass({
                                             type="text"
                                             valueLink={this.linkImmutableState(['item', 'url'])}
                                             validationError={this._getValidationError('url')}
-                                            />
+                                        />
                                     </td>
                                 </tr>
                                 </tbody>
