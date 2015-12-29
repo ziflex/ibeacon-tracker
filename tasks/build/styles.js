@@ -1,4 +1,4 @@
-module.exports = function factory($, env) {
+export default function factory($, env) {
     return function task() {
         return $.gulp.src(env.paths.input.styles + '/**/*.less')
             .pipe($.if(env.build.debug, $.sourcemaps.init()))
@@ -12,4 +12,4 @@ module.exports = function factory($, env) {
             .pipe($.if(env.build.debug, $.sourcemaps.write()))
             .pipe($.gulp.dest(env.paths.output.styles));
     };
-};
+}

@@ -2,6 +2,7 @@
 var path = require('path');
 
 var ROOT_DIR = path.resolve(__dirname, '..');
+var TEST_DIR = path.join(ROOT_DIR, 'test');
 var SRC_DIR = path.join(ROOT_DIR, 'src');
 var CLIENT_SRC_DIR = path.join(SRC_DIR, 'client');
 var SHARED_SRC_DIR = path.join(SRC_DIR, 'shared');
@@ -24,6 +25,10 @@ module.exports = {
     singleRun: true
   },
   paths: {
+    test: {
+      client: path.join(TEST_DIR, 'client'),
+      server: path.join(TEST_DIR, 'server')
+    },
     input: {
       root: SRC_DIR,
       scripts: {

@@ -1,4 +1,4 @@
-module.exports = function factory($, env) {
+export default function factory($, env) {
     return function task(done) {
         return $.delete([
             '!' + env.paths.output.scripts.client + '/**/*.js',
@@ -6,4 +6,4 @@ module.exports = function factory($, env) {
             env.paths.output.scripts.server + '/**/*.js'
         ], done);
     };
-};
+}
