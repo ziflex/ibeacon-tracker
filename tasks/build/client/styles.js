@@ -1,6 +1,6 @@
 export default function factory($, env) {
     return function task() {
-        return $.gulp.src(env.paths.input.styles + '/**/*.less')
+        return $.gulp.src(env.paths.input.client.styles + '/**/*.less')
             .pipe($.if(env.build.debug, $.sourcemaps.init()))
             .pipe($.lessImport('app.less'))
             .pipe($.less())
@@ -10,6 +10,6 @@ export default function factory($, env) {
                 cascade: false
             }))
             .pipe($.if(env.build.debug, $.sourcemaps.write()))
-            .pipe($.gulp.dest(env.paths.output.styles));
+            .pipe($.gulp.dest(env.paths.output.client.styles));
     };
 }

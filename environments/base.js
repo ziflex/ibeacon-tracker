@@ -1,55 +1,60 @@
-/*eslint-disable */
-var path = require('path');
+import path from 'path';
 
-var ROOT_DIR = path.resolve(__dirname, '..');
-var TEST_DIR = path.join(ROOT_DIR, 'test');
-var SRC_DIR = path.join(ROOT_DIR, 'src');
-var CLIENT_SRC_DIR = path.join(SRC_DIR, 'client');
-var SHARED_SRC_DIR = path.join(SRC_DIR, 'shared');
-var SERVER_SRC_DIR = path.join(SRC_DIR, 'server');
-var DIST_DIR = path.join(ROOT_DIR, 'dist');
-var CLIENT_DIST_DIR = path.join(DIST_DIR, 'public');
+const ROOT_DIR = path.resolve(__dirname, '..');
+const SRC_DIR = path.join(ROOT_DIR, 'src');
+const CLIENT_SRC_DIR = path.join(SRC_DIR, 'client');
+const SERVER_SRC_DIR = path.join(SRC_DIR, 'server');
+const DIST_DIR = path.join(ROOT_DIR, 'dist');
+const SERVER_DIST_DIR = DIST_DIR;
+const CLIENT_DIST_DIR = path.join(SERVER_DIST_DIR, 'public');
 
 module.exports = {
-  name: 'base',
-  build: {
-    debug: false,
-    watch: false,
-    minify: true,
-    port: 8080
-  },
-  test: {
-    port: 9000,
-    reporters: ['html', 'progress'],
-    browsers: ['Chrome'],
-    singleRun: true
-  },
-  paths: {
+    name: 'base',
+    build: {
+        debug: false,
+        minify: true
+    },
+    development: {
+        port: 8080,
+        watch: false
+    },
     test: {
-      client: path.join(TEST_DIR, 'client'),
-      server: path.join(TEST_DIR, 'server')
+        port: 9000,
+        report: 'spec'
     },
-    input: {
-      root: SRC_DIR,
-      scripts: {
-        shared: SHARED_SRC_DIR,
-        client: path.join(CLIENT_SRC_DIR, 'content/js'),
-        server: SERVER_SRC_DIR
-      },
-      styles: path.join(CLIENT_SRC_DIR, 'content/css'),
-      html: CLIENT_SRC_DIR
-    },
-    output: {
-      root: DIST_DIR,
-      scripts: {
-        client: path.join(CLIENT_DIST_DIR, 'content/js'),
-        server: DIST_DIR,
-        shared: path.join(DIST_DIR, 'shared')
-      },
-      styles: path.join(CLIENT_DIST_DIR, 'content/css'),
-      html: CLIENT_DIST_DIR,
-      docs: ROOT_DIR
+    paths: {
+        root: ROOT_DIR,
+        tests: path.join(ROOT_DIR, 'test'),
+        doc: path.join(ROOT_DIR, 'doc'),
+        meta: path.join(ROOT_DIR, 'applications'),
+        input: {
+            root: SRC_DIR,
+            client: {
+                root: CLIENT_SRC_DIR,
+                images: path.join(CLIENT_SRC_DIR, 'images'),
+                fonts: null, // path.join(CLIENT_SRC_DIR, 'fonts'),
+                styles: path.join(CLIENT_SRC_DIR, 'styles'),
+                scripts: path.join(CLIENT_SRC_DIR, 'scripts'),
+                html: CLIENT_SRC_DIR
+            },
+            server: {
+                root: SERVER_SRC_DIR,
+                scripts: SERVER_SRC_DIR
+            }
+        },
+        output: {
+            root: DIST_DIR,
+            client: {
+                root: CLIENT_DIST_DIR,
+                images: path.join(CLIENT_DIST_DIR, 'images'),
+                fonts: path.join(CLIENT_DIST_DIR, 'fonts'),
+                styles: path.join(CLIENT_DIST_DIR, 'styles'),
+                scripts: path.join(CLIENT_DIST_DIR, 'scripts'),
+                html: CLIENT_DIST_DIR
+            },
+            server: {
+                scripts: SERVER_DIST_DIR
+            }
+        }
     }
-  }
 };
-/*eslint-enable */

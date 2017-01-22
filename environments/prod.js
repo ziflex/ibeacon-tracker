@@ -1,13 +1,14 @@
-/*eslint-disable */
+import _ from 'lodash';
+
+_.set(process.env, 'NODE_ENV', 'production');
+
 module.exports = {
-    name: 'prod',
+    name: 'production',
     build: {
         debug: false,
-        watch: false,
         minify: true
     },
     test: {
         singleRun: true
     }
 };
-/*eslint-enable */

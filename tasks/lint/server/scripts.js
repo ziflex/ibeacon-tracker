@@ -1,6 +1,10 @@
+import path from 'path';
+
 export default function factory($, env) {
     return function task() {
-        return $.gulp.src([env.paths.input.scripts.client + '/**/*.js'])
+        return $.gulp.src([
+            path.join(env.paths.input.server.scripts, '**/*.js')
+        ])
             .pipe($.eslint())
             .pipe($.eslint.format('stylish'))
             .pipe($.eslint.failAfterError());
