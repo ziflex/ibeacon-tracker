@@ -3,9 +3,10 @@ import Symbol from 'es6-symbol';
 import EventEmitter from 'eventemitter3';
 import ObservableMixin from 'observable-mixin';
 import throttle from 'lodash/throttle';
-import { requires, assert } from '../../../common/utils/contracts';
+import { requires, assert, assertMethods } from '../../../common/utils/contracts';
 
 const TYPE_NAME = '[scanner]';
+const ENGINE_METHODS = ['startScanning', 'stopScanning'];
 const ERR_START = `${TYPE_NAME} Already started`;
 const ERR_STOP = `${TYPE_NAME} Already stopped`;
 
@@ -22,12 +23,13 @@ const METHODS = {
 
 const Scanner = composeClass({
     mixins: [
-        ObservableMixin(FIELDS.logger)
+        ObservableMixin(FIELDS.emitter)
     ],
 
     constructor(logger, engine) {
         requires('logger', logger);
         requires('engine', engine);
+        assertMethods('engine', ENGINE_METHODS, engine);
 
         this[FIELDS.logger] = logger;
         this[FIELDS.engine] = engine;
