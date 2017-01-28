@@ -1,21 +1,15 @@
-import { Record } from 'immutable';
+import get from 'lodash/get';
 import { generate as Guid } from '../utils/guid';
 
-const Metadata = Record({
-    guid: '',
-    uuid: '',
-    major: 0,
-    minor: 0,
-    proximity: 0,
-    accuracy: 0,
-    measuredPower: 0,
-    lastSeen: null
-});
-
 export default function create(values) {
-    return new Metadata({
+    return {
         guid: Guid(values),
-        lastSeen: new Date(),
-        ...values
-    });
+        uuid: get(values, 'uuid'),
+        major: get(values, 'major'),
+        minor: get(values, 'minor'),
+        proximity: get(values, 'proximity'),
+        accuracy: get(values, 'accuracy'),
+        measuredPower: get(values, 'measuredPower'),
+        lastSeen: new Date()
+    };
 }

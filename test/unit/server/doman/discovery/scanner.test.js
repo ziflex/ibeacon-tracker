@@ -10,9 +10,9 @@ import sinon from 'sinon';
 import _ from 'lodash';
 import Logger from '../../../../mock/logger';
 import Engine from '../../../../mock/server/scanner-engine';
-import Scanner from '../../../../../src/server/domain/tracking/scanner';
+import Scanner from '../../../../../src/server/domain/discovery/scanner';
 
-describe('Server. Domain. Scanner', () => {
+describe('Server. Domain. Discovery. Scanner', () => {
     describe('#constructor', () => {
         context('When arguments are missed or invalid', () => {
             it('should throw an error', () => {

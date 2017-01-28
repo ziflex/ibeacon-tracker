@@ -2,17 +2,6 @@ import isString from 'lodash/isString';
 import isEmpty from 'lodash/isEmpty';
 
 /**
- * Generates new guid based on guid, major and minor numbers.
- */
-export function generate(beacon) {
-    if (!beacon) {
-        return '';
-    }
-
-    return `${this.normalize(beacon)}:${beacon.major}:${beacon.minor}`.toLowerCase();
-}
-
-/**
  *  Normalizes Beacon's guid, removing dash characters.
  */
 export function normalize(beacon) {
@@ -21,6 +10,17 @@ export function normalize(beacon) {
     }
 
     return (beacon.guid || '').replace(/-/g, '').toLowerCase();
+}
+
+/**
+ * Generates new guid based on guid, major and minor numbers.
+ */
+export function generate(beacon) {
+    if (!beacon) {
+        return '';
+    }
+
+    return `${normalize(beacon)}:${beacon.major}:${beacon.minor}`.toLowerCase();
 }
 
 /*

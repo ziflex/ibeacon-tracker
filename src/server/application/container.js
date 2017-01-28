@@ -9,10 +9,10 @@ import Logger from '../../common/logging/logger';
 import Initializer from '../../common/utils/initializer';
 import Server from '../infrastructure/http/server';
 import UserRepository from '../infrastructure/database/repos/user';
-import RegistryRepository from '../infrastructure/database/repos/registry';
+import BeaconRepository from '../infrastructure/database/repos/beacon';
 import HistoryRepository from '../infrastructure/database/repos/history';
-import Scanner from '../domain/tracking/scanner';
-import Tracker from '../domain/tracking/tracker';
+import Scanner from '../domain/discovery/scanner';
+import Tracker from '../domain/discovery/tracker';
 import DefaultRoutes from './routes/default';
 import Settings from './settings';
 
@@ -51,7 +51,7 @@ const Container = composeClass({
         engine.service('event-hub', EventEmitter);
 
         engine.namespace(NAMESPACES.database.repositories()).factory('user', UserRepository);
-        engine.namespace(NAMESPACES.database.repositories()).factory('registry', RegistryRepository);
+        engine.namespace(NAMESPACES.database.repositories()).factory('beacon', BeaconRepository);
         engine.namespace(NAMESPACES.database.repositories()).factory('history', HistoryRepository);
 
         engine.namespace(NAMESPACES.system.tracking()).factory('scanner', [

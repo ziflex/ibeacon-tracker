@@ -2,7 +2,6 @@ import composeClass from 'compose-class';
 import Symbol from 'es6-symbol';
 import EventEmitter from 'eventemitter3';
 import ObservableMixin from 'observable-mixin';
-import throttle from 'lodash/throttle';
 import { requires, assert, assertMethods } from '../../../common/utils/contracts';
 
 const TYPE_NAME = '[scanner]';
@@ -36,9 +35,9 @@ const Scanner = composeClass({
         this[FIELDS.emitter] = new EventEmitter();
         this[FIELDS.isRunning] = false;
 
-        this[METHODS.onDiscover] = throttle((peripheral) => {
+        this[METHODS.onDiscover] = (peripheral) => {
             this[FIELDS.emitter].emit('discover', peripheral);
-        }, 100);
+        };
     },
 
     isRunning() {
