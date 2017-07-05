@@ -1,6 +1,8 @@
 # iBeacon Tracker
 
-**WARNING** This project is deprecated. If you need similar functionality, use [Beagle Project](https://github.com/blent/beagle)
+**WARNING** This project is deprecated. If you need similar functionality, use [Beagle Project](https://github.com/blent/beagle).
+
+---
 
 ``iBeacon Tracker`` allows you to track any registered iBeacons and notify 3rd party services.
 
